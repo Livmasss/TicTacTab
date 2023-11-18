@@ -10,11 +10,6 @@
         android:label="@string/title_rules"
         tools:layout="@layout/fragment_rules" />
     <fragment
-        android:id="@+id/navigation_game"
-        android:name="com.livmas.tictactab.ui.game.GameFragment"
-        android:label="@string/title_game"
-        tools:layout="@layout/fragment_game" />
-    <fragment
         android:id="@+id/navigation_history"
         android:name="com.livmas.tictactab.ui.history.HistoryFragment"
         android:label="@string/title_history"
@@ -24,4 +19,9 @@
         android:name="com.livmas.tictactab.ui.settings.SettingsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/navigation_game"
+        android:name="com.livmas.tictactab.ui.game.main.GameMainFragment"
+        android:label="fragment_game_main"
+        tools:layout="@layout/fragment_game_main" />
 </navigation>

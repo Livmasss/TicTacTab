@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_game">
+
+    <fragment
+        android:id="@+id/navigation_game_complex_session"
+        android:name="com.livmas.tictactab.ui.game.sessions.complex.ComplexGameSessionFragment"
+        android:label="fragment_complex_game_session"
+        tools:layout="@layout/fragment_complex_game_session" />
+    <fragment
+        android:id="@+id/navigation_game_primitive_session"
+        android:name="com.livmas.tictactab.ui.game.sessions.primitive.PrimitiveGameSessionFragment"
+        android:label="fragment_primitive_game_session"
+        tools:layout="@layout/fragment_primitive_game_session" />
+</navigation>
