@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
+import com.livmas.tictactab.R
 import com.livmas.tictactab.databinding.FragmentGameMainBinding
 
 class GameMainFragment : Fragment() {
@@ -15,6 +18,7 @@ class GameMainFragment : Fragment() {
     }
 
     private val viewModel: GameMainViewModel by activityViewModels()
+    private lateinit var navController: NavController
     private lateinit var binding: FragmentGameMainBinding
 
     override fun onCreateView(
@@ -24,4 +28,18 @@ class GameMainFragment : Fragment() {
         binding = FragmentGameMainBinding.inflate(inflater, container, false)
         return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        navController = findNavController()
+
+        binding.bStartClassic.setOnClickListener {
+            navController.navigate(R.id.action_gameMainFragment_to_navigation_game_primitive_session)
+        }
+        binding.bStartComplex.setOnClickListener {
+            navController.navigate(R.id.action_gameMainFragment_to_navigation_game_complex_session)
+        }
+    }
+
+    
 }

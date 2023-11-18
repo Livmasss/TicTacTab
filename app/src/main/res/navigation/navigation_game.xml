@@ -2,7 +2,8 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/navigation_game">
+    android:id="@+id/navigation_game"
+    app:startDestination="@id/navigation_game_main">
 
     <fragment
         android:id="@+id/navigation_game_complex_session"
@@ -11,7 +12,19 @@
         tools:layout="@layout/fragment_complex_game_session" />
     <fragment
         android:id="@+id/navigation_game_primitive_session"
-        android:name="com.livmas.tictactab.ui.game.sessions.primitive.PrimitiveGameSessionFragment"
+        android:name="com.livmas.tictactab.ui.game.sessions.classic.ClassicGameSessionFragment"
         android:label="fragment_primitive_game_session"
-        tools:layout="@layout/fragment_primitive_game_session" />
+        tools:layout="@layout/fragment_classic_game_session" />
+    <fragment
+        android:id="@+id/navigation_game_main"
+        android:name="com.livmas.tictactab.ui.game.main.GameMainFragment"
+        android:label="fragment_game_main"
+        tools:layout="@layout/fragment_game_main" >
+        <action
+            android:id="@+id/action_gameMainFragment_to_navigation_game_complex_session"
+            app:destination="@id/navigation_game_complex_session" />
+        <action
+            android:id="@+id/action_gameMainFragment_to_navigation_game_primitive_session"
+            app:destination="@id/navigation_game_primitive_session" />
+    </fragment>
 </navigation>

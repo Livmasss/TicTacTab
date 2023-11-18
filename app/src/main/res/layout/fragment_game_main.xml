@@ -8,23 +8,24 @@
 
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/bStartClassic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/primitive"
-        app:layout_constraintStart_toEndOf="@+id/tvGameMode"
-        app:layout_constraintTop_toTopOf="@+id/tvGameMode" />
-
-    <TextView
-        android:id="@+id/tvGameMode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
-        android:text="@string/gamemode"
-        android:textSize="28sp"
+        android:layout_marginTop="24dp"
+        android:text="@string/classic"
+        app:layout_constraintEnd_toStartOf="@+id/bStartComplex"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/bStartComplex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/complex"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/bStartClassic"
+        app:layout_constraintTop_toTopOf="@+id/bStartClassic" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
