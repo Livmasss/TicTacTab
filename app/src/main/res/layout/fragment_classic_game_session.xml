@@ -3,11 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.game.sessions.classic.ClassicGameSessionFragment">
+    tools:context=".ui.fragments.game.sessions.classic.ClassicGameSessionFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+    <include layout="@layout/classic_game_field_layout" android:id="@+id/field"/>
 
 </FrameLayout>

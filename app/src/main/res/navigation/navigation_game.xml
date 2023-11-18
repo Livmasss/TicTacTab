@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_game_complex_session"
-        android:name="com.livmas.tictactab.ui.game.sessions.complex.ComplexGameSessionFragment"
-        android:label="fragment_complex_game_session"
+        android:name="com.livmas.tictactab.ui.fragments.game.sessions.complex.ComplexGameSessionFragment"
+        android:label="@string/title_complex"
         tools:layout="@layout/fragment_complex_game_session" />
     <fragment
         android:id="@+id/navigation_game_primitive_session"
-        android:name="com.livmas.tictactab.ui.game.sessions.classic.ClassicGameSessionFragment"
-        android:label="fragment_primitive_game_session"
+        android:name="com.livmas.tictactab.ui.fragments.game.sessions.classic.ClassicGameSessionFragment"
+        android:label="@string/title_classic"
         tools:layout="@layout/fragment_classic_game_session" />
     <fragment
         android:id="@+id/navigation_game_main"
-        android:name="com.livmas.tictactab.ui.game.main.GameMainFragment"
-        android:label="fragment_game_main"
-        tools:layout="@layout/fragment_game_main" >
+        android:name="com.livmas.tictactab.ui.fragments.game.main.GameMainFragment"
+        android:label="@string/title_game"
+        tools:layout="@layout/fragment_game_main">
         <action
             android:id="@+id/action_gameMainFragment_to_navigation_game_complex_session"
             app:destination="@id/navigation_game_complex_session" />

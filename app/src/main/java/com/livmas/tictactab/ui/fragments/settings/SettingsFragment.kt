@@ -1,4 +1,4 @@
-package com.livmas.tictactab.ui.settings
+package com.livmas.tictactab.ui.fragments.settings
 
 import android.os.Bundle
 import android.view.LayoutInflater

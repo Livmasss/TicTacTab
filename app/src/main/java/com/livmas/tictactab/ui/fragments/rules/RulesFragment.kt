@@ -1,4 +1,4 @@
-package com.livmas.tictactab.ui.rules
+package com.livmas.tictactab.ui.fragments.rules
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

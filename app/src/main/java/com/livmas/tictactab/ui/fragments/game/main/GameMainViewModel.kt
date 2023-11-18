@@ -1,4 +1,4 @@
-package com.livmas.tictactab.ui.game.main
+package com.livmas.tictactab.ui.fragments.game.main
 
 import androidx.lifecycle.ViewModel
 

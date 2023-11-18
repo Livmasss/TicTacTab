@@ -1,4 +1,4 @@
-package com.livmas.tictactab.ui.game.sessions.classic
+package com.livmas.tictactab.ui.fragments.game.sessions.classic
 
 import android.os.Bundle
 import android.view.LayoutInflater

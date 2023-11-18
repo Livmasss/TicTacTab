@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.game.main.GameMainFragment">
+    tools:context=".ui.fragments.game.main.GameMainFragment">
 
 
     <Button
@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="@string/classic"
+        android:text="@string/title_classic"
         app:layout_constraintEnd_toStartOf="@+id/bStartComplex"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,7 +22,7 @@
         android:id="@+id/bStartComplex"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/complex"
+        android:text="@string/title_complex"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/bStartClassic"

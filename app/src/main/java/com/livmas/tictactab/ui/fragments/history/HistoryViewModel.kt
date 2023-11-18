@@ -1,4 +1,4 @@
-package com.livmas.tictactab.ui.history
+package com.livmas.tictactab.ui.fragments.history
 
 import androidx.lifecycle.ViewModel
 

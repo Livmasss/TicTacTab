@@ -6,17 +6,17 @@
     app:startDestination="@id/navigation_rules">
     <fragment
         android:id="@+id/navigation_rules"
-        android:name="com.livmas.tictactab.ui.rules.RulesFragment"
+        android:name="com.livmas.tictactab.ui.fragments.rules.RulesFragment"
         android:label="@string/title_rules"
         tools:layout="@layout/fragment_rules" />
     <fragment
         android:id="@+id/navigation_history"
-        android:name="com.livmas.tictactab.ui.history.HistoryFragment"
+        android:name="com.livmas.tictactab.ui.fragments.history.HistoryFragment"
         android:label="@string/title_history"
         tools:layout="@layout/fragment_history" />
     <fragment
         android:id="@+id/navigation_settings"
-        android:name="com.livmas.tictactab.ui.settings.SettingsFragment"
+        android:name="com.livmas.tictactab.ui.fragments.settings.SettingsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
     <include app:graph="@navigation/navigation_game" />
