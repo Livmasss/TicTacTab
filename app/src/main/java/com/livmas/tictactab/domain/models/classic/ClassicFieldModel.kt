@@ -1,26 +1,39 @@
-package com.livmas.tictactab.domain.models
+package com.livmas.tictactab.domain.models.classic
 
 import com.livmas.tictactab.domain.models.enums.CellState
+import com.livmas.tictactab.domain.models.enums.Player
 
-data class ClassicField(
+data class ClassicFieldModel(
     private val data: Array<Array<CellState>> = arrayOf(
         arrayOf(CellState.N, CellState.N, CellState.N),
         arrayOf(CellState.N, CellState.N, CellState.N),
         arrayOf(CellState.N, CellState.N, CellState.N)
     )
 ) {
-    fun set(cords: ClassicCoordinates, value: CellState) {
+    fun set(cords: ClassicCoordinatesModel, value: CellState) {
         data[cords.x][cords.y] = value
     }
-    fun get(cords: ClassicCoordinates): CellState {
+    fun get(cords: ClassicCoordinatesModel): CellState {
         return data[cords.x][cords.y]
     }
 
-    override fun equals(other: Any?): Boolean {
+    fun isFinished() {
+        
+    }
+
+    fun makeTurn(turn: ClassicTurnModel) {
+        val state = if (turn.player == Player.X)
+            CellState.X
+        else
+            CellState.O
+        set(turn.cords, state)
+    }
+
+        override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as ClassicField
+        other as ClassicFieldModel
 
         if (!data.contentDeepEquals(other.data)) return false
 
