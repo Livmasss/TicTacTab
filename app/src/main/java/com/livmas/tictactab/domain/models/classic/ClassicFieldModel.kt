@@ -16,9 +16,8 @@ data class ClassicFieldModel(
     fun get(cords: ClassicCoordinatesModel): CellState {
         return data[cords.x][cords.y]
     }
-
-    fun isFinished() {
-        
+    operator fun get(x: Int, y: Int): CellState {
+        return data[x][y]
     }
 
     fun makeTurn(turn: ClassicTurnModel) {
@@ -29,7 +28,7 @@ data class ClassicFieldModel(
         set(turn.cords, state)
     }
 
-        override fun equals(other: Any?): Boolean {
+    override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
