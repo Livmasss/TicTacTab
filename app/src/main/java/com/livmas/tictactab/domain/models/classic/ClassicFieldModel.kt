@@ -4,20 +4,20 @@ import com.livmas.tictactab.domain.models.enums.CellState
 import com.livmas.tictactab.domain.models.enums.Player
 
 data class ClassicFieldModel(
-    private val data: Array<Array<CellState>> = arrayOf(
+    private val _data: Array<Array<CellState>> = arrayOf(
         arrayOf(CellState.N, CellState.N, CellState.N),
         arrayOf(CellState.N, CellState.N, CellState.N),
         arrayOf(CellState.N, CellState.N, CellState.N)
     )
 ) {
     fun set(cords: ClassicCoordinatesModel, value: CellState) {
-        data[cords.x][cords.y] = value
+        _data[cords.x][cords.y] = value
     }
-    fun get(cords: ClassicCoordinatesModel): CellState {
-        return data[cords.x][cords.y]
+    operator fun get(cords: ClassicCoordinatesModel): CellState {
+        return _data[cords.x][cords.y]
     }
     operator fun get(x: Int, y: Int): CellState {
-        return data[x][y]
+        return _data[x][y]
     }
 
     fun makeTurn(turn: ClassicTurnModel) {
@@ -34,12 +34,12 @@ data class ClassicFieldModel(
 
         other as ClassicFieldModel
 
-        if (!data.contentDeepEquals(other.data)) return false
+        if (!_data.contentDeepEquals(other._data)) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        return data.contentDeepHashCode()
+        return _data.contentDeepHashCode()
     }
 }

@@ -4,12 +4,16 @@ import com.livmas.tictactab.domain.models.enums.CellState
 import com.livmas.tictactab.domain.models.enums.Player
 
 class ClassicGameSession{
-    private val field = ClassicFieldModel()
+    private val _field = ClassicFieldModel()
+    val field: ClassicFieldModel
+        get() = _field.copy()
+
+
     private var currentPlayer = Player.X
     private var winner: Player? = null
 
     fun makeTurn(cords: ClassicCoordinatesModel): Boolean {
-        field.makeTurn(ClassicTurnModel(cords, currentPlayer))
+        _field.makeTurn(ClassicTurnModel(cords, currentPlayer))
 
         winner = when (checkWinner()) {
             CellState.N -> null
@@ -21,22 +25,22 @@ class ClassicGameSession{
     }
 
     private fun checkWinner(): CellState {
-        return if (field[0, 0] != CellState.N && field[0, 0] == field[0, 1] && field[0, 1] == field[0, 2])
-            field[0, 0]
-        else if (field[1, 0] != CellState.N && field[1, 0] == field[1, 1] && field[1, 1] == field[1, 2])
-            field[1, 0]
-        else if (field[2, 0] != CellState.N && field[2, 0] == field[2, 1] && field[2, 1] == field[2, 2])
-            field[2, 0]
-        else if (field[0, 0] != CellState.N && field[0, 0] == field[1, 1] && field[1, 1] == field[2, 2])
-            field[0, 0]
-        else if (field[0, 2] != CellState.N && field[0, 2] == field[1, 1] && field[1, 1] == field[2, 0])
-            field[0, 2]
-        else if (field[0, 0] != CellState.N && field[0, 0] == field[1, 0] && field[1, 0] == field[2, 0])
-            field[0, 0]
-        else if (field[0, 1] != CellState.N && field[0, 1] == field[1, 1] && field[1, 1] == field[2, 1])
-            field[0, 1]
-        else if (field[0, 2] != CellState.N && field[0, 2] == field[1, 2] && field[1, 2] == field[2, 2])
-            field[0, 2]
+        return if (_field[0, 0] != CellState.N && _field[0, 0] == _field[0, 1] && _field[0, 1] == _field[0, 2])
+            _field[0, 0]
+        else if (_field[1, 0] != CellState.N && _field[1, 0] == _field[1, 1] && _field[1, 1] == _field[1, 2])
+            _field[1, 0]
+        else if (_field[2, 0] != CellState.N && _field[2, 0] == _field[2, 1] && _field[2, 1] == _field[2, 2])
+            _field[2, 0]
+        else if (_field[0, 0] != CellState.N && _field[0, 0] == _field[1, 1] && _field[1, 1] == _field[2, 2])
+            _field[0, 0]
+        else if (_field[0, 2] != CellState.N && _field[0, 2] == _field[1, 1] && _field[1, 1] == _field[2, 0])
+            _field[0, 2]
+        else if (_field[0, 0] != CellState.N && _field[0, 0] == _field[1, 0] && _field[1, 0] == _field[2, 0])
+            _field[0, 0]
+        else if (_field[0, 1] != CellState.N && _field[0, 1] == _field[1, 1] && _field[1, 1] == _field[2, 1])
+            _field[0, 1]
+        else if (_field[0, 2] != CellState.N && _field[0, 2] == _field[1, 2] && _field[1, 2] == _field[2, 2])
+            _field[0, 2]
         else
             CellState.N
     }
