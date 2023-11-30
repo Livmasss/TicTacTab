@@ -27,8 +27,13 @@ class ClassicGameSessionViewModel : ViewModel() {
     fun stopGame() {
         gameManager.stopGame()
     }
+    //Returns true if game
     fun makeTurn(cords: ClassicCoordinatesModel) {
-        gameManager.makeTurn(cords)
+        val isFinished = gameManager.makeTurn(cords)
         field.value = gameManager.field
+        if (isFinished)
+            stopGame()
+        if (gameManager.winner != null)
+            winner.postValue(gameManager.winner)
     }
 }

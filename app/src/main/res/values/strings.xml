@@ -17,4 +17,7 @@
     <string name="cell_coordinates_2_0">Cell coordinates 2 0</string>
     <string name="cell_coordinates_2_1">Cell coordinates 2 1</string>
     <string name="cell_coordinates_2_2">Cell coordinates 2 2</string>
+
+    <!-- Messages -->
+    <string name="winning_message">Player %1$s won!</string>
 </resources>

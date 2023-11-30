@@ -6,10 +6,10 @@ import com.livmas.tictactab.domain.models.classic.ClassicGameSession
 
 class ClassicGameManager(private val init_field: ClassicFieldModel) {
     private var game: ClassicGameSession? = null
-    private val _field: ClassicFieldModel
-        get() = if (game?.field == null) ClassicFieldModel() else game!!.field
     val field
-        get() = _field.copy()
+        get() = if (game?.field == null) ClassicFieldModel() else game!!.field
+    val winner
+        get() = game?.winner
 
     fun startGame() {
         game = ClassicGameSession(init_field)
@@ -17,11 +17,13 @@ class ClassicGameManager(private val init_field: ClassicFieldModel) {
     fun stopGame() {
         game = null
     }
-    fun makeTurn(cords: ClassicCoordinatesModel) {
+
+    //Returns true if game finished after this turn
+    fun makeTurn(cords: ClassicCoordinatesModel): Boolean {
         game?.let { game ->
-            val isFinished =  game.makeTurn(cords)
-            if (isFinished)
-                stopGame()
+            val isFinished = game.makeTurn(cords)
+            return (isFinished)
         }
+        return true
     }
 }

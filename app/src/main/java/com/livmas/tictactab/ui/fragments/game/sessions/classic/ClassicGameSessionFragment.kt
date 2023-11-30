@@ -11,6 +11,7 @@ import android.widget.ImageButton
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.google.android.material.snackbar.Snackbar
 import com.livmas.tictactab.R
 import com.livmas.tictactab.databinding.FragmentClassicGameSessionBinding
 import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
@@ -74,8 +75,19 @@ class ClassicGameSessionFragment : Fragment() {
         }
     }
     private fun initObservers() {
-        viewModel.field.observe(viewLifecycleOwner) {
-            renderField(it)
+        viewModel.apply {
+            field.observe(viewLifecycleOwner) {
+                renderField(it)
+            }
+            winner.observe(viewLifecycleOwner) {
+                if (it == null)
+                    return@observe
+                Snackbar.make(
+                    binding.root,
+                    resources.getString(R.string.winning_message, it.toString()),
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
         }
     }
     private fun makeTurnListener(cords: ClassicCoordinatesModel): OnClickListener {

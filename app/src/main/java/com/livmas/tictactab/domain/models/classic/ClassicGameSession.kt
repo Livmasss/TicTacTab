@@ -11,8 +11,11 @@ class ClassicGameSession(init_field: ClassicFieldModel) {
 
 
     private var currentPlayer = Player.X
-    private var winner: Player? = null
+    private var _winner: Player? = null
+    val winner: Player?
+        get() = _winner
 
+    //Returns true if game finished after this turn
     fun makeTurn(cords: ClassicCoordinatesModel): Boolean {
         try {
             _field.makeTurn(ClassicTurnModel(cords, currentPlayer))
@@ -21,14 +24,14 @@ class ClassicGameSession(init_field: ClassicFieldModel) {
             return false
         }
 
-        winner = when (checkWinner()) {
+        _winner = when (checkWinner()) {
             CellState.N -> null
             CellState.X -> Player.X
             CellState.O -> Player.O
         }
         currentPlayer = if (currentPlayer == Player.X) Player.O else Player.X
 
-        return winner != null
+        return _winner != null
     }
 
     private fun checkWinner(): CellState {
