@@ -1,5 +1,6 @@
 package com.livmas.tictactab.ui.fragments.game.sessions.classic
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -25,6 +26,9 @@ class ClassicGameSessionFragment : Fragment() {
     private val viewModel: ClassicGameSessionViewModel by activityViewModels()
     private lateinit var binding: FragmentClassicGameSessionBinding
     private lateinit var idsField: Array<Array<ImageButton>>
+
+    private var xDrawable: Drawable? = null
+    private var oDrawable: Drawable? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,6 +48,11 @@ class ClassicGameSessionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        xDrawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_x_cell, null)
+        xDrawable?.setTint(ResourcesCompat.getColor(resources, R.color.first_player, null))
+        oDrawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_o_cell, null)
+        oDrawable?.setTint(ResourcesCompat.getColor(resources, R.color.second_player, null))
 
         initCells()
         viewModel.field.value?.let { renderField(it) }
@@ -75,11 +84,6 @@ class ClassicGameSessionFragment : Fragment() {
         }
     }
     private fun renderField(field: ClassicFieldModel) {
-        val xDrawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_x_cell, null)
-        xDrawable?.setTint(ResourcesCompat.getColor(resources, R.color.first_player, null))
-        val oDrawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_o_cell, null)
-        oDrawable?.setTint(ResourcesCompat.getColor(resources, R.color.second_player, null))
-
         for (x in 0..2)
             for (y in 0..2) {
                 when (field[x, y]) {

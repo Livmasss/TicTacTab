@@ -2,6 +2,7 @@ package com.livmas.tictactab.domain.models.classic
 
 import com.livmas.tictactab.domain.models.enums.CellState
 import com.livmas.tictactab.domain.models.enums.Player
+import com.livmas.tictactab.domain.models.exceptions.CellOccupiedException
 
 data class ClassicFieldModel(
     private val _data: Array<Array<CellState>> = arrayOf(
@@ -25,7 +26,11 @@ data class ClassicFieldModel(
             CellState.X
         else
             CellState.O
-        set(turn.cords, state)
+
+        if (get(turn.cords) == CellState.N)
+            set(turn.cords, state)
+        else
+            throw CellOccupiedException("This cell already occupied, turn unavailable.")
     }
 
     override fun equals(other: Any?): Boolean {
