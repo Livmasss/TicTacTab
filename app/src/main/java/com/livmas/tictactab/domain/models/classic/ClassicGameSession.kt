@@ -3,8 +3,8 @@ package com.livmas.tictactab.domain.models.classic
 import com.livmas.tictactab.domain.models.enums.CellState
 import com.livmas.tictactab.domain.models.enums.Player
 
-class ClassicGameSession{
-    private val _field = ClassicFieldModel()
+class ClassicGameSession(init_field: ClassicFieldModel) {
+    private val _field = init_field
     val field: ClassicFieldModel
         get() = _field.copy()
 

@@ -18,7 +18,7 @@ class ClassicGameSessionViewModel : ViewModel() {
         MutableLiveData<Player?>(null)
     }
 
-    private val gameManager = ClassicGameManager()
+    private val gameManager = ClassicGameManager(ClassicFieldModel())
 
     fun startGame() {
         gameManager.startGame()
