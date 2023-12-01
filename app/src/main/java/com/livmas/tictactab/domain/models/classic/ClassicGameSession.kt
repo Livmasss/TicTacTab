@@ -8,6 +8,9 @@ class ClassicGameSession(init_field: ClassicFieldModel, current: Player?) {
     private val _field = init_field
     private var _currentPlayer = current ?: Player.X
     private var _winner: Player? = null
+
+    constructor() : this(ClassicFieldModel(), Player.X)
+
     val winner: Player?
         get() = _winner
     val currentPlayer: Player

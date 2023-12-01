@@ -50,17 +50,25 @@ class ClassicGameSessionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //Initiates drawables for cell states
         xDrawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_x_cell, null)
         xDrawable?.setTint(ResourcesCompat.getColor(resources, R.color.first_player, null))
         oDrawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_o_cell, null)
         oDrawable?.setTint(ResourcesCompat.getColor(resources, R.color.second_player, null))
 
-        initCells()
+        initViews()
         viewModel.field.value?.let { renderField(it) }
         initObservers()
         viewModel.startGame()
     }
 
+    private fun initViews() {
+        initCells()
+
+        binding.bRestart.setOnClickListener {
+            viewModel.restartGame()
+        }
+    }
     private fun initCells() {
         binding.field.apply {
             ibCell00.setOnClickListener(makeTurnListener(ClassicCoordinatesModel(0, 0)))
@@ -101,7 +109,7 @@ class ClassicGameSessionFragment : Fragment() {
                 when (field[x, y]) {
                     CellState.X -> idsField[x][y].setImageDrawable(xDrawable)
                     CellState.O -> idsField[x][y].setImageDrawable(oDrawable)
-                    CellState.N -> continue
+                    CellState.N -> idsField[x][y].setImageDrawable(null)
                 }
                 Log.i(logTag, field[x, y].toString())
             }

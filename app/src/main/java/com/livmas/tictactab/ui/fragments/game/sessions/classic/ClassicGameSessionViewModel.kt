@@ -28,6 +28,10 @@ class ClassicGameSessionViewModel : ViewModel() {
     fun stopGame() {
         gameManager.stopGame()
     }
+    fun restartGame() {
+        gameManager.startGame(ClassicGameSession())
+        field.value = gameManager.field
+    }
     //Returns true if game
     fun makeTurn(cords: ClassicCoordinatesModel) {
         val isFinished = gameManager.makeTurn(cords)

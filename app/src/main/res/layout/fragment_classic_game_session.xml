@@ -1,14 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.game.sessions.classic.ClassicGameSessionFragment">
+    tools:context=".ui.fragments.game.sessions.classic.ClassicGameSessionFragment"
 
-    <include layout="@layout/classic_game_field_layout" android:id="@+id/field"/>
+    android:padding="20dp">
+
+    <FrameLayout
+        android:id="@+id/flFieldContainer"
+        android:layout_width="match_parent"
+        android:layout_height="420dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include
+            android:id="@+id/field"
+            layout="@layout/classic_game_field_layout" />
+
+    </FrameLayout>
 
     <Button
+        android:id="@+id/bRestart"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/restart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/flFieldContainer" />
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
