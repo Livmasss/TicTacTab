@@ -4,15 +4,17 @@ import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
 import com.livmas.tictactab.domain.models.classic.ClassicFieldModel
 import com.livmas.tictactab.domain.models.classic.ClassicGameSession
 
-class ClassicGameManager(private val init_field: ClassicFieldModel) {
+class ClassicGameManager() {
     private var game: ClassicGameSession? = null
     val field
         get() = if (game?.field == null) ClassicFieldModel() else game!!.field
     val winner
         get() = game?.winner
+    val currentPlayer
+        get() = game?.currentPlayer
 
-    fun startGame() {
-        game = ClassicGameSession(init_field)
+    fun startGame(session: ClassicGameSession) {
+        game = session
     }
     fun stopGame() {
         game = null

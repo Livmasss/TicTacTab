@@ -7,4 +7,8 @@
 
     <include layout="@layout/classic_game_field_layout" android:id="@+id/field"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 </FrameLayout>

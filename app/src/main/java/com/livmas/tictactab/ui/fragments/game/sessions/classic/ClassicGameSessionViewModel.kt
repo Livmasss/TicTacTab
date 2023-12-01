@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.livmas.tictactab.domain.models.ClassicGameManager
 import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
 import com.livmas.tictactab.domain.models.classic.ClassicFieldModel
+import com.livmas.tictactab.domain.models.classic.ClassicGameSession
 import com.livmas.tictactab.domain.models.enums.Player
 
 class ClassicGameSessionViewModel : ViewModel() {
@@ -18,10 +19,10 @@ class ClassicGameSessionViewModel : ViewModel() {
         MutableLiveData<Player?>(null)
     }
 
-    private val gameManager = ClassicGameManager(ClassicFieldModel())
+    private val gameManager = ClassicGameManager()
 
     fun startGame() {
-        gameManager.startGame()
+        gameManager.startGame(ClassicGameSession(field.value!!, currentPlayer.value))
         field.value = gameManager.field
     }
     fun stopGame() {
@@ -31,6 +32,8 @@ class ClassicGameSessionViewModel : ViewModel() {
     fun makeTurn(cords: ClassicCoordinatesModel) {
         val isFinished = gameManager.makeTurn(cords)
         field.value = gameManager.field
+        currentPlayer.postValue(gameManager.currentPlayer)
+
         if (isFinished)
             stopGame()
         if (gameManager.winner != null)

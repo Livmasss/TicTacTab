@@ -4,21 +4,21 @@ import com.livmas.tictactab.domain.models.enums.CellState
 import com.livmas.tictactab.domain.models.enums.Player
 import com.livmas.tictactab.domain.models.exceptions.CellOccupiedException
 
-class ClassicGameSession(init_field: ClassicFieldModel) {
+class ClassicGameSession(init_field: ClassicFieldModel, current: Player?) {
     private val _field = init_field
-    val field: ClassicFieldModel
-        get() = _field.copy()
-
-
-    private var currentPlayer = Player.X
+    private var _currentPlayer = current ?: Player.X
     private var _winner: Player? = null
     val winner: Player?
         get() = _winner
+    val currentPlayer: Player
+        get() = _currentPlayer
+    val field: ClassicFieldModel
+        get() = _field.copy()
 
     //Returns true if game finished after this turn
     fun makeTurn(cords: ClassicCoordinatesModel): Boolean {
         try {
-            _field.makeTurn(ClassicTurnModel(cords, currentPlayer))
+            _field.makeTurn(ClassicTurnModel(cords, _currentPlayer))
         }
         catch (e: CellOccupiedException) {
             return false
@@ -29,7 +29,7 @@ class ClassicGameSession(init_field: ClassicFieldModel) {
             CellState.X -> Player.X
             CellState.O -> Player.O
         }
-        currentPlayer = if (currentPlayer == Player.X) Player.O else Player.X
+        _currentPlayer = if (_currentPlayer == Player.X) Player.O else Player.X
 
         return _winner != null
     }
