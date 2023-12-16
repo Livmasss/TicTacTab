@@ -1,5 +1,6 @@
 package com.livmas.tictactab.ui.fragments.game.sessions.classic
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.livmas.tictactab.domain.models.ClassicGameManager
@@ -35,12 +36,13 @@ class ClassicGameSessionViewModel : ViewModel() {
     //Returns true if game
     fun makeTurn(cords: ClassicCoordinatesModel) {
         val isFinished = gameManager.makeTurn(cords)
+        Log.d("winner", gameManager.winner.toString())
         field.value = gameManager.field
         currentPlayer.postValue(gameManager.currentPlayer)
 
-        if (isFinished)
-            stopGame()
         if (gameManager.winner != null)
             winner.postValue(gameManager.winner)
+        if (isFinished)
+            stopGame()
     }
 }
