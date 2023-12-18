@@ -7,6 +7,8 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.ImageButton
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -90,6 +92,17 @@ class ClassicGameSessionFragment : Fragment() {
                     resources.getString(R.string.winning_message, it.toString()),
                     Snackbar.LENGTH_LONG
                 ).show()
+                val view = layoutInflater.inflate(R.layout.final_line_layout, binding.flFieldContainer, false) as ConstraintLayout
+
+                ConstraintSet().apply {
+                    clone(context, R.layout.final_line_layout)
+                    setVerticalBias(R.id.vLine, 0.5f - 0.3f)
+
+                    applyTo(view)
+                }
+
+                view.rotation = 90f
+//                binding.flFieldContainer.addView(view)
             }
             gameFinished.observe(viewLifecycleOwner) {
                 if (it && winner.value == null)
