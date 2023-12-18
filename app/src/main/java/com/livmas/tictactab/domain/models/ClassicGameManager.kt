@@ -14,16 +14,20 @@ class ClassicGameManager {
         get() = game?.winner
     val currentPlayer
         get() = game?.currentPlayer
+    var isRun = false
 
     fun startGame(session: ClassicGameSession) {
         game = session
+        isRun = true
     }
     fun stopGame() {
-        game = null
+        isRun = false
     }
 
     //Returns true if game finished after this turn
     fun makeTurn(cords: ClassicCoordinatesModel): GameMessage {
+        if (!isRun)
+            return GameMessage("This game ended! You can restart it.", 31)
         game?.let { game ->
             val message = game.makeTurn(cords)
             return (message)

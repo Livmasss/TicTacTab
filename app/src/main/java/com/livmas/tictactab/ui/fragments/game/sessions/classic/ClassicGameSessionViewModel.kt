@@ -22,6 +22,9 @@ class ClassicGameSessionViewModel : ViewModel() {
     val gameFinished: MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>(false)
     }
+    val alert: MutableLiveData<String?> by lazy {
+        MutableLiveData<String?>(null)
+    }
 
     private val gameManager = ClassicGameManager()
 
@@ -42,11 +45,19 @@ class ClassicGameSessionViewModel : ViewModel() {
         field.value = gameManager.field
         currentPlayer.postValue(gameManager.currentPlayer)
 
-        if (message.code in 20..29) {
-            Log.d(ClassicGameSession.TAG, "Game finished")
-            winner.postValue(gameManager.winner)
-            gameFinished.postValue(true)
-            stopGame()
+        when (message.code) {
+            in 20..29 -> {
+                Log.d(ClassicGameSession.TAG, "Game finished")
+                winner.postValue(gameManager.winner)
+                gameFinished.postValue(true)
+                stopGame()
+            }
+            in 30..39 -> {
+                alert.postValue(message.content)
+            }
+            40 -> {
+                alert.postValue(message.content)
+            }
         }
     }
 }

@@ -99,6 +99,15 @@ class ClassicGameSessionFragment : Fragment() {
                         Snackbar.LENGTH_LONG
                     ).show()
             }
+            alert.observe(viewLifecycleOwner) {
+                it?.let { message ->
+                    Snackbar.make(
+                        binding.root,
+                        message,
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
+            }
         }
     }
     private fun makeTurnListener(cords: ClassicCoordinatesModel): OnClickListener {
