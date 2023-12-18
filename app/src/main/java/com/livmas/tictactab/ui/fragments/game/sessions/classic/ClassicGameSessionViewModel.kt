@@ -19,6 +19,9 @@ class ClassicGameSessionViewModel : ViewModel() {
     val winner: MutableLiveData<Player?> by lazy {
         MutableLiveData<Player?>(null)
     }
+    val gameFinished: MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>(false)
+    }
 
     private val gameManager = ClassicGameManager()
 
@@ -36,13 +39,14 @@ class ClassicGameSessionViewModel : ViewModel() {
     //Returns true if game
     fun makeTurn(cords: ClassicCoordinatesModel) {
         val isFinished = gameManager.makeTurn(cords)
-        Log.d("winner", gameManager.winner.toString())
         field.value = gameManager.field
         currentPlayer.postValue(gameManager.currentPlayer)
 
-        if (gameManager.winner != null)
+        if (isFinished) {
+            Log.d(ClassicGameSession.TAG, "Game stopped")
             winner.postValue(gameManager.winner)
-        if (isFinished)
+            gameFinished.postValue(true)
             stopGame()
+        }
     }
 }

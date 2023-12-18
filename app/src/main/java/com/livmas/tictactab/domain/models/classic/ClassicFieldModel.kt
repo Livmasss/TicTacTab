@@ -47,4 +47,10 @@ data class ClassicFieldModel(
     override fun hashCode(): Int {
         return _data.contentDeepHashCode()
     }
+
+    fun isFull(): Boolean = !_data.any {row ->
+        row.any { cell ->
+            cell==CellState.N
+        }
+    }
 }

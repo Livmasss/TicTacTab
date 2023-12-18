@@ -1,5 +1,6 @@
 package com.livmas.tictactab.domain.models.classic
 
+import android.util.Log
 import com.livmas.tictactab.domain.models.enums.CellState
 import com.livmas.tictactab.domain.models.enums.Player
 import com.livmas.tictactab.domain.models.exceptions.CellOccupiedException
@@ -8,6 +9,10 @@ class ClassicGameSession(init_field: ClassicFieldModel, current: Player?) {
     private val _field = init_field
     private var _currentPlayer = current ?: Player.X
     private var _winner: Player? = null
+
+    companion object {
+        const val TAG = "classic_game"
+    }
 
     constructor() : this(ClassicFieldModel(), Player.X)
 
@@ -34,7 +39,8 @@ class ClassicGameSession(init_field: ClassicFieldModel, current: Player?) {
         }
         _currentPlayer = if (_currentPlayer == Player.X) Player.O else Player.X
 
-        return _winner != null
+        Log.d(TAG, _field.isFull().toString())
+        return _winner != null || _field.isFull()
     }
 
     private fun checkWinner(): CellState {

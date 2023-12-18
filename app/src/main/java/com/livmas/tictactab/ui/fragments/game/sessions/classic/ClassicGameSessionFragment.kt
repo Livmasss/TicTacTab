@@ -2,7 +2,6 @@ package com.livmas.tictactab.ui.fragments.game.sessions.classic
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
@@ -19,10 +18,6 @@ import com.livmas.tictactab.domain.models.classic.ClassicFieldModel
 import com.livmas.tictactab.domain.models.enums.CellState
 
 class ClassicGameSessionFragment : Fragment() {
-
-    companion object {
-        const val logTag = "Game field"
-    }
 
     private val viewModel: ClassicGameSessionViewModel by activityViewModels()
     private lateinit var binding: FragmentClassicGameSessionBinding
@@ -96,6 +91,14 @@ class ClassicGameSessionFragment : Fragment() {
                     Snackbar.LENGTH_LONG
                 ).show()
             }
+            gameFinished.observe(viewLifecycleOwner) {
+                if (it)
+                    Snackbar.make(
+                        binding.root,
+                        "Draw! You can try again",
+                        Snackbar.LENGTH_LONG
+                    ).show()
+            }
         }
     }
     private fun makeTurnListener(cords: ClassicCoordinatesModel): OnClickListener {
@@ -111,7 +114,6 @@ class ClassicGameSessionFragment : Fragment() {
                     CellState.O -> idsField[x][y].setImageDrawable(oDrawable)
                     CellState.N -> idsField[x][y].setImageDrawable(null)
                 }
-                Log.i(logTag, field[x, y].toString())
             }
     }
 }
