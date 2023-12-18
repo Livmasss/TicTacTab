@@ -92,7 +92,7 @@ class ClassicGameSessionFragment : Fragment() {
                 ).show()
             }
             gameFinished.observe(viewLifecycleOwner) {
-                if (it)
+                if (it && winner.value == null)
                     Snackbar.make(
                         binding.root,
                         "Draw! You can try again",

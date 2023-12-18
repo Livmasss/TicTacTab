@@ -38,12 +38,12 @@ class ClassicGameSessionViewModel : ViewModel() {
     }
     //Returns true if game
     fun makeTurn(cords: ClassicCoordinatesModel) {
-        val isFinished = gameManager.makeTurn(cords)
+        val message = gameManager.makeTurn(cords)
         field.value = gameManager.field
         currentPlayer.postValue(gameManager.currentPlayer)
 
-        if (isFinished) {
-            Log.d(ClassicGameSession.TAG, "Game stopped")
+        if (message.code in 20..29) {
+            Log.d(ClassicGameSession.TAG, "Game finished")
             winner.postValue(gameManager.winner)
             gameFinished.postValue(true)
             stopGame()

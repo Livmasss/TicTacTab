@@ -30,7 +30,7 @@ data class ClassicFieldModel(
         if (get(turn.cords) == CellState.N)
             set(turn.cords, state)
         else
-            throw CellOccupiedException("This cell already occupied, turn unavailable.")
+            throw CellOccupiedException()
     }
 
     override fun equals(other: Any?): Boolean {
