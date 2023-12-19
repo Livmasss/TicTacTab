@@ -94,16 +94,36 @@ class ClassicGameSessionFragment : Fragment() {
                 renderField(it)
             }
             currentPlayer.observe(viewLifecycleOwner) {
-                binding.ivCurrentPlayer.setImageDrawable(if (it==Player.X) xDrawable else oDrawable)
+                binding.ivGameDisplay.apply {
+                    setImageDrawable(definePlayerDrawable(it))
+                    contentDescription = resources.getString(R.string.iv_display_desc, it)
+                }
             }
             winner.observe(viewLifecycleOwner) {
-                if (it == null)
+                if (it == null) {
+                    binding.apply {
+                        tvGameDisplay.text = resources.getString(R.string.current_player_message)
+                        ivGameDisplay.setImageDrawable(
+                            if (currentPlayer.value == null)
+                                xDrawable else definePlayerDrawable(
+                                currentPlayer.value!!
+                            )
+                        )
+                        ivGameDisplay.contentDescription =
+                            resources.getString(R.string.iv_display_desc, it)
+                    }
                     return@observe
-                Snackbar.make(
-                    binding.root,
-                    resources.getString(R.string.winning_message, it.toString()),
-                    Snackbar.LENGTH_LONG
-                ).show()
+                }
+//                Snackbar.make(
+//                    binding.root,
+//                    resources.getString(R.string.winning_message, it.toString()),
+//                    Snackbar.LENGTH_LONG
+//                ).show()
+                binding.apply {
+                    tvGameDisplay.text = resources.getString(R.string.winner_message)
+                    ivGameDisplay.setImageDrawable(definePlayerDrawable(it))
+                    ivGameDisplay.contentDescription = resources.getString(R.string.iv_display_desc, it)
+                }
             }
             gameFinished.observe(viewLifecycleOwner) {
                 if (it && winner.value == null)
@@ -136,6 +156,9 @@ class ClassicGameSessionFragment : Fragment() {
                 }
             }
         }
+    }
+    private fun definePlayerDrawable(player: Player): Drawable? {
+        return if (player==Player.X) xDrawable else oDrawable
     }
     private fun showLine(offset: Float = 0f, angle: Float = 0f) {
         val view = layoutInflater.inflate(R.layout.final_line_layout, binding.flFieldContainer, false) as ConstraintLayout

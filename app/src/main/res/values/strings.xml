@@ -14,6 +14,7 @@
     <string name="game_mode">Game Mode</string>
 
     <!-- Descriptions -->
+    <string name="iv_display_desc">%1$s</string>
         <!-- Cells -->
     <string name="cell_coordinates_0_0">Cell coordinates 0 0</string>
     <string name="cell_coordinates_0_1">Cell coordinates 0 1</string>
@@ -26,7 +27,8 @@
     <string name="cell_coordinates_2_2">Cell coordinates 2 2</string>
 
     <!-- Messages -->
-    <string name="winning_message">Player %1$s won!</string>
-    <string name="current_player">Current player: </string>
-    <string name="current_player_icon">%1$s</string>
+    <string name="winner_message">Winner:</string>
+    <string name="current_player_message">Current player: </string>
+
+
 </resources>

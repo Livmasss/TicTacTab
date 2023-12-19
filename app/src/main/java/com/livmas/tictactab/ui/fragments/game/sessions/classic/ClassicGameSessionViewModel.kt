@@ -41,6 +41,9 @@ class ClassicGameSessionViewModel : ViewModel() {
     fun restartGame() {
         gameManager.startGame(ClassicGameSession())
         field.value = gameManager.field
+        currentPlayer.postValue(Player.X)
+        winner.postValue(null)
+        gameFinished.postValue(false)
     }
     //Returns true if game
     fun makeTurn(cords: ClassicCoordinatesModel) {
