@@ -20,6 +20,7 @@ import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
 import com.livmas.tictactab.domain.models.classic.ClassicFieldModel
 import com.livmas.tictactab.domain.models.classic.ClassicGameSession
 import com.livmas.tictactab.domain.models.enums.CellState
+import com.livmas.tictactab.domain.models.enums.Player
 
 class ClassicGameSessionFragment : Fragment() {
 
@@ -91,6 +92,9 @@ class ClassicGameSessionFragment : Fragment() {
         viewModel.apply {
             field.observe(viewLifecycleOwner) {
                 renderField(it)
+            }
+            currentPlayer.observe(viewLifecycleOwner) {
+                binding.ivCurrentPlayer.setImageDrawable(if (it==Player.X) xDrawable else oDrawable)
             }
             winner.observe(viewLifecycleOwner) {
                 if (it == null)
