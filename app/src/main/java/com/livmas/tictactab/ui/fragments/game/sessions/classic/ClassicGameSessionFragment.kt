@@ -33,7 +33,7 @@ class ClassicGameSessionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentClassicGameSessionBinding.inflate(inflater, container, false)
+        binding = FragmentClassicGameSessionBinding.inflate(LayoutInflater.from(context), container, false)
 
         binding.field.apply {
             idsField = arrayOf(

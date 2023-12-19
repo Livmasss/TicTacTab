@@ -27,4 +27,5 @@
 
     <!-- Messages -->
     <string name="winning_message">Player %1$s won!</string>
+    <string name="current_player">Current player: %1$s</string>
 </resources>
