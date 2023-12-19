@@ -2,6 +2,7 @@ package com.livmas.tictactab.ui.fragments.game.sessions.classic
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
@@ -17,6 +18,7 @@ import com.livmas.tictactab.R
 import com.livmas.tictactab.databinding.FragmentClassicGameSessionBinding
 import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
 import com.livmas.tictactab.domain.models.classic.ClassicFieldModel
+import com.livmas.tictactab.domain.models.classic.ClassicGameSession
 import com.livmas.tictactab.domain.models.enums.CellState
 
 class ClassicGameSessionFragment : Fragment() {
@@ -63,6 +65,12 @@ class ClassicGameSessionFragment : Fragment() {
         initCells()
 
         binding.bRestart.setOnClickListener {
+            try {
+                binding.flFieldContainer.removeViewAt(1)
+            }
+            catch (e: NullPointerException) {
+                Log.d(ClassicGameSession.TAG, "No line drawn")
+            }
             viewModel.restartGame()
         }
     }
@@ -92,17 +100,6 @@ class ClassicGameSessionFragment : Fragment() {
                     resources.getString(R.string.winning_message, it.toString()),
                     Snackbar.LENGTH_LONG
                 ).show()
-                val view = layoutInflater.inflate(R.layout.final_line_layout, binding.flFieldContainer, false) as ConstraintLayout
-
-                ConstraintSet().apply {
-                    clone(context, R.layout.final_line_layout)
-                    setVerticalBias(R.id.vLine, 0.5f - 0.3f)
-
-                    applyTo(view)
-                }
-
-                view.rotation = 90f
-//                binding.flFieldContainer.addView(view)
             }
             gameFinished.observe(viewLifecycleOwner) {
                 if (it && winner.value == null)
@@ -121,7 +118,32 @@ class ClassicGameSessionFragment : Fragment() {
                     ).show()
                 }
             }
+            winLineCode.observe(viewLifecycleOwner) {
+                when (it) {
+                    0 -> return@observe
+                    1 -> showLine(offset = -1f/3f)
+                    2 -> showLine()
+                    3 -> showLine(offset = 1f/3f)
+                    4 -> showLine(angle = 45f)
+                    5 -> showLine(angle = -45f)
+                    6 -> showLine(offset = 1f/3f, angle = 90f)
+                    7 -> showLine(angle = 90f)
+                    8 -> showLine(offset = -1f/3f, angle = 90f)
+                }
+            }
         }
+    }
+    private fun showLine(offset: Float = 0f, angle: Float = 0f) {
+        val view = layoutInflater.inflate(R.layout.final_line_layout, binding.flFieldContainer, false) as ConstraintLayout
+        view.rotation = angle
+
+        ConstraintSet().apply {
+            clone(context, R.layout.final_line_layout)
+            setVerticalBias(R.id.vLine, 0.5f + offset)
+            applyTo(view)
+        }
+
+        binding.flFieldContainer.addView(view, 1)
     }
     private fun makeTurnListener(cords: ClassicCoordinatesModel): OnClickListener {
         return OnClickListener {

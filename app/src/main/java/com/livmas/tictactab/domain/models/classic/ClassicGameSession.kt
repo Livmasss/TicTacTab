@@ -1,6 +1,5 @@
 package com.livmas.tictactab.domain.models.classic
 
-import android.util.Log
 import com.livmas.tictactab.domain.models.enums.CellState
 import com.livmas.tictactab.domain.models.enums.Player
 import com.livmas.tictactab.domain.models.exceptions.CellOccupiedException
@@ -10,6 +9,7 @@ class ClassicGameSession(init_field: ClassicFieldModel, current: Player?) {
     private val _field = init_field
     private var _currentPlayer = current ?: Player.X
     private var _winner: Player? = null
+    private var winLineCode = 0
 
     companion object {
         const val TAG = "classic_game"
@@ -43,14 +43,13 @@ class ClassicGameSession(init_field: ClassicFieldModel, current: Player?) {
         }
         _currentPlayer = if (_currentPlayer == Player.X) Player.O else Player.X
 
-        Log.d(TAG, _field.isFull().toString())
         if (_winner != null || _field.isFull()) {
             return GameMessage(
                 null,
                 when (_winner) {
-                    null -> 20
-                    Player.X -> 21
-                    Player.O ->22
+                    null -> 200
+                    Player.X -> 210 + winLineCode
+                    Player.O ->220 + winLineCode
                 }
             )
         }
@@ -58,23 +57,41 @@ class ClassicGameSession(init_field: ClassicFieldModel, current: Player?) {
     }
 
     private fun checkWinner(): CellState {
-        return if (_field[0, 0] != CellState.N && _field[0, 0] == _field[0, 1] && _field[0, 1] == _field[0, 2])
+        return if (_field[0, 0] != CellState.N && _field[0, 0] == _field[0, 1] && _field[0, 1] == _field[0, 2]) {
+            winLineCode = 1
             _field[0, 0]
-        else if (_field[1, 0] != CellState.N && _field[1, 0] == _field[1, 1] && _field[1, 1] == _field[1, 2])
+        }
+        else if (_field[1, 0] != CellState.N && _field[1, 0] == _field[1, 1] && _field[1, 1] == _field[1, 2]) {
+            winLineCode = 2
             _field[1, 0]
-        else if (_field[2, 0] != CellState.N && _field[2, 0] == _field[2, 1] && _field[2, 1] == _field[2, 2])
+        }
+        else if (_field[2, 0] != CellState.N && _field[2, 0] == _field[2, 1] && _field[2, 1] == _field[2, 2]) {
+            winLineCode = 3
             _field[2, 0]
-        else if (_field[0, 0] != CellState.N && _field[0, 0] == _field[1, 1] && _field[1, 1] == _field[2, 2])
+        }
+        else if (_field[0, 0] != CellState.N && _field[0, 0] == _field[1, 1] && _field[1, 1] == _field[2, 2]) {
+            winLineCode = 4
             _field[0, 0]
-        else if (_field[0, 2] != CellState.N && _field[0, 2] == _field[1, 1] && _field[1, 1] == _field[2, 0])
+        }
+        else if (_field[0, 2] != CellState.N && _field[0, 2] == _field[1, 1] && _field[1, 1] == _field[2, 0]) {
+            winLineCode = 5
             _field[0, 2]
-        else if (_field[0, 0] != CellState.N && _field[0, 0] == _field[1, 0] && _field[1, 0] == _field[2, 0])
+        }
+        else if (_field[0, 0] != CellState.N && _field[0, 0] == _field[1, 0] && _field[1, 0] == _field[2, 0]) {
+            winLineCode = 6
             _field[0, 0]
-        else if (_field[0, 1] != CellState.N && _field[0, 1] == _field[1, 1] && _field[1, 1] == _field[2, 1])
+        }
+        else if (_field[0, 1] != CellState.N && _field[0, 1] == _field[1, 1] && _field[1, 1] == _field[2, 1]) {
+            winLineCode = 7
             _field[0, 1]
-        else if (_field[0, 2] != CellState.N && _field[0, 2] == _field[1, 2] && _field[1, 2] == _field[2, 2])
+        }
+        else if (_field[0, 2] != CellState.N && _field[0, 2] == _field[1, 2] && _field[1, 2] == _field[2, 2]) {
+            winLineCode = 8
             _field[0, 2]
-        else
+        }
+        else {
+            winLineCode = 0
             CellState.N
+        }
     }
 }
