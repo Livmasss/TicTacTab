@@ -20,6 +20,7 @@ import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
 import com.livmas.tictactab.domain.models.classic.ClassicFieldModel
 import com.livmas.tictactab.domain.models.classic.ClassicGameSession
 import com.livmas.tictactab.domain.models.enums.CellState
+import com.livmas.tictactab.domain.models.enums.GameResult
 import com.livmas.tictactab.domain.models.enums.Player
 
 class ClassicGameSessionFragment : Fragment() {
@@ -99,9 +100,9 @@ class ClassicGameSessionFragment : Fragment() {
                     contentDescription = resources.getString(R.string.iv_display_desc, it)
                 }
             }
-            winner.observe(viewLifecycleOwner) {
-                if (it == null) {
-                    binding.apply {
+            gameResult.observe(viewLifecycleOwner) {
+                when (it) {
+                    null -> binding.apply {
                         tvGameDisplay.text = resources.getString(R.string.current_player_message)
                         ivGameDisplay.setImageDrawable(
                             if (currentPlayer.value == null)
@@ -112,26 +113,17 @@ class ClassicGameSessionFragment : Fragment() {
                         ivGameDisplay.contentDescription =
                             resources.getString(R.string.iv_display_desc, it)
                     }
-                    return@observe
+                    GameResult.N ->binding.apply {
+                        tvGameDisplay.text = resources.getString(R.string.draw_message)
+                        ivGameDisplay.setImageDrawable(null)
+                        ivGameDisplay.contentDescription = resources.getString(R.string.draw_message)
+                    }
+                    else -> binding.apply {
+                        tvGameDisplay.text = resources.getString(R.string.winner_message)
+                        ivGameDisplay.setImageDrawable(if (it == GameResult.X) xDrawable else oDrawable)
+                        ivGameDisplay.contentDescription = resources.getString(R.string.iv_display_desc, it)
+                    }
                 }
-//                Snackbar.make(
-//                    binding.root,
-//                    resources.getString(R.string.winning_message, it.toString()),
-//                    Snackbar.LENGTH_LONG
-//                ).show()
-                binding.apply {
-                    tvGameDisplay.text = resources.getString(R.string.winner_message)
-                    ivGameDisplay.setImageDrawable(definePlayerDrawable(it))
-                    ivGameDisplay.contentDescription = resources.getString(R.string.iv_display_desc, it)
-                }
-            }
-            gameFinished.observe(viewLifecycleOwner) {
-                if (it && winner.value == null)
-                    Snackbar.make(
-                        binding.root,
-                        "Draw! You can try again",
-                        Snackbar.LENGTH_LONG
-                    ).show()
             }
             alert.observe(viewLifecycleOwner) {
                 it?.let { message ->
@@ -141,6 +133,7 @@ class ClassicGameSessionFragment : Fragment() {
                         Snackbar.LENGTH_LONG
                     ).show()
                 }
+                viewModel.clearAlert()
             }
             winLineCode.observe(viewLifecycleOwner) {
                 when (it) {

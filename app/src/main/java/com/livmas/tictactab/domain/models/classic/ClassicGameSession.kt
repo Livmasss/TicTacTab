@@ -49,7 +49,7 @@ class ClassicGameSession(init_field: ClassicFieldModel, current: Player?) {
                 when (_winner) {
                     null -> 200
                     Player.X -> 210 + winLineCode
-                    Player.O ->220 + winLineCode
+                    Player.O -> 220 + winLineCode
                 }
             )
         }
