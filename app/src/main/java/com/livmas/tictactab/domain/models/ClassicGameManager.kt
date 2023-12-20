@@ -10,15 +10,10 @@ class ClassicGameManager {
     private var game: ClassicGameSession? = null
     val field
         get() = if (game?.field == null) ClassicFieldModel() else game!!.field
-    val winner
-        get() = game?.winner
-    val currentPlayer
-        get() = game?.currentPlayer
-    var isRun = false
+    var isRun = true
 
     fun startGame(session: ClassicGameSession) {
         game = session
-        isRun = true
     }
     fun stopGame() {
         isRun = false

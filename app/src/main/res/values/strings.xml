@@ -30,6 +30,7 @@
     <string name="winner_message">Winner:</string>
     <string name="current_player_message">Current player: </string>
     <string name="draw_message">Draw! No winner.</string>
+    <string name="game_finished_message">The game is finished!</string>
 
 
 </resources>

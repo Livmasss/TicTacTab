@@ -5,22 +5,18 @@ import com.livmas.tictactab.domain.models.enums.Player
 import com.livmas.tictactab.domain.models.exceptions.CellOccupiedException
 import com.livmas.tictactab.ui.GameMessage
 
-class ClassicGameSession(init_field: ClassicFieldModel, current: Player?) {
+class ClassicGameSession(init_field: ClassicFieldModel, current: Player?, winner: Player?) {
     private val _field = init_field
     private var _currentPlayer = current ?: Player.X
-    private var _winner: Player? = null
+    private var _winner: Player? = winner
     private var winLineCode = 0
 
     companion object {
         const val TAG = "classic_game"
     }
 
-    constructor() : this(ClassicFieldModel(), Player.X)
+    constructor() : this(ClassicFieldModel(), Player.X, null)
 
-    val winner: Player?
-        get() = _winner
-    val currentPlayer: Player
-        get() = _currentPlayer
     val field: ClassicFieldModel
         get() = _field.copy()
 
@@ -53,7 +49,10 @@ class ClassicGameSession(init_field: ClassicFieldModel, current: Player?) {
                 }
             )
         }
-        return GameMessage(null, 10)
+        return GameMessage(null, when(_currentPlayer) {
+            Player.X -> 11
+            Player.O -> 12
+        })
     }
 
     private fun checkWinner(): CellState {

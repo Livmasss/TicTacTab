@@ -30,7 +30,13 @@ class ClassicGameSessionViewModel : ViewModel() {
     private val gameManager = ClassicGameManager()
 
     fun startGame() {
-        gameManager.startGame(ClassicGameSession(field.value!!, currentPlayer.value))
+        gameManager.startGame(
+            ClassicGameSession(field.value!!, currentPlayer.value, when(gameResult.value) {
+                GameResult.X -> Player.X
+                GameResult.O -> Player.O
+                else -> null
+            })
+        )
         field.value = gameManager.field
     }
     fun stopGame() {
@@ -50,11 +56,12 @@ class ClassicGameSessionViewModel : ViewModel() {
     //Returns true if game
     fun makeTurn(cords: ClassicCoordinatesModel) {
         val message = gameManager.makeTurn(cords)
-        field.value = gameManager.field
-        currentPlayer.postValue(gameManager.currentPlayer)
 
         when (message.code) {
+            11 -> nextTurn(Player.X)
+            12 -> nextTurn(Player.O)
             in 200..299 -> {
+                field.value = gameManager.field
                 Log.i(ClassicGameSession.TAG, "Game finished with code ${message.code}")
 //                winner.postValue(gameManager.winner)
 //                gameFinished.postValue(true)
@@ -83,5 +90,9 @@ class ClassicGameSessionViewModel : ViewModel() {
 
     fun clearAlert() {
         alert.postValue(null)
+    }
+    fun nextTurn(currPlayer: Player) {
+        field.value = gameManager.field
+        currentPlayer.postValue(currPlayer)
     }
 }
