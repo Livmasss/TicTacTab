@@ -7,11 +7,20 @@
     tools:context=".ui.fragments.game.sessions.classic.ClassicGameSessionFragment"
     style="@style/game_fragment_theme" >
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/field"
-        android:name="com.livmas.tictactab.ui.fragments.game.ClassicGameFieldFragment"
+    <com.livmas.tictactab.ui.views.SquareFrameLayout
+        android:id="@+id/flFieldContainer"
         android:layout_width="match_parent"
-        android:layout_height="400dp"/>
+        android:layout_height="match_parent"
+        android:padding="2.5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include
+            android:id="@+id/field"
+            layout="@layout/classic_game_field_layout"/>
+
+    </com.livmas.tictactab.ui.views.SquareFrameLayout>
 
     <Button
         android:id="@+id/bRestart"
