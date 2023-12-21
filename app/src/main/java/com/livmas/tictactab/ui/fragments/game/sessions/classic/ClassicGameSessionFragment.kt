@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.snackbar.Snackbar
 import com.livmas.tictactab.R
+import com.livmas.tictactab.databinding.FragmentClassicGameFieldBinding
 import com.livmas.tictactab.databinding.FragmentClassicGameSessionBinding
 import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
 import com.livmas.tictactab.domain.models.classic.ClassicFieldModel
@@ -22,6 +23,7 @@ import com.livmas.tictactab.domain.models.classic.ClassicGameSession
 import com.livmas.tictactab.domain.models.enums.CellState
 import com.livmas.tictactab.domain.models.enums.GameResult
 import com.livmas.tictactab.domain.models.enums.Player
+import com.livmas.tictactab.ui.fragments.game.ClassicGameFieldFragment
 import com.livmas.tictactab.ui.models.enums.Alert
 
 class ClassicGameSessionFragment : Fragment() {
@@ -32,13 +34,15 @@ class ClassicGameSessionFragment : Fragment() {
 
     private var xDrawable: Drawable? = null
     private var oDrawable: Drawable? = null
+    private lateinit var fieldBinding: FragmentClassicGameFieldBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentClassicGameSessionBinding.inflate(LayoutInflater.from(context), container, false)
+        fieldBinding = binding.field.getFragment<ClassicGameFieldFragment>().binding
 
-        binding.field.apply {
+        fieldBinding.field.apply {
             idsField = arrayOf(
                 arrayOf(ibCell00, ibCell01, ibCell02),
                 arrayOf(ibCell10, ibCell11, ibCell12),
@@ -69,7 +73,7 @@ class ClassicGameSessionFragment : Fragment() {
 
         binding.bRestart.setOnClickListener {
             try {
-                binding.flFieldContainer.removeViewAt(1)
+                fieldBinding.flFieldContainer.removeViewAt(1)
             }
             catch (e: NullPointerException) {
                 Log.d(ClassicGameSession.TAG, "No line drawn")
@@ -78,7 +82,7 @@ class ClassicGameSessionFragment : Fragment() {
         }
     }
     private fun initCells() {
-        binding.field.apply {
+        fieldBinding.field.apply {
             ibCell00.setOnClickListener(makeTurnListener(ClassicCoordinatesModel(0, 0)))
             ibCell01.setOnClickListener(makeTurnListener(ClassicCoordinatesModel(0, 1)))
             ibCell02.setOnClickListener(makeTurnListener(ClassicCoordinatesModel(0, 2)))
@@ -159,7 +163,7 @@ class ClassicGameSessionFragment : Fragment() {
         return if (player==Player.X) xDrawable else oDrawable
     }
     private fun showLine(offset: Float = 0f, angle: Float = 0f) {
-        val view = layoutInflater.inflate(R.layout.final_line_layout, binding.flFieldContainer, false) as ConstraintLayout
+        val view = layoutInflater.inflate(R.layout.final_line_layout, fieldBinding.flFieldContainer, false) as ConstraintLayout
         view.rotation = angle
 
         ConstraintSet().apply {
@@ -168,7 +172,7 @@ class ClassicGameSessionFragment : Fragment() {
             applyTo(view)
         }
 
-        binding.flFieldContainer.addView(view, 1)
+        fieldBinding.flFieldContainer.addView(view, 1)
     }
     private fun makeTurnListener(cords: ClassicCoordinatesModel): OnClickListener {
         return OnClickListener {
