@@ -5,8 +5,8 @@ import com.livmas.tictactab.domain.models.enums.Player
 import com.livmas.tictactab.domain.models.exceptions.CellOccupiedException
 import com.livmas.tictactab.ui.GameMessage
 
-class ClassicGameSession(init_field: ClassicFieldModel, current: Player?, winner: Player?) {
-    private val _field = init_field
+class ClassicGameSession(field: ClassicFieldModel, current: Player?, winner: Player?) {
+    private val _field = field
     private var _currentPlayer = current ?: Player.X
     private var _winner: Player? = winner
     private var winLineCode = 0

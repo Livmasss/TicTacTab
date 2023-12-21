@@ -22,6 +22,7 @@ import com.livmas.tictactab.domain.models.classic.ClassicGameSession
 import com.livmas.tictactab.domain.models.enums.CellState
 import com.livmas.tictactab.domain.models.enums.GameResult
 import com.livmas.tictactab.domain.models.enums.Player
+import com.livmas.tictactab.ui.models.enums.Alert
 
 class ClassicGameSessionFragment : Fragment() {
 
@@ -126,10 +127,14 @@ class ClassicGameSessionFragment : Fragment() {
                 }
             }
             alert.observe(viewLifecycleOwner) {
-                it?.let { message ->
+                it?.let { messageCode ->
                     Snackbar.make(
                         binding.root,
-                        message,
+                        when(messageCode) {
+                            Alert.SomeError -> resources.getString(R.string.internal_error_message)
+                            Alert.CellOccupied -> resources.getString(R.string.cell_occupied_message)
+                            Alert.GameFinished -> resources.getString(R.string.game_finished_message)
+                                          },
                         Snackbar.LENGTH_LONG
                     ).show()
                 }

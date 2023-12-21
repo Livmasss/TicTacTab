@@ -1,6 +1,7 @@
 package com.livmas.tictactab.ui.fragments.game.sessions.classic
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.livmas.tictactab.domain.models.ClassicGameManager
@@ -9,21 +10,32 @@ import com.livmas.tictactab.domain.models.classic.ClassicFieldModel
 import com.livmas.tictactab.domain.models.classic.ClassicGameSession
 import com.livmas.tictactab.domain.models.enums.GameResult
 import com.livmas.tictactab.domain.models.enums.Player
+import com.livmas.tictactab.ui.models.enums.Alert
 
 class ClassicGameSessionViewModel : ViewModel() {
-    val field: MutableLiveData<ClassicFieldModel> by lazy {
+     val field: LiveData<ClassicFieldModel>
+        get() = _field
+    private val _field: MutableLiveData<ClassicFieldModel> by lazy {
         MutableLiveData<ClassicFieldModel>(ClassicFieldModel())
     }
-    val currentPlayer: MutableLiveData<Player> by lazy {
+    val currentPlayer: LiveData<Player>
+        get() = _currentPlayer
+    private val _currentPlayer: MutableLiveData<Player> by lazy {
         MutableLiveData<Player>(Player.X)
     }
-    val gameResult: MutableLiveData<GameResult?> by lazy {
+    val gameResult: LiveData<GameResult?>
+        get() = _gameResult
+    private val _gameResult: MutableLiveData<GameResult?> by lazy {
         MutableLiveData<GameResult?>(null)
     }
-    val alert: MutableLiveData<String?> by lazy {
-        MutableLiveData<String?>(null)
+    val alert: LiveData<Alert?>
+        get() = _alert
+    private val _alert: MutableLiveData<Alert?> by lazy {
+        MutableLiveData<Alert?>(null)
     }
-    val winLineCode: MutableLiveData<Int> by lazy {
+    val winLineCode: MutableLiveData<Int>
+        get() = _winLineCode
+    private val _winLineCode: MutableLiveData<Int> by lazy {
         MutableLiveData<Int>(0)
     }
 
@@ -31,30 +43,28 @@ class ClassicGameSessionViewModel : ViewModel() {
 
     fun startGame() {
         gameManager.startGame(
-            ClassicGameSession(field.value!!, currentPlayer.value, when(gameResult.value) {
+            ClassicGameSession(field.value!!, _currentPlayer.value, when(_gameResult.value) {
                 GameResult.X -> Player.X
                 GameResult.O -> Player.O
                 else -> null
             }),
             null
         )
-        field.value = gameManager.field
+        _field.value = gameManager.field
     }
-    fun stopGame() {
+    private fun stopGame() {
         gameManager.stopGame()
     }
     fun restartGame() {
         gameManager.startGame(ClassicGameSession(), true)
-        field.value = gameManager.field
-        currentPlayer.postValue(Player.X)
+        _field.value = gameManager.field
+        _currentPlayer.postValue(Player.X)
 
-        gameResult.postValue(null)
-        winLineCode.postValue(0)
-        alert.postValue(null)
-//        winner.postValue(null)
-//        gameFinished.postValue(false)
+        _gameResult.postValue(null)
+        _winLineCode.postValue(0)
+        _alert.postValue(null)
     }
-    //Returns true if game
+
     fun makeTurn(cords: ClassicCoordinatesModel) {
         val message = gameManager.makeTurn(cords)
 
@@ -62,13 +72,12 @@ class ClassicGameSessionViewModel : ViewModel() {
             11 -> nextTurn(Player.X)
             12 -> nextTurn(Player.O)
             in 200..299 -> {
-                field.value = gameManager.field
+                _field.value = gameManager.field
                 Log.i(ClassicGameSession.TAG, "Game finished with code ${message.code}")
-//                winner.postValue(gameManager.winner)
-//                gameFinished.postValue(true)
-                winLineCode.postValue(message.code % 10)
+
+                _winLineCode.postValue(message.code % 10)
                 val winnerCode = (message.code / 10) % 10
-                gameResult.postValue(
+                _gameResult.postValue(
                     when (winnerCode) {
                         0 -> GameResult.N
                         1 -> GameResult.X
@@ -80,20 +89,21 @@ class ClassicGameSessionViewModel : ViewModel() {
                 stopGame()
             }
 
+            31 -> _alert.postValue(Alert.GameFinished)
             in 30..39 -> {
-                alert.postValue(message.content)
+                _alert.postValue(Alert.SomeError)
             }
             40 -> {
-                alert.postValue(message.content)
+                _alert.postValue(Alert.CellOccupied)
             }
         }
     }
 
     fun clearAlert() {
-        alert.postValue(null)
+        _alert.postValue(null)
     }
-    fun nextTurn(currPlayer: Player) {
-        field.value = gameManager.field
-        currentPlayer.postValue(currPlayer)
+    private fun nextTurn(currPlayer: Player) {
+        _field.value = gameManager.field
+        _currentPlayer.postValue(currPlayer)
     }
 }

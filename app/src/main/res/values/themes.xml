@@ -25,6 +25,10 @@
         <item name="snackbarTextViewStyle">
             @style/Theme.Snackbar
         </item>
+
+        <item name="android:buttonStyle">
+            @style/Theme.Button
+        </item>
     </style>
 
     <style name="field_line">
@@ -52,5 +56,10 @@
     </style>
     <style name="Theme.Snackbar" parent="Widget.MaterialComponents.Snackbar.TextView">
         <item name="android:textSize">14sp</item>
+    </style>
+    <style name="Theme.Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:padding">12dp</item>
+        <item name="android:layout_marginVertical">8dp</item>
+        <item name="android:textSize">20sp</item>
     </style>
 </resources>

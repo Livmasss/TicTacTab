@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TicTacTab</string>
+    <string name="app_name" translatable="false">TicTacTab</string>
 
     <!-- UI elements -->
     <string name="restart">Restart</string>
@@ -11,10 +11,10 @@
     <string name="title_classic">Classic</string>
     <string name="title_complex">Complex</string>
 
-    <string name="game_mode">Game Mode</string>
+    <string name="game_mode">Choose Game Mode</string>
 
     <!-- Descriptions -->
-    <string name="iv_display_desc">%1$s</string>
+    <string name="iv_display_desc" translatable="false">%1$s</string>
         <!-- Cells -->
     <string name="cell_coordinates_0_0">Cell coordinates 0 0</string>
     <string name="cell_coordinates_0_1">Cell coordinates 0 1</string>
@@ -30,7 +30,9 @@
     <string name="winner_message">Winner:</string>
     <string name="current_player_message">Current player: </string>
     <string name="draw_message">Draw! No winner.</string>
-    <string name="game_finished_message">The game is finished!</string>
+    <string name="game_finished_message">The game is already finished!</string>
+    <string name="internal_error_message">Some internal error occurred! </string>
+    <string name="cell_occupied_message">This cell is already occupied! Try another one.</string>
 
 
 </resources>

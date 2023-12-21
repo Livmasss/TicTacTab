@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- UI elements -->
+    <string name="restart">Перезапустить</string>
+    <!-- Navigation -->
+    <string name="title_history">История</string>
+    <string name="title_settings">Настройки</string>
+    <string name="title_game">Игра</string>
+    <string name="title_rules">Правила</string>
+    <string name="title_classic">Обычная игра</string>
+    <string name="title_complex">Сложная игра</string>
+
+    <string name="game_mode">Выберите режим игры</string>
+
+    <!-- Descriptions -->
+    <!-- Cells -->
+    <string name="cell_coordinates_0_0">Координаты клетки 0 0</string>
+    <string name="cell_coordinates_0_1">Координаты клетки 0 1</string>
+    <string name="cell_coordinates_0_2">Координаты клетки 0 2</string>
+    <string name="cell_coordinates_1_0">Координаты клетки 1 0</string>
+    <string name="cell_coordinates_1_1">Координаты клетки 1 1</string>
+    <string name="cell_coordinates_1_2">Координаты клетки 1 2</string>
+    <string name="cell_coordinates_2_0">Координаты клетки 2 0</string>
+    <string name="cell_coordinates_2_1">Координаты клетки 2 1</string>
+    <string name="cell_coordinates_2_2">Координаты клетки 2 2</string>
+
+    <!-- Messages -->
+    <string name="winner_message">Победитель:</string>
+    <string name="current_player_message">Ход игрока: </string>
+    <string name="draw_message">Ничья! Никто не победил.</string>
+    <string name="game_finished_message">Игра уже завершена!</string>
+    <string name="internal_error_message">Произошла какая-то ошибка!</string>
+    <string name="cell_occupied_message">Эта клетка уже занята! Выберете другую.</string>
+
+</resources>
