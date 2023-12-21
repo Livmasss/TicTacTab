@@ -12,8 +12,11 @@ class ClassicGameManager {
         get() = if (game?.field == null) ClassicFieldModel() else game!!.field
     var isRun = true
 
-    fun startGame(session: ClassicGameSession) {
+    fun startGame(session: ClassicGameSession, run: Boolean?) {
         game = session
+        if (run != null) {
+            isRun = run
+        }
     }
     fun stopGame() {
         isRun = false

@@ -35,7 +35,8 @@ class ClassicGameSessionViewModel : ViewModel() {
                 GameResult.X -> Player.X
                 GameResult.O -> Player.O
                 else -> null
-            })
+            }),
+            null
         )
         field.value = gameManager.field
     }
@@ -43,7 +44,7 @@ class ClassicGameSessionViewModel : ViewModel() {
         gameManager.stopGame()
     }
     fun restartGame() {
-        gameManager.startGame(ClassicGameSession())
+        gameManager.startGame(ClassicGameSession(), true)
         field.value = gameManager.field
         currentPlayer.postValue(Player.X)
 
