@@ -10,8 +10,6 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
-import androidx.core.content.res.ResourcesCompat
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.snackbar.Snackbar
 import com.livmas.tictactab.R
@@ -22,16 +20,15 @@ import com.livmas.tictactab.domain.models.classic.ClassicGameSession
 import com.livmas.tictactab.domain.models.enums.CellState
 import com.livmas.tictactab.domain.models.enums.GameResult
 import com.livmas.tictactab.domain.models.enums.Player
+import com.livmas.tictactab.ui.fragments.game.sessions.GameSessionFragment
 import com.livmas.tictactab.ui.models.enums.Alert
 
-class ClassicGameSessionFragment : Fragment() {
+class ClassicGameSessionFragment : GameSessionFragment() {
 
-    private val viewModel: ClassicGameSessionViewModel by activityViewModels()
+    override val viewModel: ClassicGameSessionViewModel by activityViewModels()
     private lateinit var binding: FragmentClassicGameSessionBinding
     private lateinit var idsField: Array<Array<ImageButton>>
 
-    private var xDrawable: Drawable? = null
-    private var oDrawable: Drawable? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,12 +48,6 @@ class ClassicGameSessionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        //Initiates drawables for cell states
-        xDrawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_x_cell, null)
-        xDrawable?.setTint(ResourcesCompat.getColor(resources, R.color.first_player, null))
-        oDrawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_o_cell, null)
-        oDrawable?.setTint(ResourcesCompat.getColor(resources, R.color.second_player, null))
 
         initViews()
         viewModel.field.value?.let { renderField(it) }
