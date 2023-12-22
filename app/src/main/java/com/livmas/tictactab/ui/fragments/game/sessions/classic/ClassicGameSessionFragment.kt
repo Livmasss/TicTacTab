@@ -14,9 +14,9 @@ import androidx.fragment.app.activityViewModels
 import com.google.android.material.snackbar.Snackbar
 import com.livmas.tictactab.R
 import com.livmas.tictactab.databinding.FragmentClassicGameSessionBinding
+import com.livmas.tictactab.domain.models.GameSession
 import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
 import com.livmas.tictactab.domain.models.classic.ClassicFieldModel
-import com.livmas.tictactab.domain.models.classic.ClassicGameSession
 import com.livmas.tictactab.domain.models.enums.CellState
 import com.livmas.tictactab.domain.models.enums.GameResult
 import com.livmas.tictactab.domain.models.enums.Player
@@ -63,7 +63,7 @@ class ClassicGameSessionFragment : GameSessionFragment() {
                 binding.flFieldContainer.removeViewAt(1)
             }
             catch (e: NullPointerException) {
-                Log.d(ClassicGameSession.TAG, "No line drawn")
+                Log.d(GameSession.TAG, "No line drawn")
             }
             viewModel.restartGame()
         }

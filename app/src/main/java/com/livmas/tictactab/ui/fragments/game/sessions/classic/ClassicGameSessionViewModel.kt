@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.livmas.tictactab.domain.models.ClassicGameManager
+import com.livmas.tictactab.domain.models.GameSession
 import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
 import com.livmas.tictactab.domain.models.classic.ClassicFieldModel
 import com.livmas.tictactab.domain.models.classic.ClassicGameSession
@@ -54,7 +55,7 @@ class ClassicGameSessionViewModel : GameSessionViewModel() {
             12 -> nextTurn(Player.O)
             in 200..299 -> {
                 _field.value = gameManager.field
-                Log.i(ClassicGameSession.TAG, "Game finished with code ${message.code}")
+                Log.i(GameSession.TAG, "Game finished with code ${message.code}")
 
                 _winLineCode.postValue(message.code % 10)
                 val winnerCode = (message.code / 10) % 10

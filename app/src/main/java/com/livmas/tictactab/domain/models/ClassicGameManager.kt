@@ -30,7 +30,7 @@ class ClassicGameManager {
             val message = game.makeTurn(cords)
             return (message)
         }
-        Log.d(ClassicGameSession.TAG, "Game object is null")
+        Log.d(GameSession.TAG, "Game object is null")
         return GameMessage(null, 30)
     }
 }
