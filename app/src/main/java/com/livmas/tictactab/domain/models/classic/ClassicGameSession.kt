@@ -2,7 +2,6 @@ package com.livmas.tictactab.domain.models.classic
 
 import com.livmas.tictactab.domain.models.enums.CellState
 import com.livmas.tictactab.domain.models.enums.Player
-import com.livmas.tictactab.domain.models.exceptions.CellOccupiedException
 import com.livmas.tictactab.ui.GameMessage
 
 class ClassicGameSession(field: ClassicFieldModel, current: Player?, winner: Player?) {
@@ -22,15 +21,18 @@ class ClassicGameSession(field: ClassicFieldModel, current: Player?, winner: Pla
 
     //Returns true if game finished after this turn
     fun makeTurn(cords: ClassicCoordinatesModel): GameMessage {
-        try {
-            _field.makeTurn(ClassicTurnModel(cords, _currentPlayer))
-        }
-        catch (e: CellOccupiedException) {
+        val state = if (_currentPlayer == Player.X)
+            CellState.X
+        else
+            CellState.O
+
+        if (_field[cords] == CellState.N)
+            _field.set(cords, state)
+        else
             return GameMessage(
-                e.message,
+                null,
                 40
             )
-        }
 
         _winner = when (checkWinner()) {
             CellState.N -> null
@@ -56,41 +58,77 @@ class ClassicGameSession(field: ClassicFieldModel, current: Player?, winner: Pla
     }
 
     private fun checkWinner(): CellState {
-        return if (_field[0, 0] != CellState.N && _field[0, 0] == _field[0, 1] && _field[0, 1] == _field[0, 2]) {
+        return if (checkLine(
+                _field[ClassicCoordinatesModel(0, 0)],
+                _field[ClassicCoordinatesModel(0, 1)],
+                _field[ClassicCoordinatesModel(0, 2)])
+        ) {
             winLineCode = 1
-            _field[0, 0]
+            _field[ClassicCoordinatesModel(0, 0)]
         }
-        else if (_field[1, 0] != CellState.N && _field[1, 0] == _field[1, 1] && _field[1, 1] == _field[1, 2]) {
+        else if (checkLine(
+                _field[ClassicCoordinatesModel(1, 0)],
+                _field[ClassicCoordinatesModel(1, 1)],
+                _field[ClassicCoordinatesModel(1, 2)])
+        ) {
             winLineCode = 2
-            _field[1, 0]
+            _field[ClassicCoordinatesModel(1, 0)]
         }
-        else if (_field[2, 0] != CellState.N && _field[2, 0] == _field[2, 1] && _field[2, 1] == _field[2, 2]) {
+        else if (checkLine(
+                _field[ClassicCoordinatesModel(2, 0)],
+                _field[ClassicCoordinatesModel(2, 1)],
+                _field[ClassicCoordinatesModel(2, 2)])
+        ) {
             winLineCode = 3
-            _field[2, 0]
+            _field[ClassicCoordinatesModel(2, 0)]
         }
-        else if (_field[0, 0] != CellState.N && _field[0, 0] == _field[1, 1] && _field[1, 1] == _field[2, 2]) {
+        else if (checkLine(
+                _field[ClassicCoordinatesModel(0, 0)],
+                _field[ClassicCoordinatesModel(1, 1)],
+                _field[ClassicCoordinatesModel(2, 2)])
+        ) {
             winLineCode = 4
-            _field[0, 0]
+            _field[ClassicCoordinatesModel(0, 0)]
         }
-        else if (_field[0, 2] != CellState.N && _field[0, 2] == _field[1, 1] && _field[1, 1] == _field[2, 0]) {
+        else if (checkLine(
+                _field[ClassicCoordinatesModel(0, 2)],
+                _field[ClassicCoordinatesModel(1, 1)],
+                _field[ClassicCoordinatesModel(2, 0)])
+        ) {
             winLineCode = 5
-            _field[0, 2]
+            _field[ClassicCoordinatesModel(0, 2)]
         }
-        else if (_field[0, 0] != CellState.N && _field[0, 0] == _field[1, 0] && _field[1, 0] == _field[2, 0]) {
+        else if (checkLine(
+                _field[ClassicCoordinatesModel(0, 0)],
+                _field[ClassicCoordinatesModel(1, 0)],
+                _field[ClassicCoordinatesModel(2, 0)])
+        ) {
             winLineCode = 6
-            _field[0, 0]
+            _field[ClassicCoordinatesModel(0, 0)]
         }
-        else if (_field[0, 1] != CellState.N && _field[0, 1] == _field[1, 1] && _field[1, 1] == _field[2, 1]) {
+        else if (checkLine(
+                _field[ClassicCoordinatesModel(0, 1)],
+                _field[ClassicCoordinatesModel(1, 1)],
+                _field[ClassicCoordinatesModel(2, 1)])
+        ) {
             winLineCode = 7
-            _field[0, 1]
+            _field[ClassicCoordinatesModel(0, 1)]
         }
-        else if (_field[0, 2] != CellState.N && _field[0, 2] == _field[1, 2] && _field[1, 2] == _field[2, 2]) {
+        else if (checkLine(
+                _field[ClassicCoordinatesModel(0, 2)],
+                _field[ClassicCoordinatesModel(1, 2)],
+                _field[ClassicCoordinatesModel(2, 2)])
+        ) {
             winLineCode = 8
-            _field[0, 2]
+            _field[ClassicCoordinatesModel(0, 2)]
         }
         else {
             winLineCode = 0
             CellState.N
         }
+    }
+
+    private fun checkLine(cell1: CellState, cell2: CellState, cell3: CellState): Boolean {
+        return cell1 != CellState.N && cell1 == cell2 && cell2 == cell3
     }
 }

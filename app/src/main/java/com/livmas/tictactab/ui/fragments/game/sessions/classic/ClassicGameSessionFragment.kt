@@ -169,7 +169,7 @@ class ClassicGameSessionFragment : GameSessionFragment() {
     private fun renderField(field: ClassicFieldModel) {
         for (x in 0..2)
             for (y in 0..2) {
-                when (field[x, y]) {
+                when (field[ClassicCoordinatesModel(x, y)]) {
                     CellState.X -> idsField[x][y].setImageDrawable(xDrawable)
                     CellState.O -> idsField[x][y].setImageDrawable(oDrawable)
                     CellState.N -> idsField[x][y].setImageDrawable(null)
