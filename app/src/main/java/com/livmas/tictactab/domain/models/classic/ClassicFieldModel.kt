@@ -1,24 +1,25 @@
 package com.livmas.tictactab.domain.models.classic
 
+import com.livmas.tictactab.domain.models.IFieldModel
 import com.livmas.tictactab.domain.models.enums.CellState
 import com.livmas.tictactab.domain.models.enums.Player
 import com.livmas.tictactab.domain.models.exceptions.CellOccupiedException
 
 data class ClassicFieldModel(
-    private val _data: Array<Array<CellState>> = arrayOf(
+    private val data: Array<Array<CellState>> = arrayOf(
         arrayOf(CellState.N, CellState.N, CellState.N),
         arrayOf(CellState.N, CellState.N, CellState.N),
         arrayOf(CellState.N, CellState.N, CellState.N)
     )
-) {
-    fun set(cords: ClassicCoordinatesModel, value: CellState) {
-        _data[cords.x][cords.y] = value
+) : IFieldModel<CellState> {
+    override fun set(cords: ClassicCoordinatesModel, value: CellState) {
+        data[cords.x][cords.y] = value
     }
-    operator fun get(cords: ClassicCoordinatesModel): CellState {
-        return _data[cords.x][cords.y]
+    private operator fun get(cords: ClassicCoordinatesModel): CellState {
+        return data[cords.x][cords.y]
     }
-    operator fun get(x: Int, y: Int): CellState {
-        return _data[x][y]
+    override operator fun get(x: Int, y: Int): CellState {
+        return data[x][y]
     }
 
     fun makeTurn(turn: ClassicTurnModel) {
@@ -33,24 +34,24 @@ data class ClassicFieldModel(
             throw CellOccupiedException()
     }
 
+    override fun isFull(): Boolean = !data.any { row ->
+        row.any { cell ->
+            cell==CellState.N
+        }
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
         other as ClassicFieldModel
 
-        if (!_data.contentDeepEquals(other._data)) return false
+        if (!data.contentDeepEquals(other.data)) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        return _data.contentDeepHashCode()
-    }
-
-    fun isFull(): Boolean = !_data.any { row ->
-        row.any { cell ->
-            cell==CellState.N
-        }
+        return data.contentDeepHashCode()
     }
 }

@@ -1,6 +1,8 @@
 package com.livmas.tictactab.domain.models.classic
 
+import com.livmas.tictactab.domain.models.ICoordinatesModel
+
 data class ClassicCoordinatesModel(
-    val x: Int,
-    val y: Int
-)
+    override val x: Int,
+    override val y: Int
+) : ICoordinatesModel

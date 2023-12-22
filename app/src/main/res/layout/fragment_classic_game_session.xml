@@ -11,10 +11,7 @@
         android:id="@+id/flFieldContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="2.5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:padding="2.5dp">
 
         <include
             android:id="@+id/field"
@@ -29,17 +26,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/restart"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/flFieldContainer" />
 
     <TextView
         android:id="@+id/tvGameDisplay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bRestart"
+        android:textAlignment="center"
 
         android:text="@string/current_player_message"/>
 
