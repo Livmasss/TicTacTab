@@ -52,7 +52,7 @@ class ClassicGameSessionFragment : GameSessionFragment() {
         initViews()
         viewModel.field.value?.let { renderField(it) }
         initObservers()
-        viewModel.startGame()
+        viewModel.resumeGame()
     }
 
     private fun initViews() {
