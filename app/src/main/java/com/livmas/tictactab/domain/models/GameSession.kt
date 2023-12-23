@@ -2,12 +2,13 @@ package com.livmas.tictactab.domain.models
 
 import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
 import com.livmas.tictactab.domain.models.enums.CellState
+import com.livmas.tictactab.domain.models.enums.GameResult
 import com.livmas.tictactab.domain.models.enums.Player
 
 abstract class GameSession(
     protected open val _field: IFieldModel,
     current: Player?,
-    protected open var _winner: Player?
+    protected open var _result: GameResult?
 ): IGameSession {
 
     companion object {

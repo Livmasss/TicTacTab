@@ -4,19 +4,20 @@ import com.livmas.tictactab.domain.models.CellValue
 import com.livmas.tictactab.domain.models.GameSession
 import com.livmas.tictactab.domain.models.ICoordinatesModel
 import com.livmas.tictactab.domain.models.enums.CellState
+import com.livmas.tictactab.domain.models.enums.GameResult
 import com.livmas.tictactab.domain.models.enums.Player
 import com.livmas.tictactab.ui.GameMessage
 
 class ClassicGameSession(
     override val _field: ClassicFieldModel,
     current: Player?,
-    override var _winner: Player?
-): GameSession(_field, current, _winner), CellValue {
+    override var _result: GameResult?
+): GameSession(_field, current, _result), CellValue {
 
     override var _currentPlayer = current ?: Player.X
     override var winLineCode = 0
-    val winner: Player?
-        get() = _winner
+    val result: GameResult?
+        get() = _result
 
     constructor() : this(ClassicFieldModel(), Player.X, null)
 
@@ -37,27 +38,24 @@ class ClassicGameSession(
                 40
             )
 
-        _winner = when (checkWinner()) {
-            CellState.N -> null
-            CellState.X -> Player.X
-            CellState.O -> Player.O
+        _result = when (checkWinner()) {
+            CellState.N -> if (_field.isFull()) GameResult.N else null
+            CellState.X -> GameResult.X
+            CellState.O -> GameResult.O
         }
         _currentPlayer = if (_currentPlayer == Player.X) Player.O else Player.X
 
-        if (_winner != null || _field.isFull()) {
-            return GameMessage(
-                null,
-                when (_winner) {
-                    null -> 200
-                    Player.X -> 210 + winLineCode
-                    Player.O -> 220 + winLineCode
+        return GameMessage(null,
+            when (_result) {
+                GameResult.N -> 200
+                GameResult.X -> 210 + winLineCode
+                GameResult.O -> 220 + winLineCode
+                null -> when(_currentPlayer) {
+                    Player.X -> 11
+                    Player.O -> 12
                 }
-            )
-        }
-        return GameMessage(null, when(_currentPlayer) {
-            Player.X -> 11
-            Player.O -> 12
-        })
+            }
+        )
     }
 
     override fun getCellState(cords: ClassicCoordinatesModel): CellState {

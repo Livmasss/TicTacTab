@@ -5,21 +5,22 @@ import com.livmas.tictactab.domain.models.ICoordinatesModel
 import com.livmas.tictactab.domain.models.IFieldModel
 import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
 import com.livmas.tictactab.domain.models.enums.CellState
+import com.livmas.tictactab.domain.models.enums.GameResult
 import com.livmas.tictactab.domain.models.enums.Player
 import com.livmas.tictactab.ui.GameMessage
 
 class ComplexGameSession(
     field: ComplexFieldModel,
     current: Player?,
-    winner: Player?
-): GameSession(field, current, winner) {
+    result: GameResult?
+): GameSession(field, current, result) {
     override val _field: IFieldModel
         get() = super._field as ComplexFieldModel
     override fun getCellState(cords: ClassicCoordinatesModel): CellState {
-        return when ((_field as ComplexFieldModel)[cords].winner) {
-            Player.X -> CellState.X
-            Player.O -> CellState.O
-            null -> CellState.N
+        return when ((_field as ComplexFieldModel)[cords].result) {
+            GameResult.X -> CellState.X
+            GameResult.O -> CellState.O
+            else -> CellState.N
         }
     }
 
@@ -44,26 +45,23 @@ class ComplexGameSession(
                 )
         }
 
-        _winner = when (checkWinner()) {
-            CellState.N -> null
-            CellState.X -> Player.X
-            CellState.O -> Player.O
+        _result = when (checkWinner()) {
+            CellState.N -> if (_field.isFull()) GameResult.N else null
+            CellState.X -> GameResult.X
+            CellState.O -> GameResult.O
         }
         _currentPlayer = if (_currentPlayer == Player.X) Player.O else Player.X
 
-        if (_winner != null || _field.isFull()) {
-            return GameMessage(
-                null,
-                when (_winner) {
-                    null -> 200
-                    Player.X -> 210 + winLineCode
-                    Player.O -> 220 + winLineCode
+        return GameMessage(null,
+            when (_result) {
+                GameResult.N -> 200
+                GameResult.X -> 210 + winLineCode
+                GameResult.O -> 220 + winLineCode
+                null -> when(_currentPlayer) {
+                    Player.X -> 11
+                    Player.O -> 12
                 }
-            )
-        }
-        return GameMessage(null, when(_currentPlayer) {
-            Player.X -> 11
-            Player.O -> 12
-        })
+            }
+        )
     }
 }

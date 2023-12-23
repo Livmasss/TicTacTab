@@ -22,14 +22,11 @@ class ClassicGameSessionViewModel : GameSessionViewModel() {
     }
 
     private val gameManager = ClassicGameManager()
+    private val session = ClassicGameSession()
 
     fun startGame() {
         gameManager.startGame(
-            ClassicGameSession(field.value!!, _currentPlayer.value, when(_gameResult.value) {
-                GameResult.X -> Player.X
-                GameResult.O -> Player.O
-                else -> null
-            }),
+            ClassicGameSession(field.value!!, _currentPlayer.value, _gameResult.value),
             null
         )
         _field.value = gameManager.field
