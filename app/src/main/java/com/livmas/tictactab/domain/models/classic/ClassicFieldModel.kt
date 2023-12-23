@@ -1,5 +1,6 @@
 package com.livmas.tictactab.domain.models.classic
 
+import com.livmas.tictactab.domain.models.CellValue
 import com.livmas.tictactab.domain.models.IFieldModel
 import com.livmas.tictactab.domain.models.enums.CellState
 
@@ -9,9 +10,12 @@ data class ClassicFieldModel(
         arrayOf(CellState.N, CellState.N, CellState.N),
         arrayOf(CellState.N, CellState.N, CellState.N)
     )
-) : IFieldModel<CellState> {
-    override fun set(cords: ClassicCoordinatesModel, value: CellState) {
+) : IFieldModel {
+    fun set(cords: ClassicCoordinatesModel, value: CellState) {
         data[cords.x][cords.y] = value
+    }
+    override fun set(cords: ClassicCoordinatesModel, value: CellValue) {
+        this.set(cords, value as CellState)
     }
     override operator fun get(cords: ClassicCoordinatesModel): CellState {
         return data[cords.x][cords.y]

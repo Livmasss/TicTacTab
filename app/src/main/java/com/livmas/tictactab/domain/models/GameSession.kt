@@ -4,15 +4,16 @@ import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
 import com.livmas.tictactab.domain.models.enums.CellState
 import com.livmas.tictactab.domain.models.enums.Player
 
-abstract class GameSession<FT, CT>(
-    protected open val _field: FT,
+abstract class GameSession(
+    protected open val _field: IFieldModel,
     current: Player?,
     protected open var _winner: Player?
-): IGameSession<FT, CT> {
+): IGameSession {
 
     companion object {
         const val TAG = "classic_game"
     }
+    abstract val field: IFieldModel
 
     protected open var _currentPlayer = current ?: Player.X
     protected open var winLineCode = 0

@@ -22,7 +22,6 @@ class ClassicGameManager {
         isRun = false
     }
 
-    //Returns true if game finished after this turn
     fun makeTurn(cords: ClassicCoordinatesModel): GameMessage {
         if (!isRun)
             return GameMessage("This game ended! You can restart it.", 31)

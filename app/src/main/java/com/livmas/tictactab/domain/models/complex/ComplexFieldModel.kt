@@ -1,5 +1,6 @@
 package com.livmas.tictactab.domain.models.complex
 
+import com.livmas.tictactab.domain.models.CellValue
 import com.livmas.tictactab.domain.models.IFieldModel
 import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
 import com.livmas.tictactab.domain.models.classic.ClassicGameSession
@@ -10,9 +11,12 @@ data class ComplexFieldModel(
         arrayOf(ClassicGameSession(), ClassicGameSession(), ClassicGameSession()),
         arrayOf(ClassicGameSession(), ClassicGameSession(), ClassicGameSession())
     )
-): IFieldModel<ClassicGameSession> {
-    override fun set(cords: ClassicCoordinatesModel, value: ClassicGameSession) {
+): IFieldModel {
+    fun set(cords: ClassicCoordinatesModel, value: ClassicGameSession) {
         data[cords.x][cords.y] = value
+    }
+    override fun set(cords: ClassicCoordinatesModel, value: CellValue) {
+        data[cords.x][cords.y] = value as ClassicGameSession
     }
 
     override fun get(cords: ClassicCoordinatesModel): ClassicGameSession {
