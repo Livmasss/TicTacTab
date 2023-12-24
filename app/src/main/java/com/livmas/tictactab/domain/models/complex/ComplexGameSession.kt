@@ -6,7 +6,6 @@ import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
 import com.livmas.tictactab.domain.models.enums.CellState
 import com.livmas.tictactab.domain.models.enums.GameResult
 import com.livmas.tictactab.domain.models.enums.Player
-import com.livmas.tictactab.ui.GameMessage
 
 class ComplexGameSession(
     field: ComplexFieldModel,
@@ -24,34 +23,6 @@ class ComplexGameSession(
         return _field[cords].state
     }
 
-    override fun makeTurn(cords: ICoordinatesModel): GameMessage {
-        cords as ComplexCoordinatesModel
-        val state = if (_currentPlayer == Player.X)
-            CellState.X
-        else
-            CellState.O
-
-        cords.apply {
-            _field[ClassicCoordinatesModel(x, y)].makeTurn(innerCoordinates)
-        }
-
-        _result = when (checkWinner()) {
-            CellState.N -> if (_field.isFull()) GameResult.N else null
-            CellState.X -> GameResult.X
-            CellState.O -> GameResult.O
-        }
-        _currentPlayer = if (_currentPlayer == Player.X) Player.O else Player.X
-
-        return GameMessage(null,
-            when (_result) {
-                GameResult.N -> 200
-                GameResult.X -> 210 + winLineCode
-                GameResult.O -> 220 + winLineCode
-                null -> when(_currentPlayer) {
-                    Player.X -> 11
-                    Player.O -> 12
-                }
-            }
-        )
-    }
+    override fun makeTurn(cords: ICoordinatesModel)  = field[ClassicCoordinatesModel(cords.x, cords.y)]
+        .makeTurn(cords as ComplexCoordinatesModel, _currentPlayer)
 }
