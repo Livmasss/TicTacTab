@@ -22,7 +22,7 @@ import com.livmas.tictactab.ui.fragments.game.sessions.GameSessionFragment
 import com.livmas.tictactab.ui.models.enums.Alert
 
 class ComplexGameSessionFragment : GameSessionFragment() {
-    
+
     private lateinit var blocks: Array<Array<Array<ImageButton>>>
     override val viewModel: ComplexGameSessionViewModel by activityViewModels()
     private lateinit var binding: FragmentComplexGameSessionBinding
@@ -106,7 +106,7 @@ class ComplexGameSessionFragment : GameSessionFragment() {
                             )
                         )
                         ivGameDisplay.contentDescription =
-                            resources.getString(R.string.iv_display_desc, it)
+                            resources.getString(R.string.iv_display_desc, null)
                     }
                     GameResult.N -> binding.apply {
                         tvGameDisplay.text = resources.getString(R.string.draw_message)

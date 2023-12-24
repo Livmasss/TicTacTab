@@ -39,7 +39,7 @@ class ClassicGameSession(
             CellState.X -> GameResult.X
             CellState.O -> GameResult.O
         }
-        _currentPlayer = if (_currentPlayer == Player.X) Player.O else Player.X
+        changePlayer()
 
         return GameMessage(null,
             when (_result) {

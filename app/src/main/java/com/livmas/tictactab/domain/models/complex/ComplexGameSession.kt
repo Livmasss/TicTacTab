@@ -6,6 +6,7 @@ import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
 import com.livmas.tictactab.domain.models.enums.CellState
 import com.livmas.tictactab.domain.models.enums.GameResult
 import com.livmas.tictactab.domain.models.enums.Player
+import com.livmas.tictactab.ui.GameMessage
 import java.util.Stack
 
 class ComplexGameSession(
@@ -20,12 +21,19 @@ class ComplexGameSession(
     override val field: ComplexFieldModel
         get() = _field.copy()
 
+    val currentPlayer: Player
+        get() = _currentPlayer
     private val backStack = Stack<ClassicCoordinatesModel>()
 
     override fun getCellState(cords: ClassicCoordinatesModel): CellState {
         return _field[cords].state
     }
 
-    override fun makeTurn(cords: ICoordinatesModel)  = field[ClassicCoordinatesModel(cords.x, cords.y)]
-        .makeTurn((cords as ComplexCoordinatesModel).innerCoordinates, _currentPlayer)
+    override fun makeTurn(cords: ICoordinatesModel): GameMessage {
+        return field[ClassicCoordinatesModel(cords.x, cords.y)]
+            .makeTurn((cords as ComplexCoordinatesModel).innerCoordinates, _currentPlayer).let {
+                changePlayer()
+                it
+            }
+    }
 }

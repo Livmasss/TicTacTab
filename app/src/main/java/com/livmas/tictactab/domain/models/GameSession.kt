@@ -24,6 +24,10 @@ abstract class GameSession(
 
     protected abstract fun getCellState(cords: ClassicCoordinatesModel): CellState
 
+    fun changePlayer() {
+        _currentPlayer = if (_currentPlayer == Player.X) Player.O else Player.X
+    }
+
     private fun checkLine(cell1: CellState, cell2: CellState, cell3: CellState): Boolean {
         return cell1 != CellState.N && cell1 == cell2 && cell2 == cell3
     }

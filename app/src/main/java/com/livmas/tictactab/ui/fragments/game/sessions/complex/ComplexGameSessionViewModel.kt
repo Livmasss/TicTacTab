@@ -77,7 +77,11 @@ class ComplexGameSessionViewModel : GameSessionViewModel() {
     }
 
     private fun nextTurn() {
+        if (session == null) {
+            _alert.postValue(Alert.SomeError)
+            return
+        }
         _field.postValue(session!!.field)
-        _currentPlayer.postValue(if (_currentPlayer.value == Player.X) Player.O else Player.X)
+        _currentPlayer.postValue(session!!.currentPlayer)
     }
 }
