@@ -27,18 +27,15 @@ abstract class GameSessionFragment: Fragment() {
         xDrawable?.setTint(ResourcesCompat.getColor(resources, R.color.first_player, null))
         oDrawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_o_cell, null)
         oDrawable?.setTint(ResourcesCompat.getColor(resources, R.color.second_player, null))
-
     }
-    protected fun renderField(field: ClassicFieldModel, idsField: Array<Array<ImageButton>>
-    ) {
+    protected fun renderField(field: ClassicFieldModel, idsField: Array<Array<ImageButton>> ) {
         for (x in 0..2)
-            for (y in 0..2) {
+            for (y in 0..2)
                 when (field[ClassicCoordinatesModel(x, y)].state) {
                     CellState.X -> idsField[x][y].setImageDrawable(xDrawable)
                     CellState.O -> idsField[x][y].setImageDrawable(oDrawable)
                     CellState.N -> idsField[x][y].setImageDrawable(null)
                 }
-            }
     }
 
     protected fun definePlayerDrawable(player: Player): Drawable? {

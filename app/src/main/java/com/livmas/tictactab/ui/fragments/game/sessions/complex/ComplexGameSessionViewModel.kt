@@ -47,8 +47,7 @@ class ComplexGameSessionViewModel : GameSessionViewModel() {
 
 
         when (message.code) {
-            11 -> nextTurn(Player.X)
-            12 -> nextTurn(Player.O)
+            in 10..19 -> nextTurn()
             in 200..299 -> {
                 _field.postValue(session!!.field)
                 Log.i(GameSession.TAG, "Game finished with code ${message.code}")
@@ -77,8 +76,8 @@ class ComplexGameSessionViewModel : GameSessionViewModel() {
         }
     }
 
-    private fun nextTurn(currPlayer: Player) {
+    private fun nextTurn() {
         _field.postValue(session!!.field)
-        _currentPlayer.postValue(currPlayer)
+        _currentPlayer.postValue(if (_currentPlayer.value == Player.X) Player.O else Player.X)
     }
 }

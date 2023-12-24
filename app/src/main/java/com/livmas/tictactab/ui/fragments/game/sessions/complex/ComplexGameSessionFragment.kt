@@ -22,11 +22,7 @@ import com.livmas.tictactab.ui.fragments.game.sessions.GameSessionFragment
 import com.livmas.tictactab.ui.models.enums.Alert
 
 class ComplexGameSessionFragment : GameSessionFragment() {
-
-    companion object {
-        fun newInstance() = ComplexGameSessionFragment()
-    }
-
+    
     private lateinit var blocks: Array<Array<Array<ImageButton>>>
     override val viewModel: ComplexGameSessionViewModel by activityViewModels()
     private lateinit var binding: FragmentComplexGameSessionBinding
@@ -174,56 +170,56 @@ class ComplexGameSessionFragment : GameSessionFragment() {
                 arrayOf(ibCell20, ibCell21, ibCell22)
             )
         }
-        binding.block00.apply {
+        binding.block01.apply {
             blocks[1] = arrayOf(
                 arrayOf(ibCell00, ibCell01, ibCell02),
                 arrayOf(ibCell10, ibCell11, ibCell12),
                 arrayOf(ibCell20, ibCell21, ibCell22)
             )
         }
-        binding.block00.apply {
+        binding.block02.apply {
             blocks[2] = arrayOf(
                 arrayOf(ibCell00, ibCell01, ibCell02),
                 arrayOf(ibCell10, ibCell11, ibCell12),
                 arrayOf(ibCell20, ibCell21, ibCell22)
             )
         }
-        binding.block00.apply {
+        binding.block10.apply {
             blocks[3] = arrayOf(
                 arrayOf(ibCell00, ibCell01, ibCell02),
                 arrayOf(ibCell10, ibCell11, ibCell12),
                 arrayOf(ibCell20, ibCell21, ibCell22)
             )
         }
-        binding.block00.apply {
+        binding.block11.apply {
             blocks[4] = arrayOf(
                 arrayOf(ibCell00, ibCell01, ibCell02),
                 arrayOf(ibCell10, ibCell11, ibCell12),
                 arrayOf(ibCell20, ibCell21, ibCell22)
             )
         }
-        binding.block00.apply {
+        binding.block12.apply {
             blocks[5] = arrayOf(
                 arrayOf(ibCell00, ibCell01, ibCell02),
                 arrayOf(ibCell10, ibCell11, ibCell12),
                 arrayOf(ibCell20, ibCell21, ibCell22)
             )
         }
-        binding.block00.apply {
+        binding.block20.apply {
             blocks[6] = arrayOf(
                 arrayOf(ibCell00, ibCell01, ibCell02),
                 arrayOf(ibCell10, ibCell11, ibCell12),
                 arrayOf(ibCell20, ibCell21, ibCell22)
             )
         }
-        binding.block00.apply {
+        binding.block21.apply {
             blocks[7] = arrayOf(
                 arrayOf(ibCell00, ibCell01, ibCell02),
                 arrayOf(ibCell10, ibCell11, ibCell12),
                 arrayOf(ibCell20, ibCell21, ibCell22)
             )
         }
-        binding.block00.apply {
+        binding.block22.apply {
             blocks[8] = arrayOf(
                 arrayOf(ibCell00, ibCell01, ibCell02),
                 arrayOf(ibCell10, ibCell11, ibCell12),
