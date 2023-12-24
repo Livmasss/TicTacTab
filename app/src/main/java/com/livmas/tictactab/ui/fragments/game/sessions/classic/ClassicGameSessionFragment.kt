@@ -1,6 +1,5 @@
 package com.livmas.tictactab.ui.fragments.game.sessions.classic
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,10 +15,7 @@ import com.livmas.tictactab.R
 import com.livmas.tictactab.databinding.FragmentClassicGameSessionBinding
 import com.livmas.tictactab.domain.models.GameSession
 import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
-import com.livmas.tictactab.domain.models.classic.ClassicFieldModel
-import com.livmas.tictactab.domain.models.enums.CellState
 import com.livmas.tictactab.domain.models.enums.GameResult
-import com.livmas.tictactab.domain.models.enums.Player
 import com.livmas.tictactab.ui.fragments.game.sessions.GameSessionFragment
 import com.livmas.tictactab.ui.models.enums.Alert
 
@@ -27,7 +23,7 @@ class ClassicGameSessionFragment : GameSessionFragment() {
 
     override val viewModel: ClassicGameSessionViewModel by activityViewModels()
     private lateinit var binding: FragmentClassicGameSessionBinding
-    private lateinit var idsField: Array<Array<ImageButton>>
+    private lateinit var imageMatrix: Array<Array<ImageButton>>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +32,7 @@ class ClassicGameSessionFragment : GameSessionFragment() {
         binding = FragmentClassicGameSessionBinding.inflate(LayoutInflater.from(context), container, false)
 
         binding.field.apply {
-            idsField = arrayOf(
+            imageMatrix = arrayOf(
                 arrayOf(ibCell00, ibCell01, ibCell02),
                 arrayOf(ibCell10, ibCell11, ibCell12),
                 arrayOf(ibCell20, ibCell21, ibCell22)
@@ -50,7 +46,7 @@ class ClassicGameSessionFragment : GameSessionFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initViews()
-        viewModel.field.value?.let { renderField(it) }
+        viewModel.field.value?.let { renderField(it, imageMatrix) }
         initObservers()
         viewModel.resumeGame()
     }
@@ -84,7 +80,7 @@ class ClassicGameSessionFragment : GameSessionFragment() {
     private fun initObservers() {
         viewModel.apply {
             field.observe(viewLifecycleOwner) {
-                renderField(it)
+                renderField(it, imageMatrix)
             }
             currentPlayer.observe(viewLifecycleOwner) {
                 binding.ivGameDisplay.apply {
@@ -146,9 +142,6 @@ class ClassicGameSessionFragment : GameSessionFragment() {
             }
         }
     }
-    private fun definePlayerDrawable(player: Player): Drawable? {
-        return if (player==Player.X) xDrawable else oDrawable
-    }
     private fun showLine(offset: Float = 0f, angle: Float = 0f) {
         val view = layoutInflater.inflate(R.layout.final_line_layout, binding.flFieldContainer, false) as ConstraintLayout
         view.rotation = angle
@@ -165,15 +158,5 @@ class ClassicGameSessionFragment : GameSessionFragment() {
         return OnClickListener {
             viewModel.makeTurn(cords)
         }
-    }
-    private fun renderField(field: ClassicFieldModel) {
-        for (x in 0..2)
-            for (y in 0..2) {
-                when (field[ClassicCoordinatesModel(x, y)].state) {
-                    CellState.X -> idsField[x][y].setImageDrawable(xDrawable)
-                    CellState.O -> idsField[x][y].setImageDrawable(oDrawable)
-                    CellState.N -> idsField[x][y].setImageDrawable(null)
-                }
-            }
     }
 }

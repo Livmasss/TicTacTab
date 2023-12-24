@@ -17,9 +17,6 @@ class ClassicGameSession(
 
     override var _currentPlayer = current ?: Player.X
     override var winLineCode = 0
-    val result: GameResult?
-        get() = _result
-
     override val field: ClassicFieldModel
         get() = _field.copy()
 

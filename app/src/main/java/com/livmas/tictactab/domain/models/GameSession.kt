@@ -16,6 +16,9 @@ abstract class GameSession(
     }
     abstract val field: IFieldModel
 
+    val result: GameResult?
+        get() = _result
+
     protected open var _currentPlayer = current ?: Player.X
     protected open var winLineCode = 0
 
