@@ -1,6 +1,5 @@
 package com.livmas.tictactab.domain.models.classic
 
-import com.livmas.tictactab.domain.models.CellValue
 import com.livmas.tictactab.domain.models.GameSession
 import com.livmas.tictactab.domain.models.ICoordinatesModel
 import com.livmas.tictactab.domain.models.enums.CellState
@@ -12,14 +11,14 @@ class ClassicGameSession(
     override val _field: ClassicFieldModel,
     current: Player?,
     override var _result: GameResult?
-): GameSession(_field, current, _result), CellValue {
+): GameSession(_field, current, _result) {
+
+    constructor() : this(ClassicFieldModel(), Player.X, null)
 
     override var _currentPlayer = current ?: Player.X
     override var winLineCode = 0
     val result: GameResult?
         get() = _result
-
-    constructor() : this(ClassicFieldModel(), Player.X, null)
 
     override val field: ClassicFieldModel
         get() = _field.copy()
@@ -30,8 +29,8 @@ class ClassicGameSession(
         else
             CellState.O
 
-        if (_field[cords as ClassicCoordinatesModel] == CellState.N)
-            _field.set(cords, state)
+        if (_field[cords as ClassicCoordinatesModel].state == CellState.N)
+            _field.setState(cords, state)
         else
             return GameMessage(
                 null,
@@ -59,6 +58,6 @@ class ClassicGameSession(
     }
 
     override fun getCellState(cords: ClassicCoordinatesModel): CellState {
-        return _field[cords]
+        return _field[cords].state
     }
 }

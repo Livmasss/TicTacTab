@@ -2,7 +2,6 @@ package com.livmas.tictactab.domain.models.complex
 
 import com.livmas.tictactab.domain.models.GameSession
 import com.livmas.tictactab.domain.models.ICoordinatesModel
-import com.livmas.tictactab.domain.models.IFieldModel
 import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
 import com.livmas.tictactab.domain.models.enums.CellState
 import com.livmas.tictactab.domain.models.enums.GameResult
@@ -14,19 +13,16 @@ class ComplexGameSession(
     current: Player?,
     result: GameResult?
 ): GameSession(field, current, result) {
-    override val _field: IFieldModel
+    constructor() : this(ComplexFieldModel(), Player.X, null)
+
+    override val _field: ComplexFieldModel
         get() = super._field as ComplexFieldModel
-    override fun getCellState(cords: ClassicCoordinatesModel): CellState {
-        return when ((_field as ComplexFieldModel)[cords].result) {
-            GameResult.X -> CellState.X
-            GameResult.O -> CellState.O
-            else -> CellState.N
-        }
-    }
-
     override val field: ComplexFieldModel
-        get() = (_field as ComplexFieldModel).copy()
+        get() = _field.copy()
 
+    override fun getCellState(cords: ClassicCoordinatesModel): CellState {
+        return _field[cords].state
+    }
 
     override fun makeTurn(cords: ICoordinatesModel): GameMessage {
         cords as ComplexCoordinatesModel
@@ -36,13 +32,7 @@ class ComplexGameSession(
             CellState.O
 
         cords.apply {
-            if ((_field as ComplexFieldModel)[innerCoordinates].field[ClassicCoordinatesModel(x, y)] == CellState.N)
-                (_field as ComplexFieldModel)[innerCoordinates].field.set(innerCoordinates, state)
-            else
-                return GameMessage(
-                    null,
-                    40
-                )
+            _field[ClassicCoordinatesModel(x, y)].makeTurn(innerCoordinates)
         }
 
         _result = when (checkWinner()) {

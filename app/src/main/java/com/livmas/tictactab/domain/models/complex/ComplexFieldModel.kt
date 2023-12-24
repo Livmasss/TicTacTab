@@ -1,25 +1,24 @@
 package com.livmas.tictactab.domain.models.complex
 
-import com.livmas.tictactab.domain.models.CellValue
+import com.livmas.tictactab.domain.models.Cell
 import com.livmas.tictactab.domain.models.IFieldModel
 import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
-import com.livmas.tictactab.domain.models.classic.ClassicGameSession
 
 data class ComplexFieldModel(
-    private val data: Array<Array<ClassicGameSession>> = arrayOf(
-        arrayOf(ClassicGameSession(), ClassicGameSession(), ClassicGameSession()),
-        arrayOf(ClassicGameSession(), ClassicGameSession(), ClassicGameSession()),
-        arrayOf(ClassicGameSession(), ClassicGameSession(), ClassicGameSession())
+    private val data: Array<Array<ComplexCell>> = arrayOf(
+        arrayOf(ComplexCell(), ComplexCell(), ComplexCell()),
+        arrayOf(ComplexCell(), ComplexCell(), ComplexCell()),
+        arrayOf(ComplexCell(), ComplexCell(), ComplexCell())
     )
 ): IFieldModel {
-    fun set(cords: ClassicCoordinatesModel, value: ClassicGameSession) {
+    fun set(cords: ClassicCoordinatesModel, value: ComplexCell) {
         data[cords.x][cords.y] = value
     }
-    override fun set(cords: ClassicCoordinatesModel, value: CellValue) {
-        data[cords.x][cords.y] = value as ClassicGameSession
+    override fun set(cords: ClassicCoordinatesModel, value: Cell) {
+        data[cords.x][cords.y] = value as ComplexCell
     }
 
-    override fun get(cords: ClassicCoordinatesModel): ClassicGameSession {
+    override fun get(cords: ClassicCoordinatesModel): ComplexCell {
         return data[cords.x][cords.y]
     }
 

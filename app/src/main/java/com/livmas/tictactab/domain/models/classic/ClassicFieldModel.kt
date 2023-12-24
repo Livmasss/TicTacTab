@@ -1,29 +1,30 @@
 package com.livmas.tictactab.domain.models.classic
 
-import com.livmas.tictactab.domain.models.CellValue
+import com.livmas.tictactab.domain.models.Cell
 import com.livmas.tictactab.domain.models.IFieldModel
+import com.livmas.tictactab.domain.models.complex.ComplexCell
 import com.livmas.tictactab.domain.models.enums.CellState
 
 data class ClassicFieldModel(
-    private val data: Array<Array<CellState>> = arrayOf(
-        arrayOf(CellState.N, CellState.N, CellState.N),
-        arrayOf(CellState.N, CellState.N, CellState.N),
-        arrayOf(CellState.N, CellState.N, CellState.N)
+    private val data: Array<Array<Cell>> = arrayOf(
+        arrayOf(Cell(), Cell(), Cell()),
+        arrayOf(Cell(), Cell(), Cell()),
+        arrayOf(Cell(), Cell(), Cell())
     )
 ) : IFieldModel {
-    fun set(cords: ClassicCoordinatesModel, value: CellState) {
+    override fun set(cords: ClassicCoordinatesModel, value: Cell) {
         data[cords.x][cords.y] = value
     }
-    override fun set(cords: ClassicCoordinatesModel, value: CellValue) {
-        this.set(cords, value as CellState)
+    fun setState(cords: ClassicCoordinatesModel, value: CellState) {
+        data[cords.x][cords.y].state = value
     }
-    override operator fun get(cords: ClassicCoordinatesModel): CellState {
+    override operator fun get(cords: ClassicCoordinatesModel): Cell {
         return data[cords.x][cords.y]
     }
 
     override fun isFull(): Boolean = !data.any { row ->
         row.any { cell ->
-            cell==CellState.N
+            cell.state==CellState.N
         }
     }
 
