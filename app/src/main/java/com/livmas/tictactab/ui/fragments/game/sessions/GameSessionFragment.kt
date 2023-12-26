@@ -35,6 +35,7 @@ abstract class GameSessionFragment: Fragment() {
                     CellState.X -> idsField[x][y].setImageDrawable(xDrawable)
                     CellState.O -> idsField[x][y].setImageDrawable(oDrawable)
                     CellState.N -> idsField[x][y].setImageDrawable(null)
+                    null -> idsField[x][y].setImageDrawable(null)
                 }
     }
 

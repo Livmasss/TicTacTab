@@ -4,7 +4,7 @@ import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
 
 
 interface IFieldModel {
-    fun set(cords: ClassicCoordinatesModel, value: Cell)
-    operator fun get(cords: ClassicCoordinatesModel): Cell
+    fun set(cords: ClassicCoordinatesModel, value: CellModel)
+    operator fun get(cords: ClassicCoordinatesModel): CellModel
     fun isFull(): Boolean
 }

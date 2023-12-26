@@ -3,7 +3,6 @@ package com.livmas.tictactab.domain.models.complex
 import com.livmas.tictactab.domain.models.GameSession
 import com.livmas.tictactab.domain.models.ICoordinatesModel
 import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
-import com.livmas.tictactab.domain.models.enums.CellState
 import com.livmas.tictactab.domain.models.enums.GameResult
 import com.livmas.tictactab.domain.models.enums.Player
 import com.livmas.tictactab.ui.GameMessage
@@ -24,10 +23,6 @@ class ComplexGameSession(
     val currentPlayer: Player
         get() = _currentPlayer
     private val backStack = Stack<ClassicCoordinatesModel>()
-
-    override fun getCellState(cords: ClassicCoordinatesModel): CellState {
-        return _field[cords].state
-    }
 
     override fun makeTurn(cords: ICoordinatesModel): GameMessage {
         return field[ClassicCoordinatesModel(cords.x, cords.y)]

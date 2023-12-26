@@ -1,6 +1,6 @@
 package com.livmas.tictactab.domain.models.complex
 
-import com.livmas.tictactab.domain.models.Cell
+import com.livmas.tictactab.domain.models.CellModel
 import com.livmas.tictactab.domain.models.ICoordinatesModel
 import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
 import com.livmas.tictactab.domain.models.classic.ClassicFieldModel
@@ -8,9 +8,9 @@ import com.livmas.tictactab.domain.models.enums.CellState
 import com.livmas.tictactab.domain.models.enums.Player
 import com.livmas.tictactab.ui.GameMessage
 
-class ComplexCell(val field: ClassicFieldModel = ClassicFieldModel(), state: CellState = CellState.N): Cell(state) {
+class ComplexCell(val field: ClassicFieldModel = ClassicFieldModel(), state: CellState = CellState.N): CellModel(null) {
     fun makeTurn(cords: ICoordinatesModel, player: Player): GameMessage {
-        if (state != CellState.N)
+        if (state != null)
             return GameMessage(
                 null,
                 41
@@ -28,12 +28,23 @@ class ComplexCell(val field: ClassicFieldModel = ClassicFieldModel(), state: Cel
                 null,
                 40
             )
+        state = when (checkWinner()) {
+            CellState.N -> if (field.isFull()) CellState.N else null
+            CellState.X -> CellState.X
+            CellState.O -> CellState.O
+        }
 
-        state = checkWinner()
-        return GameMessage(null, 10)
+        return GameMessage(null,
+            when (state) {
+                CellState.N -> 200
+                CellState.X -> 210
+                CellState.O -> 220
+                null -> 10
+            }
+        )
     }
     private fun getCellState(cords: ClassicCoordinatesModel): CellState {
-        return field[cords].state
+        return field[cords].state ?: CellState.N
     }
 
     private fun checkLine(cell1: CellState, cell2: CellState, cell3: CellState): Boolean {

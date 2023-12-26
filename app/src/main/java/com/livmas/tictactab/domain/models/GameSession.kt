@@ -22,7 +22,9 @@ abstract class GameSession(
     protected open var _currentPlayer = current ?: Player.X
     protected open var winLineCode = 0
 
-    protected abstract fun getCellState(cords: ClassicCoordinatesModel): CellState
+    private fun getCellState(cords: ClassicCoordinatesModel): CellState {
+        return _field[cords].state ?: CellState.N
+    }
 
     fun changePlayer() {
         _currentPlayer = if (_currentPlayer == Player.X) Player.O else Player.X

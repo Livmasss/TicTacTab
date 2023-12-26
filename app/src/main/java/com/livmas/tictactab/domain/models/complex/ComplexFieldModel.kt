@@ -1,6 +1,6 @@
 package com.livmas.tictactab.domain.models.complex
 
-import com.livmas.tictactab.domain.models.Cell
+import com.livmas.tictactab.domain.models.CellModel
 import com.livmas.tictactab.domain.models.IFieldModel
 import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
 
@@ -14,7 +14,7 @@ data class ComplexFieldModel(
     fun set(cords: ClassicCoordinatesModel, value: ComplexCell) {
         data[cords.x][cords.y] = value
     }
-    override fun set(cords: ClassicCoordinatesModel, value: Cell) {
+    override fun set(cords: ClassicCoordinatesModel, value: CellModel) {
         data[cords.x][cords.y] = value as ComplexCell
     }
 
@@ -42,5 +42,4 @@ data class ComplexFieldModel(
     override fun hashCode(): Int {
         return data.contentDeepHashCode()
     }
-
 }

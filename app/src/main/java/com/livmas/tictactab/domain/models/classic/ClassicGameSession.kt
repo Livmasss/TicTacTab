@@ -53,8 +53,4 @@ class ClassicGameSession(
             }
         )
     }
-
-    override fun getCellState(cords: ClassicCoordinatesModel): CellState {
-        return _field[cords].state
-    }
 }
