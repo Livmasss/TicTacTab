@@ -10,6 +10,12 @@ import com.livmas.tictactab.ui.GameMessage
 
 class ComplexCell(val field: ClassicFieldModel = ClassicFieldModel(), state: CellState = CellState.N): Cell(state) {
     fun makeTurn(cords: ICoordinatesModel, player: Player): GameMessage {
+        if (state != CellState.N)
+            return GameMessage(
+                null,
+                41
+            )
+
         val newState = if (player == Player.X)
             CellState.X
         else

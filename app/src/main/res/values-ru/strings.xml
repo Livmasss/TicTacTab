@@ -30,6 +30,8 @@
     <string name="draw_message">Ничья! Никто не победил.</string>
     <string name="game_finished_message">Игра уже завершена!</string>
     <string name="internal_error_message">Произошла какая-то ошибка!</string>
-    <string name="cell_occupied_message">Эта клетка уже занята! Выберете другую.</string>
+    <string name="entity_occupied_message">Эта %1$s уже занята! Выберете другую.</string>
+    <string name="cell_var">клетка</string>
+    <string name="block_var">блок</string>
 
 </resources>

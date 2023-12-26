@@ -32,7 +32,9 @@
     <string name="draw_message">Draw! No winner.</string>
     <string name="game_finished_message">The game is already finished!</string>
     <string name="internal_error_message">Some internal error occurred! </string>
-    <string name="cell_occupied_message">This cell is already occupied! Try another one.</string>
+    <string name="entity_occupied_message">This %1$s is already occupied! Try another one.</string>
+    <string name="cell_var">cell</string>
+    <string name="block_var">block</string>
 
 
 </resources>

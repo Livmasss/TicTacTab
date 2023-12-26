@@ -119,9 +119,10 @@ class ClassicGameSessionFragment : GameSessionFragment() {
                         binding.root,
                         when(messageCode) {
                             Alert.SomeError -> resources.getString(R.string.internal_error_message)
-                            Alert.CellOccupied -> resources.getString(R.string.cell_occupied_message)
+                            Alert.CellOccupied -> resources.getString(R.string.entity_occupied_message, resources.getString(R.string.cell_var))
                             Alert.GameFinished -> resources.getString(R.string.game_finished_message)
-                                          },
+                            Alert.BlockFinished -> resources.getString(R.string.entity_occupied_message, resources.getString(R.string.block_var))
+                        },
                         Snackbar.LENGTH_LONG
                     ).show()
                 }

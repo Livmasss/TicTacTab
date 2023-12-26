@@ -73,6 +73,9 @@ class ComplexGameSessionViewModel : GameSessionViewModel() {
             40 -> {
                 _alert.postValue(Alert.CellOccupied)
             }
+            41 -> {
+                _alert.postValue(Alert.BlockFinished)
+            }
         }
     }
 
