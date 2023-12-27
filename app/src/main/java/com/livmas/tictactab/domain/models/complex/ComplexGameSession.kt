@@ -27,9 +27,18 @@ class ComplexGameSession(
     override fun makeTurn(cords: ICoordinatesModel): GameMessage {
         return field[ClassicCoordinatesModel(cords.x, cords.y)]
             .makeTurn((cords as ComplexCoordinatesModel).innerCoordinates, _currentPlayer).let {
-                if (it.code in 10..19)
-                    changePlayer()
-                it
+                when (it.code) {
+                    in 10..19 -> {
+                        changePlayer()
+                        it
+                    }
+                    in 50..59 -> {
+                        changePlayer()
+                        val c = it.code + cords.y*3 + cords.x
+                        GameMessage(it.content, c)
+                    }
+                    else -> it
+                }
             }
     }
 }

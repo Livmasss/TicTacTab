@@ -36,9 +36,9 @@ class ComplexCell(val field: ClassicFieldModel = ClassicFieldModel(), state: Cel
 
         return GameMessage(null,
             when (state) {
-                CellState.N -> 200
-                CellState.X -> 210
-                CellState.O -> 220
+                CellState.N -> 50
+                CellState.X -> 51
+                CellState.O -> 52
                 null -> 10
             }
         )
