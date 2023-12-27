@@ -26,7 +26,7 @@ abstract class GameSession(
         return _field[cords].state ?: CellState.N
     }
 
-    fun changePlayer() {
+    protected fun changePlayer() {
         _currentPlayer = if (_currentPlayer == Player.X) Player.O else Player.X
     }
 
