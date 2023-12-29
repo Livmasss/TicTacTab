@@ -13,7 +13,9 @@ import com.livmas.tictactab.R
 import com.livmas.tictactab.databinding.ClassicGameFieldLayoutBinding
 import com.livmas.tictactab.databinding.FragmentComplexGameSessionBinding
 import com.livmas.tictactab.domain.models.GameSession
+import com.livmas.tictactab.domain.models.ICoordinatesModel
 import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
+import com.livmas.tictactab.domain.models.complex.ComplexCell
 import com.livmas.tictactab.domain.models.complex.ComplexCoordinatesModel
 import com.livmas.tictactab.domain.models.complex.ComplexFieldModel
 import com.livmas.tictactab.domain.models.enums.CellState
@@ -47,6 +49,15 @@ class ComplexGameSessionFragment : GameSessionFragment() {
         viewModel.field.value?.let { renderAll(it as ComplexFieldModel) }
         initObservers()
         viewModel.resumeGame()
+    }
+
+    override fun renderCell(imageButton: ImageButton, cords: ICoordinatesModel) {
+        viewModel.field.value?.get(ClassicCoordinatesModel(cords.x, cords.y))?.let {
+            val cell = (it as ComplexCell).field[
+                    (cords as ComplexCoordinatesModel).innerCoordinates
+            ]
+            renderCell(imageButton, cell)
+        }
     }
 
     private fun initViews() {
@@ -87,67 +98,73 @@ class ComplexGameSessionFragment : GameSessionFragment() {
         }
     }
     private fun initObservers() {
-        viewModel.apply {
-            field.observe(viewLifecycleOwner) {
-                renderAll(it as ComplexFieldModel)
-            }
-            currentPlayer.observe(viewLifecycleOwner) {
-                binding.ivGameDisplay.apply {
-                    setImageDrawable(definePlayerDrawable(it))
-                    contentDescription = resources.getString(R.string.iv_display_desc, it)
+        viewLifecycleOwner.also { owner ->
+            viewModel.apply {
+                lastTurn.observe(owner) {
+                    it?.let {
+                        val button = getImageButton(it as ComplexCoordinatesModel)
+                        renderCell(button, it)
+                        renderCell(button, it)
+                    }
                 }
-            }
-            gameResult.observe(viewLifecycleOwner) {
-                when (it) {
-                    null -> binding.apply {
-                        tvGameDisplay.text = resources.getString(R.string.current_player_message)
-                        ivGameDisplay.setImageDrawable(
-                            if (currentPlayer.value == null)
-                                xDrawable else definePlayerDrawable(
-                                currentPlayer.value!!
+                currentPlayer.observe(owner) {
+                    binding.ivGameDisplay.apply {
+                        setImageDrawable(definePlayerDrawable(it))
+                        contentDescription = resources.getString(R.string.iv_display_desc, it)
+                    }
+                }
+                gameResult.observe(owner) {
+                    when (it) {
+                        null -> binding.apply {
+                            tvGameDisplay.text = resources.getString(R.string.current_player_message)
+                            ivGameDisplay.setImageDrawable(
+                                if (currentPlayer.value == null)
+                                    xDrawable else definePlayerDrawable(
+                                    currentPlayer.value!!
+                                )
                             )
-                        )
-                        ivGameDisplay.contentDescription =
-                            resources.getString(R.string.iv_display_desc, null)
-                    }
-                    GameResult.N -> binding.apply {
-                        tvGameDisplay.text = resources.getString(R.string.draw_message)
-                        ivGameDisplay.setImageDrawable(null)
-                        ivGameDisplay.contentDescription = resources.getString(R.string.draw_message)
-                    }
-                    else -> binding.apply {
-                        tvGameDisplay.text = resources.getString(R.string.winner_message)
-                        ivGameDisplay.setImageDrawable(if (it == GameResult.X) xDrawable else oDrawable)
-                        ivGameDisplay.contentDescription = resources.getString(R.string.iv_display_desc, it)
+                            ivGameDisplay.contentDescription =
+                                resources.getString(R.string.iv_display_desc, null)
+                        }
+                        GameResult.N -> binding.apply {
+                            tvGameDisplay.text = resources.getString(R.string.draw_message)
+                            ivGameDisplay.setImageDrawable(null)
+                            ivGameDisplay.contentDescription = resources.getString(R.string.draw_message)
+                        }
+                        else -> binding.apply {
+                            tvGameDisplay.text = resources.getString(R.string.winner_message)
+                            ivGameDisplay.setImageDrawable(if (it == GameResult.X) xDrawable else oDrawable)
+                            ivGameDisplay.contentDescription = resources.getString(R.string.iv_display_desc, it)
+                        }
                     }
                 }
-            }
-            alert.observe(viewLifecycleOwner) {
-                it?.let { messageCode ->
-                    Snackbar.make(
-                        binding.root,
-                        when(messageCode) {
-                            Alert.SomeError -> resources.getString(R.string.internal_error_message)
-                            Alert.CellOccupied -> resources.getString(R.string.entity_occupied_message, resources.getString(R.string.cell_var))
-                            Alert.GameFinished -> resources.getString(R.string.game_finished_message)
-                            Alert.BlockFinished -> resources.getString(R.string.entity_occupied_message, resources.getString(R.string.block_var))
-                        },
-                        Snackbar.LENGTH_LONG
-                    ).show()
+                alert.observe(owner) {
+                    it?.let { messageCode ->
+                        Snackbar.make(
+                            binding.root,
+                            when(messageCode) {
+                                Alert.SomeError -> resources.getString(R.string.internal_error_message)
+                                Alert.CellOccupied -> resources.getString(R.string.entity_occupied_message, resources.getString(R.string.cell_var))
+                                Alert.GameFinished -> resources.getString(R.string.game_finished_message)
+                                Alert.BlockFinished -> resources.getString(R.string.entity_occupied_message, resources.getString(R.string.block_var))
+                            },
+                            Snackbar.LENGTH_LONG
+                        ).show()
+                    }
+                    viewModel.clearAlert()
                 }
-                viewModel.clearAlert()
-            }
-            winLineCode.observe(viewLifecycleOwner) {
-                when (it) {
-                    0 -> return@observe
-                    1 -> showLine(offset = -1f/3f)
-                    2 -> showLine()
-                    3 -> showLine(offset = 1f/3f)
-                    4 -> showLine(angle = 45f)
-                    5 -> showLine(angle = -45f)
-                    6 -> showLine(offset = 1f/3f, angle = 90f)
-                    7 -> showLine(angle = 90f)
-                    8 -> showLine(offset = -1f/3f, angle = 90f)
+                winLineCode.observe(owner) {
+                    when (it) {
+                        0 -> return@observe
+                        1 -> showLine(offset = -1f/3f)
+                        2 -> showLine()
+                        3 -> showLine(offset = 1f/3f)
+                        4 -> showLine(angle = 45f)
+                        5 -> showLine(angle = -45f)
+                        6 -> showLine(offset = 1f/3f, angle = 90f)
+                        7 -> showLine(angle = 90f)
+                        8 -> showLine(offset = -1f/3f, angle = 90f)
+                    }
                 }
             }
         }
@@ -253,4 +270,7 @@ class ComplexGameSessionFragment : GameSessionFragment() {
             viewModel.makeTurn(cords)
         }
     }
+
+    private fun getImageButton(cords: ComplexCoordinatesModel) =
+        blocks[cords.x*3 + cords.y][cords.innerCoordinates.x][cords.innerCoordinates.y]
 }

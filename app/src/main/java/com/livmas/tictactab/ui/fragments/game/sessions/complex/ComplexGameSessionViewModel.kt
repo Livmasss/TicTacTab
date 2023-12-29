@@ -71,6 +71,7 @@ class ComplexGameSessionViewModel : GameSessionViewModel() {
                 _alert.postValue(Alert.BlockFinished)
             }
         }
+        _lastTurn.postValue(cords)
     }
 
     private fun nextTurn() {

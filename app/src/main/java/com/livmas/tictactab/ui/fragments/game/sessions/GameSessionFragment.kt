@@ -12,6 +12,8 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.livmas.tictactab.R
+import com.livmas.tictactab.domain.models.CellModel
+import com.livmas.tictactab.domain.models.ICoordinatesModel
 import com.livmas.tictactab.domain.models.IFieldModel
 import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
 import com.livmas.tictactab.domain.models.enums.CellState
@@ -33,19 +35,18 @@ abstract class GameSessionFragment: Fragment() {
         oDrawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_o_cell, null)
         oDrawable?.setTint(ResourcesCompat.getColor(resources, R.color.second_player, null))
     }
+    protected abstract fun renderCell(imageButton: ImageButton, cords: ICoordinatesModel)
     protected fun renderField(field: IFieldModel, idsField: Array<Array<ImageButton>> ) {
         for (x in 0..2)
             for (y in 0..2)
-                renderCell(idsField[x][y], ClassicCoordinatesModel(x, y))
+                renderCell(idsField[x][y], field[ClassicCoordinatesModel(x, y)])
     }
-    protected fun renderCell(imageView: ImageView, cords: ClassicCoordinatesModel) = imageView.setImageDrawable(
-        viewModel.field.value?.get(cords)?.let {
-            when(it.state) {
-                CellState.X -> xDrawable
-                CellState.O -> oDrawable
-                CellState.N -> null
-                null -> null
-            }
+    protected fun renderCell(imageView: ImageView, cell: CellModel) = imageView.setImageDrawable(
+        when(cell.state) {
+            CellState.X -> xDrawable
+            CellState.O -> oDrawable
+            CellState.N -> null
+            null -> null
         }
     )
 

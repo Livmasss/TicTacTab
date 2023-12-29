@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.livmas.tictactab.domain.models.GameSession
+import com.livmas.tictactab.domain.models.ICoordinatesModel
 import com.livmas.tictactab.domain.models.IFieldModel
-import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
 import com.livmas.tictactab.domain.models.enums.GameResult
 import com.livmas.tictactab.domain.models.enums.Player
 import com.livmas.tictactab.ui.models.enums.Alert
@@ -13,9 +13,9 @@ import com.livmas.tictactab.ui.models.enums.Alert
 abstract class GameSessionViewModel: ViewModel() {
     protected abstract var session: GameSession?
 
-    val lastTurn: LiveData<ClassicCoordinatesModel?>
+    val lastTurn: LiveData<ICoordinatesModel?>
         get() = _lastTurn
-    protected val _lastTurn: MutableLiveData<ClassicCoordinatesModel?> by lazy {
+    protected val _lastTurn: MutableLiveData<ICoordinatesModel?> by lazy {
         MutableLiveData(null)
     }
     val field: LiveData<IFieldModel>

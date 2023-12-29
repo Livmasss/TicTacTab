@@ -12,6 +12,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.livmas.tictactab.R
 import com.livmas.tictactab.databinding.FragmentClassicGameSessionBinding
 import com.livmas.tictactab.domain.models.GameSession
+import com.livmas.tictactab.domain.models.ICoordinatesModel
 import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
 import com.livmas.tictactab.domain.models.enums.GameResult
 import com.livmas.tictactab.ui.fragments.game.sessions.GameSessionFragment
@@ -45,9 +46,17 @@ class ClassicGameSessionFragment : GameSessionFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initViews()
+        viewModel.field.value?.let { renderField(it, imageMatrix) }
         initObservers()
         viewModel.resumeGame()
     }
+
+    override fun renderCell(imageButton: ImageButton, cords: ICoordinatesModel) {
+        viewModel.field.value?.get(cords as ClassicCoordinatesModel)?.let {
+            renderCell(imageButton, it)
+        }
+    }
+
 
     private fun initViews() {
         initCells()
@@ -81,7 +90,7 @@ class ClassicGameSessionFragment : GameSessionFragment() {
                 if (it == null)
                     viewModel.field.value?.let { field -> renderField(field, imageMatrix) }
                 it?.let {
-                    renderCell(imageMatrix[it.x][it.y], it)
+                    renderCell(imageMatrix[it.x][it.y], it as ClassicCoordinatesModel)
                 }
             }
             currentPlayer.observe(viewLifecycleOwner) {
