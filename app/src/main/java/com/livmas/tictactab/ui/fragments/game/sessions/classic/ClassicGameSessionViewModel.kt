@@ -16,9 +16,7 @@ import com.livmas.tictactab.ui.models.enums.Alert
 
 class ClassicGameSessionViewModel : GameSessionViewModel() {
 
-    override val field: LiveData<IFieldModel>
-        get() = _field as LiveData<IFieldModel>
-    private val _field: MutableLiveData<ClassicFieldModel> by lazy {
+    override val _field: MutableLiveData<IFieldModel> by lazy {
         MutableLiveData(ClassicFieldModel())
     }
 
@@ -31,7 +29,7 @@ class ClassicGameSessionViewModel : GameSessionViewModel() {
     private var session: ClassicGameSession? = ClassicGameSession()
 
     fun resumeGame() {
-        session = ClassicGameSession(_field.value!!, _currentPlayer.value, _gameResult.value)
+        session = ClassicGameSession(_field.value!! as ClassicFieldModel, _currentPlayer.value, _gameResult.value)
         _field.postValue(session!!.field)
     }
     private fun stopGame() {

@@ -10,7 +10,9 @@ import com.livmas.tictactab.ui.models.enums.Alert
 
 abstract class GameSessionViewModel: ViewModel() {
 
-    abstract val field: LiveData<IFieldModel>
+    val field: LiveData<IFieldModel>
+        get() = _field
+    protected abstract val _field: MutableLiveData<IFieldModel>
     val currentPlayer: LiveData<Player>
         get() = _currentPlayer
     protected val _currentPlayer: MutableLiveData<Player> by lazy {

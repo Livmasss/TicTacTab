@@ -1,7 +1,6 @@
 package com.livmas.tictactab.ui.fragments.game.sessions.complex
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.livmas.tictactab.domain.models.GameSession
 import com.livmas.tictactab.domain.models.IFieldModel
@@ -16,15 +15,13 @@ import com.livmas.tictactab.ui.models.enums.Alert
 
 class ComplexGameSessionViewModel : GameSessionViewModel() {
 
-    override val field: LiveData<IFieldModel>
-        get() = _field as LiveData<IFieldModel>
-    private val _field: MutableLiveData<ComplexFieldModel> by lazy {
-        MutableLiveData<ComplexFieldModel>(ComplexFieldModel())
+    override val _field: MutableLiveData<IFieldModel> by lazy {
+        MutableLiveData(ComplexFieldModel())
     }
     private var session: ComplexGameSession? = ComplexGameSession()
 
     fun resumeGame() {
-        session = ComplexGameSession(_field.value!!, _currentPlayer.value, _gameResult.value)
+        session = ComplexGameSession(_field.value!! as ComplexFieldModel, _currentPlayer.value, _gameResult.value)
         _field.postValue(session!!.field)
     }
     private fun stopGame() {
@@ -66,7 +63,6 @@ class ComplexGameSessionViewModel : GameSessionViewModel() {
                 stopGame()
             }
             in 500..599 -> {
-                val cellNum = message.code % 10
             }
 
             31 -> _alert.postValue(Alert.GameFinished)
