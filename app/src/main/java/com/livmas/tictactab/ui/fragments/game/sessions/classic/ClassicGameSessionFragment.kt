@@ -45,7 +45,6 @@ class ClassicGameSessionFragment : GameSessionFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initViews()
-        viewModel.field.value?.let { renderField(it, imageMatrix) }
         initObservers()
         viewModel.resumeGame()
     }
@@ -78,8 +77,12 @@ class ClassicGameSessionFragment : GameSessionFragment() {
     }
     private fun initObservers() {
         viewModel.apply {
-            field.observe(viewLifecycleOwner) {
-                renderField(it, imageMatrix)
+            lastTurn.observe(viewLifecycleOwner) {
+                if (it == null)
+                    viewModel.field.value?.let { field -> renderField(field, imageMatrix) }
+                it?.let {
+                    renderCell(imageMatrix[it.x][it.y], it)
+                }
             }
             currentPlayer.observe(viewLifecycleOwner) {
                 binding.ivGameDisplay.apply {

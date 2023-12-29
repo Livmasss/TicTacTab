@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.livmas.tictactab.domain.models.GameSession
+import com.livmas.tictactab.domain.models.IFieldModel
 import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
 import com.livmas.tictactab.domain.models.classic.ClassicFieldModel
 import com.livmas.tictactab.domain.models.classic.ClassicGameSession
@@ -15,15 +16,22 @@ import com.livmas.tictactab.ui.models.enums.Alert
 
 class ClassicGameSessionViewModel : GameSessionViewModel() {
 
-    val field: LiveData<ClassicFieldModel>
-        get() = _field
+    override val field: LiveData<IFieldModel>
+        get() = _field as LiveData<IFieldModel>
     private val _field: MutableLiveData<ClassicFieldModel> by lazy {
-        MutableLiveData<ClassicFieldModel>(ClassicFieldModel())
+        MutableLiveData(ClassicFieldModel())
     }
+
+    val lastTurn: LiveData<ClassicCoordinatesModel?>
+        get() = _lastTurn
+    private val _lastTurn: MutableLiveData<ClassicCoordinatesModel?> by lazy {
+        MutableLiveData(null)
+    }
+
     private var session: ClassicGameSession? = ClassicGameSession()
 
     fun resumeGame() {
-        session = ClassicGameSession(field.value!!, _currentPlayer.value, _gameResult.value)
+        session = ClassicGameSession(_field.value!!, _currentPlayer.value, _gameResult.value)
         _field.postValue(session!!.field)
     }
     private fun stopGame() {
@@ -33,6 +41,7 @@ class ClassicGameSessionViewModel : GameSessionViewModel() {
         session = ClassicGameSession(ClassicFieldModel(), Player.X, null)
 
         _field.postValue(session!!.field)
+        _lastTurn.postValue(null)
         _currentPlayer.postValue(Player.X)
         _gameResult.postValue(null)
         _winLineCode.postValue(0)
@@ -65,7 +74,6 @@ class ClassicGameSessionViewModel : GameSessionViewModel() {
 
                 stopGame()
             }
-
             31 -> _alert.postValue(Alert.GameFinished)
             in 30..39 -> {
                 _alert.postValue(Alert.SomeError)
@@ -74,6 +82,8 @@ class ClassicGameSessionViewModel : GameSessionViewModel() {
                 _alert.postValue(Alert.CellOccupied)
             }
         }
+
+        _lastTurn.postValue(cords)
     }
 
     private fun nextTurn(currPlayer: Player) {

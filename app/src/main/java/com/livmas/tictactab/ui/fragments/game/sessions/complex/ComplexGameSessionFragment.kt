@@ -44,7 +44,7 @@ class ComplexGameSessionFragment : GameSessionFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initViews()
-        viewModel.field.value?.let { renderAll(it) }
+        viewModel.field.value?.let { renderAll(it as ComplexFieldModel) }
         initObservers()
         viewModel.resumeGame()
     }
@@ -89,7 +89,7 @@ class ComplexGameSessionFragment : GameSessionFragment() {
     private fun initObservers() {
         viewModel.apply {
             field.observe(viewLifecycleOwner) {
-                renderAll(it)
+                renderAll(it as ComplexFieldModel)
 
             }
             currentPlayer.observe(viewLifecycleOwner) {

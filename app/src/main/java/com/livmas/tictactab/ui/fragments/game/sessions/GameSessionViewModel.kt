@@ -3,12 +3,14 @@ package com.livmas.tictactab.ui.fragments.game.sessions
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.livmas.tictactab.domain.models.IFieldModel
 import com.livmas.tictactab.domain.models.enums.GameResult
 import com.livmas.tictactab.domain.models.enums.Player
 import com.livmas.tictactab.ui.models.enums.Alert
 
 abstract class GameSessionViewModel: ViewModel() {
 
+    abstract val field: LiveData<IFieldModel>
     val currentPlayer: LiveData<Player>
         get() = _currentPlayer
     protected val _currentPlayer: MutableLiveData<Player> by lazy {

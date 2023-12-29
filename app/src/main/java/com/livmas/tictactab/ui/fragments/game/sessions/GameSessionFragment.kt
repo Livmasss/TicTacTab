@@ -5,14 +5,15 @@ import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageButton
+import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.livmas.tictactab.R
+import com.livmas.tictactab.domain.models.IFieldModel
 import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
-import com.livmas.tictactab.domain.models.classic.ClassicFieldModel
 import com.livmas.tictactab.domain.models.enums.CellState
 import com.livmas.tictactab.domain.models.enums.Player
 
@@ -32,16 +33,21 @@ abstract class GameSessionFragment: Fragment() {
         oDrawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_o_cell, null)
         oDrawable?.setTint(ResourcesCompat.getColor(resources, R.color.second_player, null))
     }
-    protected fun renderField(field: ClassicFieldModel, idsField: Array<Array<ImageButton>> ) {
+    protected fun renderField(field: IFieldModel, idsField: Array<Array<ImageButton>> ) {
         for (x in 0..2)
             for (y in 0..2)
-                when (field[ClassicCoordinatesModel(x, y)].state) {
-                    CellState.X -> idsField[x][y].setImageDrawable(xDrawable)
-                    CellState.O -> idsField[x][y].setImageDrawable(oDrawable)
-                    CellState.N -> idsField[x][y].setImageDrawable(null)
-                    null -> idsField[x][y].setImageDrawable(null)
-                }
+                renderCell(idsField[x][y], ClassicCoordinatesModel(x, y))
     }
+    protected fun renderCell(imageView: ImageView, cords: ClassicCoordinatesModel) = imageView.setImageDrawable(
+        viewModel.field.value?.get(cords)?.let {
+            when(it.state) {
+                CellState.X -> xDrawable
+                CellState.O -> oDrawable
+                CellState.N -> null
+                null -> null
+            }
+        }
+    )
 
     protected fun showLine(offset: Float = 0f, angle: Float = 0f) {
         val view = layoutInflater.inflate(R.layout.final_line_layout, fieldContainer, false) as ConstraintLayout

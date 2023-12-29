@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.livmas.tictactab.domain.models.GameSession
+import com.livmas.tictactab.domain.models.IFieldModel
 import com.livmas.tictactab.domain.models.complex.ComplexCoordinatesModel
 import com.livmas.tictactab.domain.models.complex.ComplexFieldModel
 import com.livmas.tictactab.domain.models.complex.ComplexGameSession
@@ -15,15 +16,15 @@ import com.livmas.tictactab.ui.models.enums.Alert
 
 class ComplexGameSessionViewModel : GameSessionViewModel() {
 
-    val field: LiveData<ComplexFieldModel>
-        get() = _field
+    override val field: LiveData<IFieldModel>
+        get() = _field as LiveData<IFieldModel>
     private val _field: MutableLiveData<ComplexFieldModel> by lazy {
         MutableLiveData<ComplexFieldModel>(ComplexFieldModel())
     }
     private var session: ComplexGameSession? = ComplexGameSession()
 
     fun resumeGame() {
-        session = ComplexGameSession(field.value!!, _currentPlayer.value, _gameResult.value)
+        session = ComplexGameSession(_field.value!!, _currentPlayer.value, _gameResult.value)
         _field.postValue(session!!.field)
     }
     private fun stopGame() {
