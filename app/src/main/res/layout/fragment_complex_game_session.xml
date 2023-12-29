@@ -33,6 +33,11 @@
                     <include
                         android:id="@+id/block00"
                         layout="@layout/classic_game_field_layout" />
+
+                    <ImageView
+                        android:id="@+id/image00"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
                 </com.livmas.tictactab.ui.views.SquareFrameLayout>
 
                 <com.livmas.tictactab.ui.views.SquareFrameLayout
@@ -42,6 +47,11 @@
                     <include
                         android:id="@+id/block01"
                         layout="@layout/classic_game_field_layout" />
+
+                    <ImageView
+                        android:id="@+id/image01"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
                 </com.livmas.tictactab.ui.views.SquareFrameLayout>
 
                 <com.livmas.tictactab.ui.views.SquareFrameLayout
@@ -51,6 +61,11 @@
                     <include
                         android:id="@+id/block02"
                         layout="@layout/classic_game_field_layout" />
+
+                    <ImageView
+                        android:id="@+id/image02"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
                 </com.livmas.tictactab.ui.views.SquareFrameLayout>
             </TableRow>
 
@@ -67,6 +82,11 @@
                     <include
                         android:id="@+id/block10"
                         layout="@layout/classic_game_field_layout" />
+
+                    <ImageView
+                        android:id="@+id/image10"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
                 </com.livmas.tictactab.ui.views.SquareFrameLayout>
 
                 <com.livmas.tictactab.ui.views.SquareFrameLayout
@@ -76,6 +96,11 @@
                     <include
                         android:id="@+id/block11"
                         layout="@layout/classic_game_field_layout" />
+
+                    <ImageView
+                        android:id="@+id/image11"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
                 </com.livmas.tictactab.ui.views.SquareFrameLayout>
 
                 <com.livmas.tictactab.ui.views.SquareFrameLayout
@@ -85,6 +110,11 @@
                     <include
                         android:id="@+id/block12"
                         layout="@layout/classic_game_field_layout" />
+
+                    <ImageView
+                        android:id="@+id/image12"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
                 </com.livmas.tictactab.ui.views.SquareFrameLayout>
             </TableRow>
 
@@ -101,6 +131,11 @@
                     <include
                         android:id="@+id/block20"
                         layout="@layout/classic_game_field_layout" />
+
+                    <ImageView
+                        android:id="@+id/image20"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
                 </com.livmas.tictactab.ui.views.SquareFrameLayout>
 
                 <com.livmas.tictactab.ui.views.SquareFrameLayout
@@ -110,6 +145,11 @@
                     <include
                         android:id="@+id/block21"
                         layout="@layout/classic_game_field_layout" />
+
+                    <ImageView
+                        android:id="@+id/image21"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
                 </com.livmas.tictactab.ui.views.SquareFrameLayout>
 
                 <com.livmas.tictactab.ui.views.SquareFrameLayout
@@ -119,6 +159,11 @@
                     <include
                         android:id="@+id/block22"
                         layout="@layout/classic_game_field_layout" />
+
+                    <ImageView
+                        android:id="@+id/image22"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
                 </com.livmas.tictactab.ui.views.SquareFrameLayout>
             </TableRow>
         </TableLayout>

@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import androidx.constraintlayout.widget.ConstraintLayout
+import android.widget.ImageView
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.snackbar.Snackbar
 import com.livmas.tictactab.R
@@ -104,7 +104,9 @@ class ComplexGameSessionFragment : GameSessionFragment() {
                     it?.let {
                         val button = getImageButton(it as ComplexCoordinatesModel)
                         renderCell(button, it)
-                        renderCell(button, it)
+                        field.value?.let { field ->
+                            renderBlockState(field as ComplexFieldModel, ClassicCoordinatesModel(it.x, it.y))
+                        }
                     }
                 }
                 currentPlayer.observe(owner) {
@@ -187,17 +189,25 @@ class ComplexGameSessionFragment : GameSessionFragment() {
     private fun renderBlockStates(field: ComplexFieldModel) {
         for (x in 0..2)
             for (y in 0..2) {
-                val container: ConstraintLayout by lazy {
-                    val id = resources.getIdentifier("block${x}$y", "id", requireContext().packageName)
-                    binding.root.findViewById(id)
-                }
-                when (field[ClassicCoordinatesModel(x, y)].state) {
-                    null -> continue
-                    CellState.N -> continue
-                    CellState.X -> container.foreground = xDrawable
-                    CellState.O -> container.foreground = oDrawable
-                }
+                renderBlockState(field, ClassicCoordinatesModel(x, y))
             }
+    }
+
+    private fun renderBlockState(field: ComplexFieldModel, cords: ClassicCoordinatesModel) {
+        val container: ImageView by lazy {
+            val id = resources.getIdentifier("image${cords.x}${cords.y}", "id", requireContext().packageName)
+            binding.root.findViewById(id)
+        }
+        renderBlockState(container, field[cords].state)
+    }
+
+    private fun renderBlockState(container: ImageView, state: CellState?) {
+        when (state) {
+            null -> {}
+            CellState.N -> {}
+            CellState.X -> container.setImageDrawable(xDrawable)
+            CellState.O -> container.setImageDrawable(oDrawable)
+        }
     }
 
     private fun getImageButtons() {
