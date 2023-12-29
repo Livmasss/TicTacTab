@@ -7,8 +7,6 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.ImageButton
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.snackbar.Snackbar
 import com.livmas.tictactab.R
@@ -38,6 +36,7 @@ class ClassicGameSessionFragment : GameSessionFragment() {
                 arrayOf(ibCell20, ibCell21, ibCell22)
             )
         }
+        fieldContainer = binding.flFieldContainer
 
         return binding.root
     }
@@ -142,18 +141,6 @@ class ClassicGameSessionFragment : GameSessionFragment() {
                 }
             }
         }
-    }
-    private fun showLine(offset: Float = 0f, angle: Float = 0f) {
-        val view = layoutInflater.inflate(R.layout.final_line_layout, binding.flFieldContainer, false) as ConstraintLayout
-        view.rotation = angle
-
-        ConstraintSet().apply {
-            clone(context, R.layout.final_line_layout)
-            setVerticalBias(R.id.vLine, 0.5f + offset)
-            applyTo(view)
-        }
-
-        binding.flFieldContainer.addView(view, 1)
     }
     private fun makeTurnListener(cords: ClassicCoordinatesModel): OnClickListener {
         return OnClickListener {

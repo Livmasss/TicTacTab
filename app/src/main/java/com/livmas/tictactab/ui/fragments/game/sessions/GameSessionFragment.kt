@@ -3,7 +3,10 @@ package com.livmas.tictactab.ui.fragments.game.sessions
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.ImageButton
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -15,6 +18,7 @@ import com.livmas.tictactab.domain.models.enums.Player
 
 abstract class GameSessionFragment: Fragment() {
     open val viewModel: GameSessionViewModel by activityViewModels()
+    protected lateinit var fieldContainer: FrameLayout
 
     protected var xDrawable: Drawable? = null
     protected var oDrawable: Drawable? = null
@@ -37,6 +41,24 @@ abstract class GameSessionFragment: Fragment() {
                     CellState.N -> idsField[x][y].setImageDrawable(null)
                     null -> idsField[x][y].setImageDrawable(null)
                 }
+    }
+
+    protected fun showLine(offset: Float = 0f, angle: Float = 0f) {
+        val view = layoutInflater.inflate(R.layout.final_line_layout, fieldContainer, false) as ConstraintLayout
+
+        addConstLayout(view, offset, angle)
+    }
+
+    private fun addConstLayout(view: ConstraintLayout, offset: Float = 0f, angle: Float = 0f) {
+        view.rotation = angle
+
+        ConstraintSet().apply {
+            clone(context, R.layout.final_line_layout)
+            setVerticalBias(R.id.vLine, 0.5f + offset)
+            applyTo(view)
+        }
+
+        fieldContainer.addView(view, 1)
     }
 
     protected fun definePlayerDrawable(player: Player): Drawable? {

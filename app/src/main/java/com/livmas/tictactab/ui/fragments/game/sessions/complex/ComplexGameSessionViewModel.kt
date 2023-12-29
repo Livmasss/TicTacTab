@@ -62,8 +62,10 @@ class ComplexGameSessionViewModel : GameSessionViewModel() {
                         else -> null
                     }
                 )
-
                 stopGame()
+            }
+            in 500..599 -> {
+                val cellNum = message.code % 10
             }
 
             31 -> _alert.postValue(Alert.GameFinished)

@@ -31,7 +31,7 @@
                     android:layout_height="130dp">
 
                     <include
-                        android:id="@+id/block_0.0"
+                        android:id="@+id/block00"
                         layout="@layout/classic_game_field_layout" />
                 </com.livmas.tictactab.ui.views.SquareFrameLayout>
 
@@ -40,7 +40,7 @@
                     android:layout_height="130dp">
 
                     <include
-                        android:id="@+id/block_0.1"
+                        android:id="@+id/block01"
                         layout="@layout/classic_game_field_layout" />
                 </com.livmas.tictactab.ui.views.SquareFrameLayout>
 
@@ -49,41 +49,7 @@
                     android:layout_height="130dp">
 
                     <include
-                        android:id="@+id/block_0.2"
-                        layout="@layout/classic_game_field_layout" />
-                </com.livmas.tictactab.ui.views.SquareFrameLayout>
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:divider="@drawable/line_material"
-                android:showDividers="middle">
-
-                <com.livmas.tictactab.ui.views.SquareFrameLayout
-                    android:layout_width="130dp"
-                    android:layout_height="130dp">
-
-                    <include
-                        android:id="@+id/block_1.0"
-                        layout="@layout/classic_game_field_layout" />
-                </com.livmas.tictactab.ui.views.SquareFrameLayout>
-
-                <com.livmas.tictactab.ui.views.SquareFrameLayout
-                    android:layout_width="130dp"
-                    android:layout_height="130dp">
-
-                    <include
-                        android:id="@+id/block_1.1"
-                        layout="@layout/classic_game_field_layout" />
-                </com.livmas.tictactab.ui.views.SquareFrameLayout>
-
-                <com.livmas.tictactab.ui.views.SquareFrameLayout
-                    android:layout_width="130dp"
-                    android:layout_height="130dp">
-
-                    <include
-                        android:id="@+id/block_1.2"
+                        android:id="@+id/block02"
                         layout="@layout/classic_game_field_layout" />
                 </com.livmas.tictactab.ui.views.SquareFrameLayout>
             </TableRow>
@@ -99,7 +65,7 @@
                     android:layout_height="130dp">
 
                     <include
-                        android:id="@+id/block_2.0"
+                        android:id="@+id/block10"
                         layout="@layout/classic_game_field_layout" />
                 </com.livmas.tictactab.ui.views.SquareFrameLayout>
 
@@ -108,7 +74,7 @@
                     android:layout_height="130dp">
 
                     <include
-                        android:id="@+id/block_2.1"
+                        android:id="@+id/block11"
                         layout="@layout/classic_game_field_layout" />
                 </com.livmas.tictactab.ui.views.SquareFrameLayout>
 
@@ -117,7 +83,41 @@
                     android:layout_height="130dp">
 
                     <include
-                        android:id="@+id/block_2.2"
+                        android:id="@+id/block12"
+                        layout="@layout/classic_game_field_layout" />
+                </com.livmas.tictactab.ui.views.SquareFrameLayout>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@drawable/line_material"
+                android:showDividers="middle">
+
+                <com.livmas.tictactab.ui.views.SquareFrameLayout
+                    android:layout_width="130dp"
+                    android:layout_height="130dp">
+
+                    <include
+                        android:id="@+id/block20"
+                        layout="@layout/classic_game_field_layout" />
+                </com.livmas.tictactab.ui.views.SquareFrameLayout>
+
+                <com.livmas.tictactab.ui.views.SquareFrameLayout
+                    android:layout_width="130dp"
+                    android:layout_height="130dp">
+
+                    <include
+                        android:id="@+id/block21"
+                        layout="@layout/classic_game_field_layout" />
+                </com.livmas.tictactab.ui.views.SquareFrameLayout>
+
+                <com.livmas.tictactab.ui.views.SquareFrameLayout
+                    android:layout_width="130dp"
+                    android:layout_height="130dp">
+
+                    <include
+                        android:id="@+id/block22"
                         layout="@layout/classic_game_field_layout" />
                 </com.livmas.tictactab.ui.views.SquareFrameLayout>
             </TableRow>

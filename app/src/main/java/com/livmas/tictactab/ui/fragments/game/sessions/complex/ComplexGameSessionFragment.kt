@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.snackbar.Snackbar
 import com.livmas.tictactab.R
@@ -17,6 +16,7 @@ import com.livmas.tictactab.domain.models.GameSession
 import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
 import com.livmas.tictactab.domain.models.complex.ComplexCoordinatesModel
 import com.livmas.tictactab.domain.models.complex.ComplexFieldModel
+import com.livmas.tictactab.domain.models.enums.CellState
 import com.livmas.tictactab.domain.models.enums.GameResult
 import com.livmas.tictactab.ui.fragments.game.sessions.GameSessionFragment
 import com.livmas.tictactab.ui.models.enums.Alert
@@ -34,6 +34,8 @@ class ComplexGameSessionFragment : GameSessionFragment() {
         binding = FragmentComplexGameSessionBinding.inflate(inflater, container, false)
         blocks = Array(9) { arrayOf(arrayOf(ImageButton(context))) }
         getImageButtons()
+
+        fieldContainer = binding.flFieldContainer
 
         return binding.root
     }
@@ -88,6 +90,7 @@ class ComplexGameSessionFragment : GameSessionFragment() {
         viewModel.apply {
             field.observe(viewLifecycleOwner) {
                 renderAll(it)
+
             }
             currentPlayer.observe(viewLifecycleOwner) {
                 binding.ivGameDisplay.apply {
@@ -161,6 +164,24 @@ class ComplexGameSessionFragment : GameSessionFragment() {
         renderField(field[ClassicCoordinatesModel(2, 0)].field, blocks[6])
         renderField(field[ClassicCoordinatesModel(2, 1)].field, blocks[7])
         renderField(field[ClassicCoordinatesModel(2, 2)].field, blocks[8])
+
+        renderBlockStates(field)
+    }
+
+    private fun renderBlockStates(field: ComplexFieldModel) {
+        for (x in 0..2)
+            for (y in 0..2) {
+                val container: ConstraintLayout by lazy {
+                    val id = resources.getIdentifier("block${x}$y", "id", requireContext().packageName)
+                    binding.root.findViewById(id)
+                }
+                when (field[ClassicCoordinatesModel(x, y)].state) {
+                    null -> continue
+                    CellState.N -> continue
+                    CellState.X -> container.foreground = xDrawable
+                    CellState.O -> container.foreground = oDrawable
+                }
+            }
     }
 
     private fun getImageButtons() {
@@ -227,19 +248,6 @@ class ComplexGameSessionFragment : GameSessionFragment() {
                 arrayOf(ibCell20, ibCell21, ibCell22)
             )
         }
-    }
-
-    private fun showLine(offset: Float = 0f, angle: Float = 0f) {
-        val view = layoutInflater.inflate(R.layout.final_line_layout, binding.flFieldContainer, false) as ConstraintLayout
-        view.rotation = angle
-
-        ConstraintSet().apply {
-            clone(context, R.layout.final_line_layout)
-            setVerticalBias(R.id.vLine, 0.5f + offset)
-            applyTo(view)
-        }
-
-        binding.flFieldContainer.addView(view, 1)
     }
     private fun makeTurnListener(cords: ComplexCoordinatesModel): View.OnClickListener {
         return View.OnClickListener {
