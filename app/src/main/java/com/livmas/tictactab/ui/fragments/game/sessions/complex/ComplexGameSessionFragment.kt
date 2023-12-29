@@ -90,7 +90,6 @@ class ComplexGameSessionFragment : GameSessionFragment() {
         viewModel.apply {
             field.observe(viewLifecycleOwner) {
                 renderAll(it as ComplexFieldModel)
-
             }
             currentPlayer.observe(viewLifecycleOwner) {
                 binding.ivGameDisplay.apply {

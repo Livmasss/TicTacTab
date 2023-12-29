@@ -3,13 +3,21 @@ package com.livmas.tictactab.ui.fragments.game.sessions
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.livmas.tictactab.domain.models.GameSession
 import com.livmas.tictactab.domain.models.IFieldModel
+import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
 import com.livmas.tictactab.domain.models.enums.GameResult
 import com.livmas.tictactab.domain.models.enums.Player
 import com.livmas.tictactab.ui.models.enums.Alert
 
 abstract class GameSessionViewModel: ViewModel() {
+    protected abstract var session: GameSession?
 
+    val lastTurn: LiveData<ClassicCoordinatesModel?>
+        get() = _lastTurn
+    protected val _lastTurn: MutableLiveData<ClassicCoordinatesModel?> by lazy {
+        MutableLiveData(null)
+    }
     val field: LiveData<IFieldModel>
         get() = _field
     protected abstract val _field: MutableLiveData<IFieldModel>
@@ -35,6 +43,15 @@ abstract class GameSessionViewModel: ViewModel() {
     }
 
     fun clearAlert() {
+        _alert.postValue(null)
+    }
+
+    open fun restartGame() {
+        _field.postValue(session!!.field)
+        _lastTurn.postValue(null)
+        _currentPlayer.postValue(Player.X)
+        _gameResult.postValue(null)
+        _winLineCode.postValue(0)
         _alert.postValue(null)
     }
 }

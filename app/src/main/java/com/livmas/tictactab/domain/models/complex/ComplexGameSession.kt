@@ -20,8 +20,6 @@ class ComplexGameSession(
     override val field: ComplexFieldModel
         get() = _field.copy()
 
-    val currentPlayer: Player
-        get() = _currentPlayer
     private val backStack = Stack<ClassicCoordinatesModel>()
 
     override fun makeTurn(cords: ICoordinatesModel): GameMessage {

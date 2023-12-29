@@ -19,6 +19,8 @@ abstract class GameSession(
     val result: GameResult?
         get() = _result
 
+    val currentPlayer: Player
+        get() = _currentPlayer
     protected open var _currentPlayer = current ?: Player.X
     protected open var winLineCode = 0
 

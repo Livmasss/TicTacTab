@@ -1,7 +1,6 @@
 package com.livmas.tictactab.ui.fragments.game.sessions.classic
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.livmas.tictactab.domain.models.GameSession
 import com.livmas.tictactab.domain.models.IFieldModel
@@ -20,13 +19,8 @@ class ClassicGameSessionViewModel : GameSessionViewModel() {
         MutableLiveData(ClassicFieldModel())
     }
 
-    val lastTurn: LiveData<ClassicCoordinatesModel?>
-        get() = _lastTurn
-    private val _lastTurn: MutableLiveData<ClassicCoordinatesModel?> by lazy {
-        MutableLiveData(null)
-    }
 
-    private var session: ClassicGameSession? = ClassicGameSession()
+    override var session: GameSession? = ClassicGameSession()
 
     fun resumeGame() {
         session = ClassicGameSession(_field.value!! as ClassicFieldModel, _currentPlayer.value, _gameResult.value)
@@ -35,15 +29,10 @@ class ClassicGameSessionViewModel : GameSessionViewModel() {
     private fun stopGame() {
         session = null
     }
-    fun restartGame() {
-        session = ClassicGameSession(ClassicFieldModel(), Player.X, null)
 
-        _field.postValue(session!!.field)
-        _lastTurn.postValue(null)
-        _currentPlayer.postValue(Player.X)
-        _gameResult.postValue(null)
-        _winLineCode.postValue(0)
-        _alert.postValue(null)
+    override fun restartGame() {
+        session = ClassicGameSession(ClassicFieldModel(), Player.X, null)
+        super.restartGame()
     }
 
     fun makeTurn(cords: ClassicCoordinatesModel) {

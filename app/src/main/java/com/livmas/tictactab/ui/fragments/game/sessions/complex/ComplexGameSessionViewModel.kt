@@ -18,7 +18,7 @@ class ComplexGameSessionViewModel : GameSessionViewModel() {
     override val _field: MutableLiveData<IFieldModel> by lazy {
         MutableLiveData(ComplexFieldModel())
     }
-    private var session: ComplexGameSession? = ComplexGameSession()
+    override var session: GameSession? = ComplexGameSession()
 
     fun resumeGame() {
         session = ComplexGameSession(_field.value!! as ComplexFieldModel, _currentPlayer.value, _gameResult.value)
@@ -27,14 +27,9 @@ class ComplexGameSessionViewModel : GameSessionViewModel() {
     private fun stopGame() {
         session = null
     }
-    fun restartGame() {
+    override fun restartGame() {
         session = ComplexGameSession(ComplexFieldModel(), Player.X, null)
-
-        _field.postValue(session!!.field)
-        _currentPlayer.postValue(Player.X)
-        _gameResult.postValue(null)
-        _winLineCode.postValue(0)
-        _alert.postValue(null)
+        super.restartGame()
     }
 
     fun makeTurn(cords: ComplexCoordinatesModel) {
