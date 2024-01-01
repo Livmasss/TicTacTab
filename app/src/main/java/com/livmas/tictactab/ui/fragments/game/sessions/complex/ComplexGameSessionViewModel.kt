@@ -57,7 +57,8 @@ class ComplexGameSessionViewModel : GameSessionViewModel() {
                 )
                 stopGame()
             }
-            in 500..599 -> {
+            in 50..59 -> {
+                nextTurn()
             }
 
             31 -> _alert.postValue(Alert.GameFinished)

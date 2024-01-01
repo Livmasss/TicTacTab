@@ -3,6 +3,7 @@ package com.livmas.tictactab.domain.models.complex
 import com.livmas.tictactab.domain.models.GameSession
 import com.livmas.tictactab.domain.models.ICoordinatesModel
 import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
+import com.livmas.tictactab.domain.models.enums.CellState
 import com.livmas.tictactab.domain.models.enums.GameResult
 import com.livmas.tictactab.domain.models.enums.Player
 import com.livmas.tictactab.ui.GameMessage
@@ -22,21 +23,46 @@ class ComplexGameSession(
 
     private val backStack = Stack<ClassicCoordinatesModel>()
 
+    override fun postTurnProcess(cords: ICoordinatesModel) {
+        val fCell = _field[ClassicCoordinatesModel(cords)]
+        fCell.state = when (fCell.checkWinner()) {
+            CellState.N -> if (field.isFull()) CellState.N else null
+            CellState.X -> CellState.X
+            CellState.O -> CellState.O
+        }
+
+        super.postTurnProcess(cords)
+    }
+    override fun preTurnProcess(cords: ICoordinatesModel): GameMessage {
+
+        cords as ComplexCoordinatesModel
+        if (_field[cords] != CellState.N)
+            return GameMessage(
+                null,
+                40
+            )
+
+        return super.preTurnProcess(cords)
+    }
     override fun makeTurn(cords: ICoordinatesModel): GameMessage {
-        return field[ClassicCoordinatesModel(cords.x, cords.y)]
-            .makeTurn((cords as ComplexCoordinatesModel).innerCoordinates, _currentPlayer).let {
-                when (it.code) {
-                    in 10..19 -> {
-                        changePlayer()
-                        it
-                    }
-                    in 50..59 -> {
-                        changePlayer()
-                        val c = it.code + cords.y*3 + cords.x
-                        GameMessage(it.content, c)
-                    }
-                    else -> it
-                }
+        val cCords = ClassicCoordinatesModel(cords)
+        var state = _field[cCords].state
+        if (state != null)
+            return GameMessage(
+                null,
+                41
+            )
+
+        val message = super.makeTurn(cords)
+        state = _field[cCords].state
+
+        return GameMessage(null,
+            when (state) {
+                CellState.N -> 50
+                CellState.X -> 51
+                CellState.O -> 52
+                null -> return message
             }
+        )
     }
 }

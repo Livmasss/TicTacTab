@@ -5,4 +5,6 @@ import com.livmas.tictactab.domain.models.ICoordinatesModel
 data class ClassicCoordinatesModel(
     override val x: Int,
     override val y: Int
-) : ICoordinatesModel
+) : ICoordinatesModel {
+    constructor(cords: ICoordinatesModel) : this(cords.x, cords.y)
+}

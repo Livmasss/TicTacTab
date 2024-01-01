@@ -4,6 +4,7 @@ import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
 import com.livmas.tictactab.domain.models.enums.CellState
 import com.livmas.tictactab.domain.models.enums.GameResult
 import com.livmas.tictactab.domain.models.enums.Player
+import com.livmas.tictactab.ui.GameMessage
 
 abstract class GameSession(
     protected open val _field: IFieldModel,
@@ -104,6 +105,57 @@ abstract class GameSession(
         else {
             winLineCode = 0
             CellState.N
+        }
+    }
+
+    override fun makeTurn(cords: ICoordinatesModel): GameMessage {
+        val state = if (_currentPlayer == Player.X)
+            CellState.X
+        else
+            CellState.O
+
+        preTurnProcess(cords).let {
+            when (it.code) {
+                in 40..49 -> return it
+                else -> {}
+            }
+        }
+
+        _field.set(cords, state)
+
+        postTurnProcess(cords)
+        changePlayer()
+
+        return GameMessage(null,
+            when (_result) {
+                GameResult.N -> 200
+                GameResult.X -> 210 + winLineCode
+                GameResult.O -> 220 + winLineCode
+                null -> when(_currentPlayer) {
+                    Player.X -> 11
+                    Player.O -> 12
+                }
+            }
+        )
+    }
+
+    protected open fun preTurnProcess(cords: ICoordinatesModel) : GameMessage {
+        if (_field[ClassicCoordinatesModel(cords)].state != null)
+            return GameMessage(
+                null,
+                40
+            )
+        return GameMessage(
+            null,
+            0
+        )
+    }
+
+    protected open fun postTurnProcess(cords: ICoordinatesModel) {
+        _result = when (checkWinner()) {
+            CellState.N -> if (_field.isFull()) GameResult.N else null
+            CellState.X -> GameResult.X
+            CellState.O -> GameResult.O
         }
     }
 }

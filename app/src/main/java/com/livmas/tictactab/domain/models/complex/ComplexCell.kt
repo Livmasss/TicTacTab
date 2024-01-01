@@ -51,7 +51,7 @@ class ComplexCell(val field: ClassicFieldModel = ClassicFieldModel(), state: Cel
         return cell1 != CellState.N && cell1 == cell2 && cell2 == cell3
     }
 
-    private fun checkWinner(): CellState {
+    fun checkWinner(): CellState {
         return if (checkLine(
                 getCellState(ClassicCoordinatesModel(0, 0)),
                 getCellState(ClassicCoordinatesModel(0, 1)),

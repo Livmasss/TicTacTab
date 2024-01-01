@@ -1,6 +1,7 @@
 package com.livmas.tictactab.domain.models.classic
 
 import com.livmas.tictactab.domain.models.CellModel
+import com.livmas.tictactab.domain.models.ICoordinatesModel
 import com.livmas.tictactab.domain.models.IFieldModel
 import com.livmas.tictactab.domain.models.enums.CellState
 
@@ -14,11 +15,21 @@ data class ClassicFieldModel(
     override fun set(cords: ClassicCoordinatesModel, value: CellModel) {
         data[cords.x][cords.y] = value
     }
+
+    override fun set(cords: ICoordinatesModel, value: CellState) {
+        data[cords.x][cords.y].state = value
+    }
+
     fun setState(cords: ClassicCoordinatesModel, value: CellState) {
         data[cords.x][cords.y].state = value
     }
     override operator fun get(cords: ClassicCoordinatesModel): CellModel {
         return data[cords.x][cords.y]
+    }
+
+    override fun get(cords: ICoordinatesModel): CellState {
+        cords as ClassicCoordinatesModel
+        return this[cords].state ?: CellState.N
     }
 
     override fun isFull(): Boolean = !data.any { row ->

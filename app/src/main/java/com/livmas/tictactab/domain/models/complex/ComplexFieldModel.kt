@@ -1,8 +1,10 @@
 package com.livmas.tictactab.domain.models.complex
 
 import com.livmas.tictactab.domain.models.CellModel
+import com.livmas.tictactab.domain.models.ICoordinatesModel
 import com.livmas.tictactab.domain.models.IFieldModel
 import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
+import com.livmas.tictactab.domain.models.enums.CellState
 
 data class ComplexFieldModel(
     private val data: Array<Array<ComplexCell>> = arrayOf(
@@ -18,8 +20,17 @@ data class ComplexFieldModel(
         data[cords.x][cords.y] = value as ComplexCell
     }
 
+    override fun set(cords: ICoordinatesModel, value: CellState) {
+        data[cords.x][cords.y].field.setState((cords as ComplexCoordinatesModel).innerCoordinates, value)
+    }
+
     override fun get(cords: ClassicCoordinatesModel): ComplexCell {
         return data[cords.x][cords.y]
+    }
+
+    override fun get(cords: ICoordinatesModel): CellState {
+        cords as ComplexCoordinatesModel
+        return this[ClassicCoordinatesModel(cords)].field[cords.innerCoordinates].state ?: CellState.N
     }
 
     override fun isFull(): Boolean = data.all { row ->
