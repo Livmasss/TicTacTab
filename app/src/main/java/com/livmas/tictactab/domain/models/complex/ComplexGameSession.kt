@@ -34,7 +34,6 @@ class ComplexGameSession(
         super.postTurnProcess(cords)
     }
     override fun preTurnProcess(cords: ICoordinatesModel): GameMessage {
-
         cords as ComplexCoordinatesModel
         if (_field[cords] != CellState.N)
             return GameMessage(
@@ -42,19 +41,20 @@ class ComplexGameSession(
                 40
             )
 
-        return super.preTurnProcess(cords)
-    }
-    override fun makeTurn(cords: ICoordinatesModel): GameMessage {
-        val cCords = ClassicCoordinatesModel(cords)
-        var state = _field[cCords].state
-        if (state != null)
+        if (_field[ClassicCoordinatesModel(cords)].state != null)
             return GameMessage(
                 null,
                 41
             )
 
+        return super.preTurnProcess(cords)
+    }
+    override fun makeTurn(cords: ICoordinatesModel): GameMessage {
         val message = super.makeTurn(cords)
-        state = _field[cCords].state
+        val state = _field[ClassicCoordinatesModel(cords)].state
+
+        if (message.code !in 10..19)
+            return message
 
         return GameMessage(null,
             when (state) {

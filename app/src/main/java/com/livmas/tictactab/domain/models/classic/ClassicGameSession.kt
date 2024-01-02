@@ -20,6 +20,15 @@ class ClassicGameSession(
     override val field: ClassicFieldModel
         get() = _field.copy()
 
+    override fun preTurnProcess(cords: ICoordinatesModel): GameMessage {
+        if (_field[ClassicCoordinatesModel(cords)].state != null)
+            return GameMessage(
+                null,
+                40
+            )
+
+        return super.preTurnProcess(cords)
+    }
     override fun makeTurn(cords: ICoordinatesModel): GameMessage {
         val state = if (_currentPlayer == Player.X)
             CellState.X

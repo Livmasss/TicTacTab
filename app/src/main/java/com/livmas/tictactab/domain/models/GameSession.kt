@@ -140,11 +140,6 @@ abstract class GameSession(
     }
 
     protected open fun preTurnProcess(cords: ICoordinatesModel) : GameMessage {
-        if (_field[ClassicCoordinatesModel(cords)].state != null)
-            return GameMessage(
-                null,
-                40
-            )
         return GameMessage(
             null,
             0
