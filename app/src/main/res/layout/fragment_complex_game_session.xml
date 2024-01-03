@@ -30,7 +30,8 @@
                 android:divider="@drawable/block_divider_material"
                 android:showDividers="middle">
 
-                <com.livmas.tictactab.ui.views.SquareFrameLayout android:layout_weight="1">
+                <com.livmas.tictactab.ui.views.SquareFrameLayout
+                    style="@style/game_block_style">
 
                     <include
                         android:id="@+id/block00"
@@ -42,9 +43,10 @@
                         android:layout_height="match_parent" />
                 </com.livmas.tictactab.ui.views.SquareFrameLayout>
 
-                <com.livmas.tictactab.ui.views.SquareFrameLayout android:layout_weight="1">
+                <com.livmas.tictactab.ui.views.SquareFrameLayout
+                    style="@style/game_block_style">
 
-                    <include
+                <include
                         android:id="@+id/block01"
                         layout="@layout/classic_game_field_layout" />
 
@@ -54,7 +56,8 @@
                         android:layout_height="match_parent" />
                 </com.livmas.tictactab.ui.views.SquareFrameLayout>
 
-                <com.livmas.tictactab.ui.views.SquareFrameLayout android:layout_weight="1">
+                <com.livmas.tictactab.ui.views.SquareFrameLayout
+                    style="@style/game_block_style">
 
                     <include
                         android:id="@+id/block02"
@@ -74,7 +77,8 @@
                 android:divider="@drawable/block_divider_material"
                 android:showDividers="middle">
 
-                <com.livmas.tictactab.ui.views.SquareFrameLayout android:layout_weight="1">
+                <com.livmas.tictactab.ui.views.SquareFrameLayout
+                    style="@style/game_block_style">
 
                     <include
                         android:id="@+id/block10"
@@ -86,7 +90,8 @@
                         android:layout_height="match_parent" />
                 </com.livmas.tictactab.ui.views.SquareFrameLayout>
 
-                <com.livmas.tictactab.ui.views.SquareFrameLayout android:layout_weight="1">
+                <com.livmas.tictactab.ui.views.SquareFrameLayout
+                    style="@style/game_block_style">
 
                     <include
                         android:id="@+id/block11"
@@ -98,7 +103,8 @@
                         android:layout_height="match_parent" />
                 </com.livmas.tictactab.ui.views.SquareFrameLayout>
 
-                <com.livmas.tictactab.ui.views.SquareFrameLayout android:layout_weight="1">
+                <com.livmas.tictactab.ui.views.SquareFrameLayout
+                    style="@style/game_block_style">
 
                     <include
                         android:id="@+id/block12"
@@ -116,7 +122,8 @@
                 android:divider="@drawable/block_divider_material"
                 android:showDividers="middle">
 
-                <com.livmas.tictactab.ui.views.SquareFrameLayout android:layout_weight="1">
+                <com.livmas.tictactab.ui.views.SquareFrameLayout
+                    style="@style/game_block_style">
 
                     <include
                         android:id="@+id/block20"
@@ -128,7 +135,8 @@
                         android:layout_height="match_parent" />
                 </com.livmas.tictactab.ui.views.SquareFrameLayout>
 
-                <com.livmas.tictactab.ui.views.SquareFrameLayout android:layout_weight="1">
+                <com.livmas.tictactab.ui.views.SquareFrameLayout
+                    style="@style/game_block_style">
 
                     <include
                         android:id="@+id/block21"
@@ -140,7 +148,8 @@
                         android:layout_height="match_parent" />
                 </com.livmas.tictactab.ui.views.SquareFrameLayout>
 
-                <com.livmas.tictactab.ui.views.SquareFrameLayout android:layout_weight="1">
+                <com.livmas.tictactab.ui.views.SquareFrameLayout
+                    style="@style/game_block_style">
 
                     <include
                         android:id="@+id/block22"

@@ -158,14 +158,14 @@ class ComplexGameSessionFragment : GameSessionFragment() {
                 winLineCode.observe(owner) {
                     when (it) {
                         0 -> return@observe
-                        1 -> showLine(offset = -1f/3f)
+                        1 -> showLine(offset = -0.35f)
                         2 -> showLine()
-                        3 -> showLine(offset = 1f/3f)
+                        3 -> showLine(offset = 0.35f)
                         4 -> showLine(angle = 45f)
                         5 -> showLine(angle = -45f)
-                        6 -> showLine(offset = 1f/3f, angle = 90f)
+                        6 -> showLine(offset = 0.35f, angle = 90f)
                         7 -> showLine(angle = 90f)
-                        8 -> showLine(offset = -1f/3f, angle = 90f)
+                        8 -> showLine(offset = -0.35f, angle = 90f)
                     }
                 }
             }

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="field_line">
+        <item name="android:background">?attr/colorPrimary</item>
+    </style>
+
+    <style name="game_field_theme">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:padding">5dp</item>
+
+        <item name="android:scaleType">fitCenter</item>
+        <item name="backgroundTint">@color/transparent</item>
+    </style>
+
+    <style name="game_fragment_theme">
+        <item name="android:textSize">28sp</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="textViewStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">42sp</item>
+    </style>
+    <style name="Theme.Snackbar" parent="Widget.MaterialComponents.Snackbar.TextView">
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="Theme.Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:padding">12dp</item>
+        <item name="android:layout_marginVertical">8dp</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="game_block_style">
+        <item name="android:layout_weight">1</item>
+        <item name="android:padding">5dp</item>
+    </style>
+</resources>
