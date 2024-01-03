@@ -40,6 +40,4 @@ class GameMainFragment : Fragment() {
             navController.navigate(R.id.action_gameMainFragment_to_navigation_game_complex_session)
         }
     }
-
-    
 }
