@@ -16,14 +16,14 @@
             android:id="@+id/field"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:divider="@drawable/line_material"
+            android:divider="@drawable/block_divider_material"
             android:showDividers="middle"
             tools:context=".ui.fragments.game.sessions.complex.ComplexGameSessionFragment">
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:divider="@drawable/line_material"
+                android:divider="@drawable/block_divider_material"
                 android:showDividers="middle">
 
                 <com.livmas.tictactab.ui.views.SquareFrameLayout
@@ -72,7 +72,7 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:divider="@drawable/line_material"
+                android:divider="@drawable/block_divider_material"
                 android:showDividers="middle">
 
                 <com.livmas.tictactab.ui.views.SquareFrameLayout
@@ -121,7 +121,7 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:divider="@drawable/line_material"
+                android:divider="@drawable/block_divider_material"
                 android:showDividers="middle">
 
                 <com.livmas.tictactab.ui.views.SquareFrameLayout

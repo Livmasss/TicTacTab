@@ -7,7 +7,7 @@
 
     <View
         android:id="@+id/vLine"
-        style="@style/field_line"
+        android:background="?attr/colorPrimaryVariant"
         android:layout_width="match_parent"
         android:layout_height="15dp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -15,7 +15,7 @@
 
         <include
             android:id="@+id/field"
-            layout="@layout/classic_game_field_layout"/>
+            layout="@layout/classic_game_field_layout" />
 
     </com.livmas.tictactab.ui.views.SquareFrameLayout>
 

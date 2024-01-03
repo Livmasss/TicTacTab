@@ -2,6 +2,7 @@ package com.livmas.tictactab.ui.fragments.game.sessions
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageButton
@@ -19,6 +20,7 @@ import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
 import com.livmas.tictactab.domain.models.enums.CellState
 import com.livmas.tictactab.domain.models.enums.Player
 
+
 abstract class GameSessionFragment: Fragment() {
     open val viewModel: GameSessionViewModel by activityViewModels()
     protected lateinit var fieldContainer: FrameLayout
@@ -31,9 +33,22 @@ abstract class GameSessionFragment: Fragment() {
 
         //Initiates drawables for cell states
         xDrawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_x_cell, null)
-        xDrawable?.setTint(ResourcesCompat.getColor(resources, R.color.first_player, null))
+        xDrawable?.setTint(
+            context?.let {
+                val typedValue = TypedValue()
+                it.theme.resolveAttribute(com.google.android.material.R.attr.colorSecondary, typedValue, true)
+                typedValue.data
+            } ?: ResourcesCompat.getColor(resources, R.color.orange_200, null)
+        )
+
         oDrawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_o_cell, null)
-        oDrawable?.setTint(ResourcesCompat.getColor(resources, R.color.second_player, null))
+        oDrawable?.setTint(
+            context?.let {
+                val typedValue = TypedValue()
+                it.theme.resolveAttribute(com.google.android.material.R.attr.colorPrimary, typedValue, true)
+                typedValue.data
+            } ?: ResourcesCompat.getColor(resources, R.color.purple_200, null)
+        )
     }
     protected abstract fun renderCell(imageButton: ImageButton, cords: ICoordinatesModel)
     protected fun renderField(field: IFieldModel, idsField: Array<Array<ImageButton>> ) {

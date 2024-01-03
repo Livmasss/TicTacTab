@@ -48,7 +48,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:contentDescription="@string/cell_coordinates_0_0"
 
-        style="@style/game_field_theme"/>
+        style="@style/game_field_theme" />
 
     <ImageButton
         android:id="@+id/ibCell0_1"
