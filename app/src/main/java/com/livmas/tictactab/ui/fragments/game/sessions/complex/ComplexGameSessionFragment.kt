@@ -46,7 +46,7 @@ class ComplexGameSessionFragment : GameSessionFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initViews()
-        viewModel.field.value?.let { renderAll(it as ComplexFieldModel) }
+        viewModel.field.value?.let { renderWholeField(it as ComplexFieldModel) }
         initObservers()
         viewModel.resumeGame()
     }
@@ -101,6 +101,8 @@ class ComplexGameSessionFragment : GameSessionFragment() {
         viewLifecycleOwner.also { owner ->
             viewModel.apply {
                 lastTurn.observe(owner) {
+                    if (it == null)
+                        viewModel.field.value?.let { field -> renderAll(field as ComplexFieldModel) }
                     it?.let {
                         val button = getImageButton(it as ComplexCoordinatesModel)
                         renderCell(button, it)
@@ -173,6 +175,11 @@ class ComplexGameSessionFragment : GameSessionFragment() {
     }
 
     private fun renderAll(field: ComplexFieldModel) {
+        renderWholeField(field)
+        renderBlockStates(field)
+    }
+
+    private fun renderWholeField(field: ComplexFieldModel) {
         renderField(field[ClassicCoordinatesModel(0, 0)].field, blocks[0])
         renderField(field[ClassicCoordinatesModel(0, 1)].field, blocks[1])
         renderField(field[ClassicCoordinatesModel(0, 2)].field, blocks[2])
@@ -182,8 +189,6 @@ class ComplexGameSessionFragment : GameSessionFragment() {
         renderField(field[ClassicCoordinatesModel(2, 0)].field, blocks[6])
         renderField(field[ClassicCoordinatesModel(2, 1)].field, blocks[7])
         renderField(field[ClassicCoordinatesModel(2, 2)].field, blocks[8])
-
-        renderBlockStates(field)
     }
 
     private fun renderBlockStates(field: ComplexFieldModel) {
@@ -203,8 +208,8 @@ class ComplexGameSessionFragment : GameSessionFragment() {
 
     private fun renderBlockState(container: ImageView, state: CellState?) {
         when (state) {
-            null -> {}
-            CellState.N -> {}
+            null -> container.setImageDrawable(null)
+            CellState.N -> container.setImageDrawable(null)
             CellState.X -> container.setImageDrawable(xDrawable)
             CellState.O -> container.setImageDrawable(oDrawable)
         }
