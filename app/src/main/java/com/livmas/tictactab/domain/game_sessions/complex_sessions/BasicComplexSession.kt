@@ -31,6 +31,8 @@ open class BasicComplexSession(
         }
 
         super.postTurnProcess(cords)
+        if (fCell.state != null)
+            onBlockClose(cords)
     }
     override fun preTurnProcess(cords: ICoordinatesModel): GameMessage {
         cords as ComplexCoordinatesModel
@@ -63,5 +65,7 @@ open class BasicComplexSession(
                 null -> return message
             }
         )
+    }
+    open fun onBlockClose(cords: ICoordinatesModel) {
     }
 }

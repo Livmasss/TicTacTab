@@ -15,7 +15,7 @@ abstract class GameSession(
 ): IGameSession {
 
     companion object {
-        const val TAG = "classic_game"
+        const val TAG = "game"
     }
     abstract val field: IFieldModel
 

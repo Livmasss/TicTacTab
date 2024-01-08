@@ -19,8 +19,8 @@ class SingleComplexSession(
     private var _currentBlockCords: ClassicCoordinatesModel? = null
 
     override fun postTurnProcess(cords: ICoordinatesModel) {
-        super.postTurnProcess(cords)
         _currentBlockCords = ClassicCoordinatesModel(cords)
+        super.postTurnProcess(cords)
     }
 
     override fun preTurnProcess(cords: ICoordinatesModel): GameMessage {
@@ -34,5 +34,10 @@ class SingleComplexSession(
             )
         else
             super.preTurnProcess(cords)
+    }
+
+    override fun onBlockClose(cords: ICoordinatesModel) {
+        super.onBlockClose(cords)
+        _currentBlockCords = null
     }
 }
