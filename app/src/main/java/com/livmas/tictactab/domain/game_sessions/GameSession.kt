@@ -1,5 +1,7 @@
-package com.livmas.tictactab.domain.models
+package com.livmas.tictactab.domain.game_sessions
 
+import com.livmas.tictactab.domain.models.ICoordinatesModel
+import com.livmas.tictactab.domain.models.IFieldModel
 import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
 import com.livmas.tictactab.domain.models.enums.CellState
 import com.livmas.tictactab.domain.models.enums.GameResult
@@ -120,11 +122,8 @@ abstract class GameSession(
                 else -> {}
             }
         }
-
         _field.set(cords, state)
-
         postTurnProcess(cords)
-        changePlayer()
 
         return GameMessage(null,
             when (_result) {
@@ -152,5 +151,6 @@ abstract class GameSession(
             CellState.X -> GameResult.X
             CellState.O -> GameResult.O
         }
+        changePlayer()
     }
 }

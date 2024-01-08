@@ -12,7 +12,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.livmas.tictactab.R
 import com.livmas.tictactab.databinding.ClassicGameFieldLayoutBinding
 import com.livmas.tictactab.databinding.FragmentComplexGameSessionBinding
-import com.livmas.tictactab.domain.models.GameSession
+import com.livmas.tictactab.domain.game_sessions.GameSession
 import com.livmas.tictactab.domain.models.ICoordinatesModel
 import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
 import com.livmas.tictactab.domain.models.complex.ComplexCell
@@ -151,6 +151,7 @@ class ComplexGameSessionFragment : GameSessionFragment() {
                                 Alert.CellOccupied -> resources.getString(R.string.entity_occupied_message, resources.getString(R.string.cell_var))
                                 Alert.GameFinished -> resources.getString(R.string.game_finished_message)
                                 Alert.BlockFinished -> resources.getString(R.string.entity_occupied_message, resources.getString(R.string.block_var))
+                                Alert.BlockInactive -> resources.getString(R.string.block_inactive_message)
                             },
                             Snackbar.LENGTH_LONG
                         ).show()

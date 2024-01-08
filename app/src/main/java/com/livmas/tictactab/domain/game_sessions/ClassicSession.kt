@@ -1,13 +1,14 @@
-package com.livmas.tictactab.domain.models.classic
+package com.livmas.tictactab.domain.game_sessions
 
-import com.livmas.tictactab.domain.models.GameSession
 import com.livmas.tictactab.domain.models.ICoordinatesModel
+import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
+import com.livmas.tictactab.domain.models.classic.ClassicFieldModel
 import com.livmas.tictactab.domain.models.enums.CellState
 import com.livmas.tictactab.domain.models.enums.GameResult
 import com.livmas.tictactab.domain.models.enums.Player
 import com.livmas.tictactab.ui.GameMessage
 
-class ClassicGameSession(
+class ClassicSession(
     override val _field: ClassicFieldModel,
     current: Player?,
     override var _result: GameResult?

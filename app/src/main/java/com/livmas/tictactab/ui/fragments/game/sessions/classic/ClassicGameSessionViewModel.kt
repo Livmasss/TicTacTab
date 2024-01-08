@@ -2,11 +2,11 @@ package com.livmas.tictactab.ui.fragments.game.sessions.classic
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.livmas.tictactab.domain.models.GameSession
+import com.livmas.tictactab.domain.game_sessions.GameSession
 import com.livmas.tictactab.domain.models.IFieldModel
 import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
 import com.livmas.tictactab.domain.models.classic.ClassicFieldModel
-import com.livmas.tictactab.domain.models.classic.ClassicGameSession
+import com.livmas.tictactab.domain.game_sessions.ClassicSession
 import com.livmas.tictactab.domain.models.enums.GameResult
 import com.livmas.tictactab.domain.models.enums.Player
 import com.livmas.tictactab.ui.GameMessage
@@ -20,10 +20,10 @@ class ClassicGameSessionViewModel : GameSessionViewModel() {
     }
 
 
-    override var session: GameSession? = ClassicGameSession()
+    override var session: GameSession? = ClassicSession()
 
     fun resumeGame() {
-        session = ClassicGameSession(_field.value!! as ClassicFieldModel, _currentPlayer.value, _gameResult.value)
+        session = ClassicSession(_field.value!! as ClassicFieldModel, _currentPlayer.value, _gameResult.value)
         _field.postValue(session!!.field)
     }
     private fun stopGame() {
@@ -31,7 +31,7 @@ class ClassicGameSessionViewModel : GameSessionViewModel() {
     }
 
     override fun restartGame() {
-        session = ClassicGameSession(ClassicFieldModel(), Player.X, null)
+        session = ClassicSession(ClassicFieldModel(), Player.X, null)
         super.restartGame()
     }
 

@@ -2,11 +2,11 @@ package com.livmas.tictactab.ui.fragments.game.sessions.complex
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.livmas.tictactab.domain.models.GameSession
+import com.livmas.tictactab.domain.game_sessions.GameSession
+import com.livmas.tictactab.domain.game_sessions.complex_sessions.SingleComplexSession
 import com.livmas.tictactab.domain.models.IFieldModel
 import com.livmas.tictactab.domain.models.complex.ComplexCoordinatesModel
 import com.livmas.tictactab.domain.models.complex.ComplexFieldModel
-import com.livmas.tictactab.domain.models.complex.ComplexGameSession
 import com.livmas.tictactab.domain.models.enums.GameResult
 import com.livmas.tictactab.domain.models.enums.Player
 import com.livmas.tictactab.ui.GameMessage
@@ -18,17 +18,17 @@ class ComplexGameSessionViewModel : GameSessionViewModel() {
     override val _field: MutableLiveData<IFieldModel> by lazy {
         MutableLiveData(ComplexFieldModel())
     }
-    override var session: GameSession? = ComplexGameSession()
+    override var session: GameSession? = SingleComplexSession()
 
     fun resumeGame() {
-        session = ComplexGameSession(_field.value!! as ComplexFieldModel, _currentPlayer.value, _gameResult.value)
+        session = SingleComplexSession(_field.value!! as ComplexFieldModel, _currentPlayer.value, _gameResult.value)
         _field.postValue(session!!.field)
     }
     private fun stopGame() {
         session = null
     }
     override fun restartGame() {
-        session = ComplexGameSession(ComplexFieldModel(), Player.X, null)
+        session = SingleComplexSession(ComplexFieldModel(), Player.X, null)
         super.restartGame()
     }
 
@@ -57,20 +57,13 @@ class ComplexGameSessionViewModel : GameSessionViewModel() {
                 )
                 stopGame()
             }
-            in 50..59 -> {
-                nextTurn()
-            }
+            in 50..59 -> nextTurn()
 
             31 -> _alert.postValue(Alert.GameFinished)
-            in 30..39 -> {
-                _alert.postValue(Alert.SomeError)
-            }
-            40 -> {
-                _alert.postValue(Alert.CellOccupied)
-            }
-            41 -> {
-                _alert.postValue(Alert.BlockFinished)
-            }
+            in 30..39 -> _alert.postValue(Alert.SomeError)
+            40 -> _alert.postValue(Alert.CellOccupied)
+            41 -> _alert.postValue(Alert.BlockFinished)
+            42 -> _alert.postValue(Alert.BlockInactive)
         }
         _lastTurn.postValue(cords)
     }

@@ -35,6 +35,7 @@
     <string name="entity_occupied_message">This %1$s is already occupied! Try another one.</string>
     <string name="cell_var">cell</string>
     <string name="block_var">block</string>
+    <string name="block_inactive_message">This block inactive! Choose active one.</string>
 
 
 </resources>

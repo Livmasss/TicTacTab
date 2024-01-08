@@ -3,7 +3,7 @@ package com.livmas.tictactab.ui.fragments.game.sessions
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.livmas.tictactab.domain.models.GameSession
+import com.livmas.tictactab.domain.game_sessions.GameSession
 import com.livmas.tictactab.domain.models.ICoordinatesModel
 import com.livmas.tictactab.domain.models.IFieldModel
 import com.livmas.tictactab.domain.models.enums.GameResult

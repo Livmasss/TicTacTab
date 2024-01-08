@@ -4,5 +4,6 @@ enum class Alert {
     SomeError,
     CellOccupied,
     GameFinished,
-    BlockFinished
+    BlockFinished,
+    BlockInactive
 }

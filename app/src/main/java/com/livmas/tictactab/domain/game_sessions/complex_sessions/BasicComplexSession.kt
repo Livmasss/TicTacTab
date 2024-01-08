@@ -1,15 +1,16 @@
-package com.livmas.tictactab.domain.models.complex
+package com.livmas.tictactab.domain.game_sessions.complex_sessions
 
-import com.livmas.tictactab.domain.models.GameSession
+import com.livmas.tictactab.domain.game_sessions.GameSession
 import com.livmas.tictactab.domain.models.ICoordinatesModel
 import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
+import com.livmas.tictactab.domain.models.complex.ComplexCoordinatesModel
+import com.livmas.tictactab.domain.models.complex.ComplexFieldModel
 import com.livmas.tictactab.domain.models.enums.CellState
 import com.livmas.tictactab.domain.models.enums.GameResult
 import com.livmas.tictactab.domain.models.enums.Player
 import com.livmas.tictactab.ui.GameMessage
-import java.util.Stack
 
-class ComplexGameSession(
+open class BasicComplexSession(
     field: ComplexFieldModel,
     current: Player?,
     result: GameResult?
@@ -20,8 +21,6 @@ class ComplexGameSession(
         get() = super._field as ComplexFieldModel
     override val field: ComplexFieldModel
         get() = _field.copy()
-
-    private val backStack = Stack<ClassicCoordinatesModel>()
 
     override fun postTurnProcess(cords: ICoordinatesModel) {
         val fCell = _field[ClassicCoordinatesModel(cords)]
@@ -35,16 +34,16 @@ class ComplexGameSession(
     }
     override fun preTurnProcess(cords: ICoordinatesModel): GameMessage {
         cords as ComplexCoordinatesModel
-        if (_field[cords] != CellState.N)
-            return GameMessage(
-                null,
-                40
-            )
-
         if (_field[ClassicCoordinatesModel(cords)].state != null)
             return GameMessage(
                 null,
                 41
+            )
+
+        if (_field[cords] != CellState.N)
+            return GameMessage(
+                null,
+                40
             )
 
         return super.preTurnProcess(cords)
