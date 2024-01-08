@@ -17,6 +17,10 @@ open class BasicComplexSession(
 ): GameSession(field, current, result) {
     constructor() : this(ComplexFieldModel(), Player.X, null)
 
+    val currentBlockCords: ClassicCoordinatesModel?
+        get() = _currentBlockCords?.copy()
+    protected var _currentBlockCords: ClassicCoordinatesModel? = null
+
     override val _field: ComplexFieldModel
         get() = super._field as ComplexFieldModel
     override val field: ComplexFieldModel
@@ -36,6 +40,11 @@ open class BasicComplexSession(
     }
     override fun preTurnProcess(cords: ICoordinatesModel): GameMessage {
         cords as ComplexCoordinatesModel
+        if (_currentBlockCords != null && _currentBlockCords != (ClassicCoordinatesModel(cords)))
+            return GameMessage(
+                null,
+                42
+            )
         if (_field[ClassicCoordinatesModel(cords)].state != null)
             return GameMessage(
                 null,

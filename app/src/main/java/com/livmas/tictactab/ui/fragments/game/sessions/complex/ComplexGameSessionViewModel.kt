@@ -3,7 +3,7 @@ package com.livmas.tictactab.ui.fragments.game.sessions.complex
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.livmas.tictactab.domain.game_sessions.GameSession
-import com.livmas.tictactab.domain.game_sessions.complex_sessions.SingleComplexSession
+import com.livmas.tictactab.domain.game_sessions.complex_sessions.ChooseComplexSession
 import com.livmas.tictactab.domain.models.IFieldModel
 import com.livmas.tictactab.domain.models.complex.ComplexCoordinatesModel
 import com.livmas.tictactab.domain.models.complex.ComplexFieldModel
@@ -18,17 +18,17 @@ class ComplexGameSessionViewModel : GameSessionViewModel() {
     override val _field: MutableLiveData<IFieldModel> by lazy {
         MutableLiveData(ComplexFieldModel())
     }
-    override var session: GameSession? = SingleComplexSession()
+    override var session: GameSession? = ChooseComplexSession()
 
     fun resumeGame() {
-        session = SingleComplexSession(_field.value!! as ComplexFieldModel, _currentPlayer.value, _gameResult.value)
+        session = ChooseComplexSession(_field.value!! as ComplexFieldModel, _currentPlayer.value, _gameResult.value)
         _field.postValue(session!!.field)
     }
     private fun stopGame() {
         session = null
     }
     override fun restartGame() {
-        session = SingleComplexSession(ComplexFieldModel(), Player.X, null)
+        session = ChooseComplexSession(ComplexFieldModel(), Player.X, null)
         super.restartGame()
     }
 
