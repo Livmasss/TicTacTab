@@ -37,5 +37,14 @@
     <string name="block_var">block</string>
     <string name="block_inactive_message">This block is inactive! Choose active one.</string>
 
+    <!-- Settings -->
+    <string name="complex_game_mode">Complex Game Mode</string>
+    <!-- Complex Game Modes -->
+    <string name="backstack_mode">BackStack mode</string>
+    <string name="choise_mode">Choise mode</string>
+    <string name="single_mode">Single mode</string>
+    <string name="basic_mode">Basic mode</string>
+
+    <string name="night_theme">Night theme</string>
 
 </resources>

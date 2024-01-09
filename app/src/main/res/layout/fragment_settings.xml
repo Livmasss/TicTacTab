@@ -1,6 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.settings.SettingsFragment"/>
+    android:divider="@drawable/settings_divider_material"
+    android:dividerPadding="4dp"
+
+    android:orientation="vertical"
+    android:showDividers="middle"
+    tools:context=".ui.fragments.settings.SettingsFragment">
+
+    <LinearLayout
+        android:id="@+id/llComplexGameMode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:dividerPadding="16dp"
+        android:divider="@drawable/inner_settings_divider_material"
+        android:orientation="vertical"
+        android:showDividers="middle">
+
+        <TextView
+            android:id="@+id/tvComplexGameMode"
+            style="@style/SettingsTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/complex_game_mode" />
+
+        <RadioGroup
+            android:id="@+id/rbgComplexGameMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/rbBasic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/basic_mode"
+                app:useMaterialThemeColors="true" />
+
+            <RadioButton
+                android:id="@+id/rbSingle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/single_mode" />
+
+            <RadioButton
+                android:id="@+id/rbChoice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/choise_mode" />
+
+            <RadioButton
+                android:id="@+id/rbStack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/backstack_mode" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/sNightMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/night_mode" />
+
+</LinearLayout>

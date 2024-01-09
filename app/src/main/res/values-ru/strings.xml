@@ -7,8 +7,8 @@
     <string name="title_settings">Настройки</string>
     <string name="title_game">Игра</string>
     <string name="title_rules">Правила</string>
-    <string name="title_classic">Обычная игра</string>
-    <string name="title_complex">Сложная игра</string>
+    <string name="title_classic">Обычный</string>
+    <string name="title_complex">Сложный</string>
 
     <string name="game_mode">Выберите режим игры</string>
 
@@ -35,4 +35,13 @@
     <string name="block_var">блок</string>
     <string name="block_inactive_message">Этот блок неактивен! Выберите другой.</string>
 
+    <!-- Settings -->
+    <string name="complex_game_mode">Режим сложной игры</string>
+    <!-- Complex Game Modes -->
+    <string name="backstack_mode">Режим возврата</string>
+    <string name="choise_mode">Режим выбора</string>
+    <string name="single_mode">Поочередный режим</string>
+    <string name="basic_mode">Базовый режим</string>
+
+    <string name="night_theme">Тёмная тема</string>
 </resources>

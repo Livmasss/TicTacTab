@@ -26,6 +26,7 @@
     <style name="Theme.Snackbar" parent="Widget.MaterialComponents.Snackbar.TextView">
         <item name="android:textSize">14sp</item>
     </style>
+
     <style name="Theme.Button" parent="Widget.MaterialComponents.Button">
         <item name="android:padding">12dp</item>
         <item name="android:layout_marginVertical">8dp</item>
@@ -35,5 +36,9 @@
     <style name="game_block_style">
         <item name="android:layout_weight">1</item>
         <item name="android:padding">5dp</item>
+    </style>
+
+    <style name="SettingsTextViewStyle">
+        <item name="android:textSize">32sp</item>
     </style>
 </resources>
