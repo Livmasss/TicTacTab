@@ -2,6 +2,7 @@
 <resources>
     <!-- UI elements -->
     <string name="restart">Перезапустить</string>
+    <string name="confirm">Подтвердить</string>
     <!-- Navigation -->
     <string name="title_history">История</string>
     <string name="title_settings">Настройки</string>
