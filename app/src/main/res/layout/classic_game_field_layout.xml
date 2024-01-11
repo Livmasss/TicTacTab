@@ -41,7 +41,7 @@
         app:layout_constraintTop_toBottomOf="@+id/vLine" />
 
     <ImageButton
-        android:id="@+id/ibCell0_0"
+        android:id="@+id/ibCell00"
         app:layout_constraintBottom_toTopOf="@+id/vLine"
         app:layout_constraintEnd_toStartOf="@+id/view2"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +51,7 @@
         style="@style/game_field_theme" />
 
     <ImageButton
-        android:id="@+id/ibCell0_1"
+        android:id="@+id/ibCell01"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/vLine"
@@ -63,7 +63,7 @@
         style="@style/game_field_theme"/>
 
     <ImageButton
-        android:id="@+id/ibCell0_2"
+        android:id="@+id/ibCell02"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/vLine"
@@ -75,7 +75,7 @@
         style="@style/game_field_theme"/>
 
     <ImageButton
-        android:id="@+id/ibCell1_0"
+        android:id="@+id/ibCell10"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/view4"
@@ -87,7 +87,7 @@
         style="@style/game_field_theme"/>
 
     <ImageButton
-        android:id="@+id/ibCell1_1"
+        android:id="@+id/ibCell11"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/view4"
@@ -99,10 +99,10 @@
         style="@style/game_field_theme"/>
 
     <ImageButton
-        android:id="@+id/ibCell1_2"
+        android:id="@+id/ibCell12"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/ibCell1_1"
+        app:layout_constraintBottom_toBottomOf="@+id/ibCell11"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/view"
         app:layout_constraintTop_toBottomOf="@+id/vLine"
@@ -111,19 +111,19 @@
         style="@style/game_field_theme"/>
 
     <ImageButton
-        android:id="@+id/ibCell2_0"
+        android:id="@+id/ibCell20"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/view2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/ibCell2_1"
+        app:layout_constraintTop_toTopOf="@+id/ibCell21"
         android:contentDescription="@string/cell_coordinates_2_0"
 
         style="@style/game_field_theme"/>
 
     <ImageButton
-        android:id="@+id/ibCell2_1"
+        android:id="@+id/ibCell21"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -135,13 +135,13 @@
         style="@style/game_field_theme"/>
 
     <ImageButton
-        android:id="@+id/ibCell2_2"
+        android:id="@+id/ibCell22"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/view"
-        app:layout_constraintTop_toTopOf="@+id/ibCell2_1"
+        app:layout_constraintTop_toTopOf="@+id/ibCell21"
         android:contentDescription="@string/cell_coordinates_2_2"
 
         style="@style/game_field_theme"/>

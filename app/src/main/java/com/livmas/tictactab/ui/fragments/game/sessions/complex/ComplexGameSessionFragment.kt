@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.snackbar.Snackbar
 import com.livmas.tictactab.GAME_TAG
 import com.livmas.tictactab.R
-import com.livmas.tictactab.databinding.ClassicGameFieldLayoutBinding
 import com.livmas.tictactab.databinding.FragmentComplexGameSessionBinding
 import com.livmas.tictactab.domain.models.ICoordinatesModel
 import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
@@ -61,7 +61,7 @@ class ComplexGameSessionFragment : GameSessionFragment() {
     }
 
     private fun initViews() {
-        initCells()
+        initBlocksListeners()
 
         binding.bRestart.setOnClickListener {
             try {
@@ -73,28 +73,26 @@ class ComplexGameSessionFragment : GameSessionFragment() {
             viewModel.restartGame()
         }
     }
-    private fun initCells() {
-        initBlock(binding.block00, ClassicCoordinatesModel(0, 0))
-        initBlock(binding.block01, ClassicCoordinatesModel(0, 1))
-        initBlock(binding.block02, ClassicCoordinatesModel(0, 2))
-        initBlock(binding.block10, ClassicCoordinatesModel(1, 0))
-        initBlock(binding.block11, ClassicCoordinatesModel(1, 1))
-        initBlock(binding.block12, ClassicCoordinatesModel(1, 2))
-        initBlock(binding.block20, ClassicCoordinatesModel(2, 0))
-        initBlock(binding.block21, ClassicCoordinatesModel(2, 1))
-        initBlock(binding.block22, ClassicCoordinatesModel(2, 2))
+    private fun initBlocksListeners() {
+        for (i in 0..8) {
+            val x = i / 3
+            val y = i % 3
+
+            val id = resources.getIdentifier("block$x$y", "id", context?.packageName)
+            val block = binding.root.findViewById(id) as ConstraintLayout
+
+            initBlockListeners(block, ClassicCoordinatesModel(x, y))
+        }
     }
-    private fun initBlock(block: ClassicGameFieldLayoutBinding, cords: ClassicCoordinatesModel) {
-        block.apply {
-            ibCell00.setOnClickListener(makeTurnListener(ComplexCoordinatesModel(cords.x, cords.y, ClassicCoordinatesModel(0, 0))))
-            ibCell01.setOnClickListener(makeTurnListener(ComplexCoordinatesModel(cords.x, cords.y, ClassicCoordinatesModel(0, 1))))
-            ibCell02.setOnClickListener(makeTurnListener(ComplexCoordinatesModel(cords.x, cords.y, ClassicCoordinatesModel(0, 2))))
-            ibCell10.setOnClickListener(makeTurnListener(ComplexCoordinatesModel(cords.x, cords.y, ClassicCoordinatesModel(1, 0))))
-            ibCell11.setOnClickListener(makeTurnListener(ComplexCoordinatesModel(cords.x, cords.y, ClassicCoordinatesModel(1, 1))))
-            ibCell12.setOnClickListener(makeTurnListener(ComplexCoordinatesModel(cords.x, cords.y, ClassicCoordinatesModel(1, 2))))
-            ibCell20.setOnClickListener(makeTurnListener(ComplexCoordinatesModel(cords.x, cords.y, ClassicCoordinatesModel(2, 0))))
-            ibCell21.setOnClickListener(makeTurnListener(ComplexCoordinatesModel(cords.x, cords.y, ClassicCoordinatesModel(2, 1))))
-            ibCell22.setOnClickListener(makeTurnListener(ComplexCoordinatesModel(cords.x, cords.y, ClassicCoordinatesModel(2, 2))))
+    private fun initBlockListeners(block: ConstraintLayout, cords: ClassicCoordinatesModel) {
+        for (i in 0..8) {
+            val x = i / 3
+            val y = i % 3
+
+            val id = resources.getIdentifier("ibCell$x$y", "id", context?.packageName)
+            val cell = block.findViewById(id) as View
+
+            cell.setOnClickListener(makeTurnListener(ComplexCoordinatesModel(cords.x, cords.y, ClassicCoordinatesModel(x, y))))
         }
     }
     private fun initObservers() {
@@ -181,15 +179,8 @@ class ComplexGameSessionFragment : GameSessionFragment() {
     }
 
     private fun renderWholeField(field: ComplexFieldModel) {
-        renderField(field[ClassicCoordinatesModel(0, 0)].field, blocks[0])
-        renderField(field[ClassicCoordinatesModel(0, 1)].field, blocks[1])
-        renderField(field[ClassicCoordinatesModel(0, 2)].field, blocks[2])
-        renderField(field[ClassicCoordinatesModel(1, 0)].field, blocks[3])
-        renderField(field[ClassicCoordinatesModel(1, 1)].field, blocks[4])
-        renderField(field[ClassicCoordinatesModel(1, 2)].field, blocks[5])
-        renderField(field[ClassicCoordinatesModel(2, 0)].field, blocks[6])
-        renderField(field[ClassicCoordinatesModel(2, 1)].field, blocks[7])
-        renderField(field[ClassicCoordinatesModel(2, 2)].field, blocks[8])
+        for (i in 0..8)
+            renderField(field[ClassicCoordinatesModel(i / 3, i % 3)].field, blocks[i])
     }
 
     private fun renderBlockStates(field: ComplexFieldModel) {
