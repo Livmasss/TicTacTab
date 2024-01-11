@@ -19,7 +19,7 @@ class SettingsViewModel: ViewModel() {
     val nightTheme: LiveData<Boolean>
         get() = _nightTheme
     private val _nightTheme: MutableLiveData<Boolean> by lazy {
-        MutableLiveData<Boolean>(false)
+        MutableLiveData<Boolean>(repository.readNightMode())
     }
 
     val firstColor: MutableLiveData<Color>
@@ -37,11 +37,14 @@ class SettingsViewModel: ViewModel() {
     fun postGameMode(mode: ComplexGameMode) {
         _complexGameMode.postValue(mode)
     }
+    fun postNightMode(isNight: Boolean) {
+        _nightTheme.postValue(isNight)
+    }
 
     fun saveData() {
         repository.apply {
             putCompGameMode(_complexGameMode.value ?: ComplexGameMode.Stack)
-            putTheme(true)
+            putNightMode(_nightTheme.value?: false)
         }
     }
 }

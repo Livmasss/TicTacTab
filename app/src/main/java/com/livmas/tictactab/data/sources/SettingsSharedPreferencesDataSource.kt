@@ -29,7 +29,7 @@ class SettingsSharedPreferencesDataSource {
         editor!!.putInt(PREF_GAME_MODE, gameMode)
         editor!!.commit()
     }
-    fun putTheme(isNight: Boolean) {
+    fun putNightMode(isNight: Boolean) {
         if (isEditorNull())
             return
         editor!!.putBoolean(PREF_NIGHT_MODE, isNight)
@@ -41,6 +41,13 @@ class SettingsSharedPreferencesDataSource {
             0
         else
             sp!!.getInt(PREF_GAME_MODE, 0)
+    }
+
+    fun readNightMode(): Boolean {
+        return if (isPrefNull())
+            false
+        else
+            sp!!.getBoolean(PREF_NIGHT_MODE, false)
     }
 
     private fun isEditorNull(): Boolean {

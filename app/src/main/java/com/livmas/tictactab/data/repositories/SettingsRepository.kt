@@ -9,7 +9,9 @@ class SettingsRepository {
     private val source = SettingsSharedPreferencesDataSource.instance
 
     fun putCompGameMode(mode: ComplexGameMode) = source.putCompGameMode(mode.value)
-    fun putTheme(isNight: Boolean) = source.putTheme(isNight)
+    fun putNightMode(isNight: Boolean) = source.putNightMode(isNight)
     fun readCompGameMode() = ComplexGameMode.values()[source.readCompGameMode()].also {
-        Log.d(SETTINGS_TAG, it.toString()) }
+        Log.d(SETTINGS_TAG, "Value gained from settings sp: $it") }
+    fun readNightMode(): Boolean = source.readNightMode().also {
+        Log.d(SETTINGS_TAG, "Value gained from settings sp: $it") }
 }
