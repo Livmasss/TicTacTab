@@ -4,13 +4,17 @@ import android.graphics.Color
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.livmas.tictactab.data.repositories.SettingsRepository
 import com.livmas.tictactab.ui.models.enums.ComplexGameMode
 
 class SettingsViewModel: ViewModel() {
+
+    private val repository = SettingsRepository()
+
     val complexGameMode: LiveData<ComplexGameMode>
         get() = _complexGameMode
     private val _complexGameMode: MutableLiveData<ComplexGameMode> by lazy {
-        MutableLiveData<ComplexGameMode>(ComplexGameMode.Stack)
+        MutableLiveData<ComplexGameMode>(repository.readCompGameMode())
     }
     val nightTheme: LiveData<Boolean>
         get() = _nightTheme
@@ -32,5 +36,12 @@ class SettingsViewModel: ViewModel() {
 
     fun postGameMode(mode: ComplexGameMode) {
         _complexGameMode.postValue(mode)
+    }
+
+    fun saveData() {
+        repository.apply {
+            putCompGameMode(_complexGameMode.value ?: ComplexGameMode.Stack)
+            putTheme(true)
+        }
     }
 }

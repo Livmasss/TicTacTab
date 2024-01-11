@@ -31,6 +31,7 @@ class SettingsFragment : Fragment() {
 
         showValues()
         initRGBListener()
+        initConfirmButton()
     }
 
     private fun showValues() {
@@ -46,6 +47,12 @@ class SettingsFragment : Fragment() {
             Log.i(TAG, gameMode.toString())
 
             viewModel.postGameMode(gameMode)
+        }
+    }
+
+    private fun initConfirmButton() {
+        binding.bConfirm.setOnClickListener {
+            viewModel.saveData()
         }
     }
 }

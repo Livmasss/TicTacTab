@@ -14,9 +14,6 @@ abstract class GameSession(
     protected open var _result: GameResult?
 ): IGameSession {
 
-    companion object {
-        const val TAG = "game"
-    }
     abstract val field: IFieldModel
 
     val result: GameResult?

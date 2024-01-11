@@ -9,10 +9,10 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.snackbar.Snackbar
+import com.livmas.tictactab.GAME_TAG
 import com.livmas.tictactab.R
 import com.livmas.tictactab.databinding.ClassicGameFieldLayoutBinding
 import com.livmas.tictactab.databinding.FragmentComplexGameSessionBinding
-import com.livmas.tictactab.domain.game_sessions.GameSession
 import com.livmas.tictactab.domain.models.ICoordinatesModel
 import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
 import com.livmas.tictactab.domain.models.complex.ComplexCell
@@ -68,7 +68,7 @@ class ComplexGameSessionFragment : GameSessionFragment() {
                 binding.flFieldContainer.removeViewAt(1)
             }
             catch (e: NullPointerException) {
-                Log.d(GameSession.TAG, "No line drawn")
+                Log.d(GAME_TAG, "No line drawn")
             }
             viewModel.restartGame()
         }
