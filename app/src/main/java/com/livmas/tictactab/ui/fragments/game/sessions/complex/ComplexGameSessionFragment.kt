@@ -34,11 +34,16 @@ class ComplexGameSessionFragment : GameSessionFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentComplexGameSessionBinding.inflate(inflater, container, false)
-        blocks = Array(9) { arrayOf(arrayOf(ImageButton(context))) }
+        blocks = Array(9) {
+            Array(3) { _ ->
+                Array(3) { _ ->
+                    ImageButton(context)
+                }
+            }
+        }
         getImageButtons()
 
         fieldContainer = binding.flFieldContainer
-
         return binding.root
     }
 
@@ -46,7 +51,7 @@ class ComplexGameSessionFragment : GameSessionFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initViews()
-        viewModel.field.value?.let { renderWholeField(it as ComplexFieldModel) }
+        viewModel.field.value?.let { renderAll(it as ComplexFieldModel) }
         initObservers()
         viewModel.resumeGame()
     }
@@ -78,18 +83,20 @@ class ComplexGameSessionFragment : GameSessionFragment() {
             val x = i / 3
             val y = i % 3
 
-            val id = resources.getIdentifier("block$x$y", "id", context?.packageName)
-            val block = binding.root.findViewById(id) as ConstraintLayout
-
+            val block = findBlock(ClassicCoordinatesModel(x, y))
             initBlockListeners(block, ClassicCoordinatesModel(x, y))
         }
+    }
+    private fun findBlock(cords: ClassicCoordinatesModel): ConstraintLayout {
+        val id = getIdByString("block${cords.x}${cords.y}")
+        return binding.root.findViewById(id) as ConstraintLayout
     }
     private fun initBlockListeners(block: ConstraintLayout, cords: ClassicCoordinatesModel) {
         for (i in 0..8) {
             val x = i / 3
             val y = i % 3
 
-            val id = resources.getIdentifier("ibCell$x$y", "id", context?.packageName)
+            val id = getIdByString("ibCell$x$y")
             val cell = block.findViewById(id) as View
 
             cell.setOnClickListener(makeTurnListener(ComplexCoordinatesModel(cords.x, cords.y, ClassicCoordinatesModel(x, y))))
@@ -192,7 +199,7 @@ class ComplexGameSessionFragment : GameSessionFragment() {
 
     private fun renderBlockState(field: ComplexFieldModel, cords: ClassicCoordinatesModel) {
         val container: ImageView by lazy {
-            val id = resources.getIdentifier("image${cords.x}${cords.y}", "id", requireContext().packageName)
+            val id = getIdByString("image${cords.x}${cords.y}")
             binding.root.findViewById(id)
         }
         renderBlockState(container, field[cords].state)
@@ -207,75 +214,35 @@ class ComplexGameSessionFragment : GameSessionFragment() {
         }
     }
 
+    private fun findCell(block: ConstraintLayout, cords: ClassicCoordinatesModel): ImageButton {
+        return getIdByString("ibCell${cords.x}${cords.y}").let {
+            block.findViewById(it)
+        }
+    }
+
     private fun getImageButtons() {
-        binding.block00.apply {
-            blocks[0] = arrayOf(
-                arrayOf(ibCell00, ibCell01, ibCell02),
-                arrayOf(ibCell10, ibCell11, ibCell12),
-                arrayOf(ibCell20, ibCell21, ibCell22)
-            )
-        }
-        binding.block01.apply {
-            blocks[1] = arrayOf(
-                arrayOf(ibCell00, ibCell01, ibCell02),
-                arrayOf(ibCell10, ibCell11, ibCell12),
-                arrayOf(ibCell20, ibCell21, ibCell22)
-            )
-        }
-        binding.block02.apply {
-            blocks[2] = arrayOf(
-                arrayOf(ibCell00, ibCell01, ibCell02),
-                arrayOf(ibCell10, ibCell11, ibCell12),
-                arrayOf(ibCell20, ibCell21, ibCell22)
-            )
-        }
-        binding.block10.apply {
-            blocks[3] = arrayOf(
-                arrayOf(ibCell00, ibCell01, ibCell02),
-                arrayOf(ibCell10, ibCell11, ibCell12),
-                arrayOf(ibCell20, ibCell21, ibCell22)
-            )
-        }
-        binding.block11.apply {
-            blocks[4] = arrayOf(
-                arrayOf(ibCell00, ibCell01, ibCell02),
-                arrayOf(ibCell10, ibCell11, ibCell12),
-                arrayOf(ibCell20, ibCell21, ibCell22)
-            )
-        }
-        binding.block12.apply {
-            blocks[5] = arrayOf(
-                arrayOf(ibCell00, ibCell01, ibCell02),
-                arrayOf(ibCell10, ibCell11, ibCell12),
-                arrayOf(ibCell20, ibCell21, ibCell22)
-            )
-        }
-        binding.block20.apply {
-            blocks[6] = arrayOf(
-                arrayOf(ibCell00, ibCell01, ibCell02),
-                arrayOf(ibCell10, ibCell11, ibCell12),
-                arrayOf(ibCell20, ibCell21, ibCell22)
-            )
-        }
-        binding.block21.apply {
-            blocks[7] = arrayOf(
-                arrayOf(ibCell00, ibCell01, ibCell02),
-                arrayOf(ibCell10, ibCell11, ibCell12),
-                arrayOf(ibCell20, ibCell21, ibCell22)
-            )
-        }
-        binding.block22.apply {
-            blocks[8] = arrayOf(
-                arrayOf(ibCell00, ibCell01, ibCell02),
-                arrayOf(ibCell10, ibCell11, ibCell12),
-                arrayOf(ibCell20, ibCell21, ibCell22)
-            )
+        for (i in 0..8) {
+            val x = i / 3
+            val y = i % 3
+
+            val block = findBlock(ClassicCoordinatesModel(x, y))
+
+            for (j in 0..8) {
+                val x1 = j / 3
+                val y1 = j % 3
+
+                blocks[i][x1][y1] = findCell(block, ClassicCoordinatesModel(x1, y1))
+            }
         }
     }
     private fun makeTurnListener(cords: ComplexCoordinatesModel): View.OnClickListener {
         return View.OnClickListener {
             viewModel.makeTurn(cords)
         }
+    }
+
+    private fun getIdByString(name: String): Int {
+        return resources.getIdentifier(name, "id", context?.packageName)
     }
 
     private fun getImageButton(cords: ComplexCoordinatesModel) =
