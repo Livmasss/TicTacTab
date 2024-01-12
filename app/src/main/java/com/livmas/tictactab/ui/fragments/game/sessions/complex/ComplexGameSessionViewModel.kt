@@ -3,8 +3,12 @@ package com.livmas.tictactab.ui.fragments.game.sessions.complex
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.livmas.tictactab.GAME_TAG
+import com.livmas.tictactab.data.repositories.SettingsRepository
 import com.livmas.tictactab.domain.game_sessions.GameSession
 import com.livmas.tictactab.domain.game_sessions.complex_sessions.BasicComplexSession
+import com.livmas.tictactab.domain.game_sessions.complex_sessions.ChooseComplexSession
+import com.livmas.tictactab.domain.game_sessions.complex_sessions.SingleComplexSession
+import com.livmas.tictactab.domain.game_sessions.complex_sessions.StackComplexSession
 import com.livmas.tictactab.domain.models.IFieldModel
 import com.livmas.tictactab.domain.models.complex.ComplexCoordinatesModel
 import com.livmas.tictactab.domain.models.complex.ComplexFieldModel
@@ -13,24 +17,39 @@ import com.livmas.tictactab.domain.models.enums.Player
 import com.livmas.tictactab.ui.GameMessage
 import com.livmas.tictactab.ui.fragments.game.sessions.GameSessionViewModel
 import com.livmas.tictactab.ui.models.enums.Alert
+import com.livmas.tictactab.ui.models.enums.ComplexGameMode
 
 class ComplexGameSessionViewModel : GameSessionViewModel() {
 
     override val _field: MutableLiveData<IFieldModel> by lazy {
         MutableLiveData(ComplexFieldModel())
     }
+    private val repository = SettingsRepository()
+    private val gameMode = repository.readCompGameMode()
     override var session: GameSession? = BasicComplexSession()
 
     fun resumeGame() {
-        session = BasicComplexSession(_field.value!! as ComplexFieldModel, _currentPlayer.value, _gameResult.value)
+        if (gameMode != repository.readCompGameMode()) {
+            restartGame()
+            return
+        }
+        session = createGame(_field.value!! as ComplexFieldModel, _currentPlayer.value?: Player.X, _gameResult.value)
         _field.postValue(session!!.field)
     }
     private fun stopGame() {
         session = null
     }
     override fun restartGame() {
-        session = BasicComplexSession(ComplexFieldModel(), Player.X, null)
+        session = createGame(ComplexFieldModel(), Player.X, null)
         super.restartGame()
+    }
+    private fun createGame(field: ComplexFieldModel, current: Player, result: GameResult?): GameSession {
+        return when(gameMode) {
+            ComplexGameMode.Basic -> BasicComplexSession(field, current, result)
+            ComplexGameMode.Single -> SingleComplexSession(field, current, result)
+            ComplexGameMode.Choose -> ChooseComplexSession(field, current, result)
+            ComplexGameMode.Stack -> StackComplexSession(field, current, result)
+        }
     }
 
     fun makeTurn(cords: ComplexCoordinatesModel) {
@@ -38,7 +57,6 @@ class ComplexGameSessionViewModel : GameSessionViewModel() {
             GameMessage("This game ended! You can restart it.", 31)
         else
             session!!.makeTurn(cords)
-
 
         when (message.code) {
             in 10..19 -> nextTurn()
