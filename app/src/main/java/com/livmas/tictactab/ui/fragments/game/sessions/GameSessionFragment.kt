@@ -23,8 +23,9 @@ import com.livmas.tictactab.domain.models.enums.Player
 
 abstract class GameSessionFragment: Fragment() {
     open val viewModel: GameSessionViewModel by activityViewModels()
-    protected lateinit var fieldContainer: FrameLayout
+    protected lateinit var fieldContainer: FrameLayout //Layout containing game field
 
+    // Drawables for X and O icons
     protected var xDrawable: Drawable? = null
     protected var oDrawable: Drawable? = null
 
@@ -50,12 +51,15 @@ abstract class GameSessionFragment: Fragment() {
             } ?: ResourcesCompat.getColor(resources, R.color.purple_200, null)
         )
     }
+    // Update cell according to its value in field
     protected abstract fun renderCell(imageButton: ImageButton, cords: ICoordinatesModel)
     protected fun renderField(field: IFieldModel, idsField: Array<Array<ImageButton>> ) {
         for (x in 0..2)
             for (y in 0..2)
                 renderCell(idsField[x][y], field[ClassicCoordinatesModel(x, y)])
     }
+
+    // Update drawable of ImageView
     protected fun renderCell(imageView: ImageView, cell: CellModel) = imageView.setImageDrawable(
         when(cell.state) {
             CellState.X -> xDrawable
@@ -65,12 +69,13 @@ abstract class GameSessionFragment: Fragment() {
         }
     )
 
-    protected fun showLine(offset: Float = 0f, angle: Float = 0f) {
+    //Inflates win line
+    protected fun renderLine(offset: Float = 0f, angle: Float = 0f) {
         val view = layoutInflater.inflate(R.layout.final_line_layout, fieldContainer, false) as ConstraintLayout
-
         addConstLayout(view, offset, angle)
     }
 
+    //Adds ConstraintLayout to fieldContainer
     private fun addConstLayout(view: ConstraintLayout, offset: Float = 0f, angle: Float = 0f) {
         view.rotation = angle
 

@@ -22,29 +22,32 @@ import com.livmas.tictactab.domain.models.complex.ComplexCoordinatesModel
 import com.livmas.tictactab.domain.models.complex.ComplexFieldModel
 import com.livmas.tictactab.domain.models.enums.CellState
 import com.livmas.tictactab.domain.models.enums.GameResult
+import com.livmas.tictactab.domain.models.enums.Player
 import com.livmas.tictactab.ui.fragments.game.sessions.GameSessionFragment
 import com.livmas.tictactab.ui.models.enums.Alert
 
 class ComplexGameSessionFragment : GameSessionFragment() {
 
-    private lateinit var blocks: Array<Array<Array<ImageButton>>>
+    private lateinit var blockButtons: Array<Array<Array<ImageButton>>>
     override val viewModel: ComplexGameSessionViewModel by activityViewModels()
     private lateinit var binding: FragmentComplexGameSessionBinding
-    private var prevBlockCords: ClassicCoordinatesModel? = null
+    private var prevBlockCords: ClassicCoordinatesModel? = null // Coordinates of previous active block
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        //initiating
         binding = FragmentComplexGameSessionBinding.inflate(inflater, container, false)
-        blocks = Array(9) {
+
+        blockButtons = Array(9) {
             Array(3) { _ ->
                 Array(3) { _ ->
                     ImageButton(context)
                 }
             }
         }
-        getImageButtons()
+        initBlockButtons()
 
         fieldContainer = binding.flFieldContainer
         return binding.root
@@ -59,6 +62,7 @@ class ComplexGameSessionFragment : GameSessionFragment() {
         viewModel.resumeGame()
     }
 
+    // Update cell according to its ComplexCoordinates and value in field
     override fun renderCell(imageButton: ImageButton, cords: ICoordinatesModel) {
         viewModel.field.value?.get(ClassicCoordinatesModel(cords.x, cords.y))?.let {
             val cell = (it as ComplexCell).field[
@@ -68,6 +72,46 @@ class ComplexGameSessionFragment : GameSessionFragment() {
         }
     }
 
+    //Renders everything
+    private fun renderAll(field: ComplexFieldModel) {
+        renderWholeField(field)
+        renderBlockStates(field)
+    }
+
+    //Renders whole field
+    private fun renderWholeField(field: ComplexFieldModel) {
+        for (i in 0..8)
+            renderField(field[ClassicCoordinatesModel(i / 3, i % 3)].field, blockButtons[i])
+    }
+
+    //Renders every block states
+    private fun renderBlockStates(field: ComplexFieldModel) {
+        for (x in 0..2)
+            for (y in 0..2) {
+                renderBlockState(field, ClassicCoordinatesModel(x, y))
+            }
+    }
+
+    //Renders block at coordinates state
+    private fun renderBlockState(field: ComplexFieldModel, cords: ClassicCoordinatesModel) {
+        val container: ImageView by lazy {
+            val id = getIdByString("image${cords.x}${cords.y}")
+            binding.root.findViewById(id)
+        }
+        renderBlockState(container, field[cords].state)
+    }
+
+    //Renders block state
+    private fun renderBlockState(container: ImageView, state: CellState?) {
+        when (state) {
+            null -> container.setImageDrawable(null)
+            CellState.N -> container.setImageDrawable(null)
+            CellState.X -> container.setImageDrawable(xDrawable)
+            CellState.O -> container.setImageDrawable(oDrawable)
+        }
+    }
+
+    // Initiates all views appearance
     private fun initViews() {
         initBlocksListeners()
 
@@ -81,19 +125,7 @@ class ComplexGameSessionFragment : GameSessionFragment() {
             viewModel.restartGame()
         }
     }
-    private fun initBlocksListeners() {
-        for (i in 0..8) {
-            val x = i / 3
-            val y = i % 3
-
-            val block = findBlock(ClassicCoordinatesModel(x, y))
-            initBlockListeners(block, ClassicCoordinatesModel(x, y))
-        }
-    }
-    private fun findBlock(cords: ClassicCoordinatesModel): ConstraintLayout {
-        val id = getIdByString("block${cords.x}${cords.y}")
-        return binding.root.findViewById(id) as ConstraintLayout
-    }
+    //Initiates block listeners
     private fun initBlockListeners(block: ConstraintLayout, cords: ClassicCoordinatesModel) {
         for (i in 0..8) {
             val x = i / 3
@@ -105,19 +137,68 @@ class ComplexGameSessionFragment : GameSessionFragment() {
             cell.setOnClickListener(makeTurnListener(ComplexCoordinatesModel(cords.x, cords.y, ClassicCoordinatesModel(x, y))))
         }
     }
+
+    //Initiates listeners for every blocks
+    private fun initBlocksListeners() {
+        for (i in 0..8) {
+            val x = i / 3
+            val y = i % 3
+
+            val block = findBlock(ClassicCoordinatesModel(x, y))
+            initBlockListeners(block, ClassicCoordinatesModel(x, y))
+        }
+    }
+    //Find block (ConstraintLayout) by coordinates
+    private fun findBlock(cords: ClassicCoordinatesModel): ConstraintLayout {
+        val id = getIdByString("block${cords.x}${cords.y}")
+        return binding.root.findViewById(id) as ConstraintLayout
+    }
+
+    //Handles changes in view model. Used in observers
+    private fun handleLastTurn(cords: ICoordinatesModel) {
+        val button = getImageButton(cords as ComplexCoordinatesModel)
+        renderCell(button, cords)
+        viewModel.field.value?.let { field ->
+            renderBlockState(field as ComplexFieldModel, ClassicCoordinatesModel(cords.x, cords.y))
+        }
+    }
+    private fun handleResultN() {
+        binding.apply {
+            tvGameDisplay.text = resources.getString(R.string.draw_message)
+            ivGameDisplay.setImageDrawable(null)
+            ivGameDisplay.contentDescription = resources.getString(R.string.draw_message)
+        }
+    }
+
+    private fun handleResultNull(currentPlayer: Player?) =
+        binding.apply {
+            tvGameDisplay.text = resources.getString(R.string.current_player_message)
+            ivGameDisplay.setImageDrawable(
+                if (currentPlayer == null)
+                    xDrawable
+                else
+                    definePlayerDrawable(currentPlayer)
+            )
+            ivGameDisplay.contentDescription =
+                resources.getString(R.string.iv_display_desc, null)
+        }
+
+    private fun handleResultXO(res: GameResult) = binding.apply {
+        tvGameDisplay.text = resources.getString(R.string.winner_message)
+        ivGameDisplay.setImageDrawable(if (res == GameResult.X) xDrawable else oDrawable)
+        ivGameDisplay.contentDescription = resources.getString(R.string.iv_display_desc, res)
+    }
+
+    //Initiates observers for viewModel
     private fun initObservers() {
         viewLifecycleOwner.also { owner ->
             viewModel.apply {
                 lastTurn.observe(owner) {
-                    if (it == null)
-                        viewModel.field.value?.let { field -> renderAll(field as ComplexFieldModel) }
-                    it?.let {
-                        val button = getImageButton(it as ComplexCoordinatesModel)
-                        renderCell(button, it)
-                        field.value?.let { field ->
-                            renderBlockState(field as ComplexFieldModel, ClassicCoordinatesModel(it.x, it.y))
-                        }
+                    if (it == null) { // if null, the game have been restarted, rerender empty field
+                        field.value?.let { field -> renderAll(field as ComplexFieldModel) }
+                        return@observe
                     }
+                    handleLastTurn(it)
                 }
                 currentPlayer.observe(owner) {
                     binding.ivGameDisplay.apply {
@@ -127,27 +208,9 @@ class ComplexGameSessionFragment : GameSessionFragment() {
                 }
                 gameResult.observe(owner) {
                     when (it) {
-                        null -> binding.apply {
-                            tvGameDisplay.text = resources.getString(R.string.current_player_message)
-                            ivGameDisplay.setImageDrawable(
-                                if (currentPlayer.value == null)
-                                    xDrawable else definePlayerDrawable(
-                                    currentPlayer.value!!
-                                )
-                            )
-                            ivGameDisplay.contentDescription =
-                                resources.getString(R.string.iv_display_desc, null)
-                        }
-                        GameResult.N -> binding.apply {
-                            tvGameDisplay.text = resources.getString(R.string.draw_message)
-                            ivGameDisplay.setImageDrawable(null)
-                            ivGameDisplay.contentDescription = resources.getString(R.string.draw_message)
-                        }
-                        else -> binding.apply {
-                            tvGameDisplay.text = resources.getString(R.string.winner_message)
-                            ivGameDisplay.setImageDrawable(if (it == GameResult.X) xDrawable else oDrawable)
-                            ivGameDisplay.contentDescription = resources.getString(R.string.iv_display_desc, it)
-                        }
+                        null -> handleResultNull(currentPlayer.value)
+                        GameResult.N -> handleResultN()
+                        else -> handleResultXO(it)
                     }
                 }
                 alert.observe(owner) {
@@ -169,14 +232,14 @@ class ComplexGameSessionFragment : GameSessionFragment() {
                 winLineCode.observe(owner) {
                     when (it) {
                         0 -> return@observe
-                        1 -> showLine(offset = -0.35f)
-                        2 -> showLine()
-                        3 -> showLine(offset = 0.35f)
-                        4 -> showLine(angle = 45f)
-                        5 -> showLine(angle = -45f)
-                        6 -> showLine(offset = 0.35f, angle = 90f)
-                        7 -> showLine(angle = 90f)
-                        8 -> showLine(offset = -0.35f, angle = 90f)
+                        1 -> renderLine(offset = -0.35f)
+                        2 -> renderLine()
+                        3 -> renderLine(offset = 0.35f)
+                        4 -> renderLine(angle = 45f)
+                        5 -> renderLine(angle = -45f)
+                        6 -> renderLine(offset = 0.35f, angle = 90f)
+                        7 -> renderLine(angle = 90f)
+                        8 -> renderLine(offset = -0.35f, angle = 90f)
                     }
                 }
                 currentBlockCords.observe(viewLifecycleOwner) {
@@ -193,6 +256,7 @@ class ComplexGameSessionFragment : GameSessionFragment() {
         }
     }
 
+    //Set color from theme by R.attr integer
     private fun ConstraintLayout.setBlockColor(attrId: Int) {
         val tv = TypedValue()
         context?.theme?.resolveAttribute(attrId, tv, true)
@@ -204,47 +268,15 @@ class ComplexGameSessionFragment : GameSessionFragment() {
         }
     }
 
-    private fun renderAll(field: ComplexFieldModel) {
-        renderWholeField(field)
-        renderBlockStates(field)
-    }
-
-    private fun renderWholeField(field: ComplexFieldModel) {
-        for (i in 0..8)
-            renderField(field[ClassicCoordinatesModel(i / 3, i % 3)].field, blocks[i])
-    }
-
-    private fun renderBlockStates(field: ComplexFieldModel) {
-        for (x in 0..2)
-            for (y in 0..2) {
-                renderBlockState(field, ClassicCoordinatesModel(x, y))
-            }
-    }
-
-    private fun renderBlockState(field: ComplexFieldModel, cords: ClassicCoordinatesModel) {
-        val container: ImageView by lazy {
-            val id = getIdByString("image${cords.x}${cords.y}")
-            binding.root.findViewById(id)
-        }
-        renderBlockState(container, field[cords].state)
-    }
-
-    private fun renderBlockState(container: ImageView, state: CellState?) {
-        when (state) {
-            null -> container.setImageDrawable(null)
-            CellState.N -> container.setImageDrawable(null)
-            CellState.X -> container.setImageDrawable(xDrawable)
-            CellState.O -> container.setImageDrawable(oDrawable)
-        }
-    }
-
+    //Finds ImageButton cell by cords
     private fun findCell(block: ConstraintLayout, cords: ClassicCoordinatesModel): ImageButton {
         return getIdByString("ibCell${cords.x}${cords.y}").let {
             block.findViewById(it)
         }
     }
 
-    private fun getImageButtons() {
+    //Fills blockButtons with ImageButtons
+    private fun initBlockButtons() {
         for (i in 0..8) {
             val x = i / 3
             val y = i % 3
@@ -255,20 +287,24 @@ class ComplexGameSessionFragment : GameSessionFragment() {
                 val x1 = j / 3
                 val y1 = j % 3
 
-                blocks[i][x1][y1] = findCell(block, ClassicCoordinatesModel(x1, y1))
+                blockButtons[i][x1][y1] = findCell(block, ClassicCoordinatesModel(x1, y1))
             }
         }
     }
+
+    //Listener for making turn (For cells)
     private fun makeTurnListener(cords: ComplexCoordinatesModel): View.OnClickListener {
         return View.OnClickListener {
             viewModel.makeTurn(cords)
         }
     }
 
+    //Returns Int id by its string name
     private fun getIdByString(name: String): Int {
         return resources.getIdentifier(name, "id", context?.packageName)
     }
 
+    //Returns ImageButton by coordinates
     private fun getImageButton(cords: ComplexCoordinatesModel) =
-        blocks[cords.x*3 + cords.y][cords.innerCoordinates.x][cords.innerCoordinates.y]
+        blockButtons[cords.x*3 + cords.y][cords.innerCoordinates.x][cords.innerCoordinates.y]
 }

@@ -142,14 +142,14 @@ class ClassicGameSessionFragment : GameSessionFragment() {
             winLineCode.observe(viewLifecycleOwner) {
                 when (it) {
                     0 -> return@observe
-                    1 -> showLine(offset = -0.35f)
-                    2 -> showLine()
-                    3 -> showLine(offset = 0.35f)
-                    4 -> showLine(angle = 45f)
-                    5 -> showLine(angle = -45f)
-                    6 -> showLine(offset = 0.35f, angle = 90f)
-                    7 -> showLine(angle = 90f)
-                    8 -> showLine(offset = -0.35f, angle = 90f)
+                    1 -> renderLine(offset = -0.35f)
+                    2 -> renderLine()
+                    3 -> renderLine(offset = 0.35f)
+                    4 -> renderLine(angle = 45f)
+                    5 -> renderLine(angle = -45f)
+                    6 -> renderLine(offset = 0.35f, angle = 90f)
+                    7 -> renderLine(angle = 90f)
+                    8 -> renderLine(offset = -0.35f, angle = 90f)
                 }
             }
         }
