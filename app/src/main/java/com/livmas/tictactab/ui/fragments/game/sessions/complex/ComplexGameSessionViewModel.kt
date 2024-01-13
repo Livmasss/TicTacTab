@@ -34,10 +34,12 @@ class ComplexGameSessionViewModel : GameSessionViewModel() {
         get() =_currentBlockCords
 
     private val repository = SettingsRepository()
-    private val gameMode = repository.readCompGameMode()
+    private val _gameMode = repository.readCompGameMode()
+    val gameMode
+        get() = _gameMode
     override var session: GameSession? = BasicComplexSession()
     fun resumeGame() {
-        if (gameMode != repository.readCompGameMode()) {
+        if (_gameMode != repository.readCompGameMode()) {
             restartGame()
             return
         }
@@ -49,10 +51,11 @@ class ComplexGameSessionViewModel : GameSessionViewModel() {
     }
     override fun restartGame() {
         session = createGame(ComplexFieldModel(), Player.X, null)
+        _currentBlockCords.postValue(null)
         super.restartGame()
     }
     private fun createGame(field: ComplexFieldModel, current: Player, result: GameResult?): GameSession {
-        return when(gameMode) {
+        return when(_gameMode) {
             ComplexGameMode.Basic -> BasicComplexSession(field, current, result)
             ComplexGameMode.Single -> SingleComplexSession(field, current, result)
             ComplexGameMode.Choose -> ChooseComplexSession(field, current, result)

@@ -25,6 +25,7 @@ import com.livmas.tictactab.domain.models.enums.GameResult
 import com.livmas.tictactab.domain.models.enums.Player
 import com.livmas.tictactab.ui.fragments.game.sessions.GameSessionFragment
 import com.livmas.tictactab.ui.models.enums.Alert
+import com.livmas.tictactab.ui.models.enums.ComplexGameMode
 
 class ComplexGameSessionFragment : GameSessionFragment() {
 
@@ -116,6 +117,11 @@ class ComplexGameSessionFragment : GameSessionFragment() {
         initBlocksListeners()
 
         binding.bRestart.setOnClickListener {
+            if (viewModel.currentBlockCords.value != null) {
+                val block = findBlock(viewModel.currentBlockCords.value!!)
+                block.setBlockColor(androidx.appcompat.R.attr.colorPrimary)
+            }
+
             try {
                 binding.flFieldContainer.removeViewAt(1)
             }
@@ -244,16 +250,31 @@ class ComplexGameSessionFragment : GameSessionFragment() {
                 }
                 currentBlockCords.observe(viewLifecycleOwner) {
                     if (it == null || it == prevBlockCords)
-                        return@observe
+                        if (viewModel.gameMode == ComplexGameMode.Basic)
+                            return@observe
+                        else
+                            paintAll(androidx.appcompat.R.attr.colorAccent)
 
-                    if (prevBlockCords != null)
-                        findBlock(prevBlockCords!!).setBlockColor(androidx.appcompat.R.attr.colorPrimary)
-                    findBlock(it).setBlockColor(androidx.appcompat.R.attr.colorAccent)
+                    if (prevBlockCords == null)
+                            paintAll(androidx.appcompat.R.attr.colorPrimary)
+                    else {
+                        if (it != null)
+                            findBlock(prevBlockCords!!).setBlockColor(androidx.appcompat.R.attr.colorPrimary)
+                    }
+
+                    if (it != null)
+                        findBlock(it).setBlockColor(androidx.appcompat.R.attr.colorAccent)
 
                     prevBlockCords = it
                 }
             }
         }
+    }
+
+    private fun paintAll(attrId: Int) {
+        for (x in 0..2)
+            for (y in 0..2)
+                findBlock(ClassicCoordinatesModel(x, y)).setBlockColor(attrId)
     }
 
     //Set color from theme by R.attr integer
