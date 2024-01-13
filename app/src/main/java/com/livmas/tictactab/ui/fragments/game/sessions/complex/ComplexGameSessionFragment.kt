@@ -2,12 +2,14 @@ package com.livmas.tictactab.ui.fragments.game.sessions.complex
 
 import android.os.Bundle
 import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.children
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.snackbar.Snackbar
 import com.livmas.tictactab.GAME_TAG
@@ -28,6 +30,7 @@ class ComplexGameSessionFragment : GameSessionFragment() {
     private lateinit var blocks: Array<Array<Array<ImageButton>>>
     override val viewModel: ComplexGameSessionViewModel by activityViewModels()
     private lateinit var binding: FragmentComplexGameSessionBinding
+    private var prevBlockCords: ClassicCoordinatesModel? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -176,7 +179,28 @@ class ComplexGameSessionFragment : GameSessionFragment() {
                         8 -> showLine(offset = -0.35f, angle = 90f)
                     }
                 }
+                currentBlockCords.observe(viewLifecycleOwner) {
+                    if (it == null || it == prevBlockCords)
+                        return@observe
+
+                    if (prevBlockCords != null)
+                        findBlock(prevBlockCords!!).setBlockColor(androidx.appcompat.R.attr.colorPrimary)
+                    findBlock(it).setBlockColor(androidx.appcompat.R.attr.colorAccent)
+
+                    prevBlockCords = it
+                }
             }
+        }
+    }
+
+    private fun ConstraintLayout.setBlockColor(attrId: Int) {
+        val tv = TypedValue()
+        context?.theme?.resolveAttribute(attrId, tv, true)
+
+        for (i in this.children) {
+            if (i is ImageButton)
+                continue
+            i.setBackgroundColor(tv.data)
         }
     }
 

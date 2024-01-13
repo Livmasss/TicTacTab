@@ -1,6 +1,7 @@
 package com.livmas.tictactab.ui.fragments.game.sessions.complex
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.livmas.tictactab.GAME_TAG
 import com.livmas.tictactab.data.repositories.SettingsRepository
@@ -10,6 +11,7 @@ import com.livmas.tictactab.domain.game_sessions.complex_sessions.ChooseComplexS
 import com.livmas.tictactab.domain.game_sessions.complex_sessions.SingleComplexSession
 import com.livmas.tictactab.domain.game_sessions.complex_sessions.StackComplexSession
 import com.livmas.tictactab.domain.models.IFieldModel
+import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
 import com.livmas.tictactab.domain.models.complex.ComplexCoordinatesModel
 import com.livmas.tictactab.domain.models.complex.ComplexFieldModel
 import com.livmas.tictactab.domain.models.enums.GameResult
@@ -24,10 +26,16 @@ class ComplexGameSessionViewModel : GameSessionViewModel() {
     override val _field: MutableLiveData<IFieldModel> by lazy {
         MutableLiveData(ComplexFieldModel())
     }
+
+    private val _currentBlockCords: MutableLiveData<ClassicCoordinatesModel?> by lazy {
+        MutableLiveData(null)
+    }
+    val currentBlockCords: LiveData<ClassicCoordinatesModel?>
+        get() =_currentBlockCords
+
     private val repository = SettingsRepository()
     private val gameMode = repository.readCompGameMode()
     override var session: GameSession? = BasicComplexSession()
-
     fun resumeGame() {
         if (gameMode != repository.readCompGameMode()) {
             restartGame()
@@ -94,5 +102,6 @@ class ComplexGameSessionViewModel : GameSessionViewModel() {
         }
         _field.postValue(session!!.field)
         _currentPlayer.postValue(session!!.currentPlayer)
+        _currentBlockCords.postValue((session as BasicComplexSession).currentBlockCords)
     }
 }
