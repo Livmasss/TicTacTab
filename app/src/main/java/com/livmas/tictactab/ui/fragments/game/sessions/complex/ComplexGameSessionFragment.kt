@@ -195,6 +195,20 @@ class ComplexGameSessionFragment : GameSessionFragment() {
         ivGameDisplay.contentDescription = resources.getString(R.string.iv_display_desc, res)
     }
 
+    private fun handleCurrBlockNull() {
+        if (viewModel.gameMode == ComplexGameMode.Basic)
+            return
+        else
+            paintAllBlocks(androidx.appcompat.R.attr.colorAccent)
+    }
+
+    private fun handlePrevBlock() {
+        if (prevBlockCords == null)
+            paintAllBlocks(androidx.appcompat.R.attr.colorPrimary)
+        else
+            findBlock(prevBlockCords!!).setBlockColor(androidx.appcompat.R.attr.colorPrimary)
+    }
+
     //Initiates observers for viewModel
     private fun initObservers() {
         viewLifecycleOwner.also { owner ->
@@ -249,21 +263,12 @@ class ComplexGameSessionFragment : GameSessionFragment() {
                     }
                 }
                 currentBlockCords.observe(viewLifecycleOwner) {
-                    if (it == null || it == prevBlockCords)
-                        if (viewModel.gameMode == ComplexGameMode.Basic)
-                            return@observe
-                        else
-                            paintAll(androidx.appcompat.R.attr.colorAccent)
-
-                    if (prevBlockCords == null)
-                            paintAll(androidx.appcompat.R.attr.colorPrimary)
+                    if (it == null)
+                        handleCurrBlockNull()
                     else {
-                        if (it != null)
-                            findBlock(prevBlockCords!!).setBlockColor(androidx.appcompat.R.attr.colorPrimary)
-                    }
-
-                    if (it != null)
+                        handlePrevBlock()
                         findBlock(it).setBlockColor(androidx.appcompat.R.attr.colorAccent)
+                    }
 
                     prevBlockCords = it
                 }
@@ -271,7 +276,7 @@ class ComplexGameSessionFragment : GameSessionFragment() {
         }
     }
 
-    private fun paintAll(attrId: Int) {
+    private fun paintAllBlocks(attrId: Int) {
         for (x in 0..2)
             for (y in 0..2)
                 findBlock(ClassicCoordinatesModel(x, y)).setBlockColor(attrId)
