@@ -12,9 +12,10 @@ abstract class ChangeableComplexSession(
     current: Player?,
     result: GameResult?
 ): BasicComplexSession(field, current, result) {
-    constructor() : this(ComplexFieldModel(), Player.X, null)
 
     override fun postTurnProcess(cords: ICoordinatesModel) {
+        super.postTurnProcess(cords)
+
         cords as ComplexCoordinatesModel
         cords.innerCoordinates.also {
             _currentBlockCords =
@@ -23,7 +24,6 @@ abstract class ChangeableComplexSession(
                 else
                     onChooseClosedBlock()
         }
-        super.postTurnProcess(cords)
     }
     abstract fun onChooseClosedBlock(): ClassicCoordinatesModel?
 }

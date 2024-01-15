@@ -298,6 +298,7 @@ class ComplexGameSessionFragment : GameSessionFragment() {
         for (x in 0..2)
             for (y in 0..2) {
                 val cords = ClassicCoordinatesModel(x, y)
+                findBlock(cords).setBlockColor(androidx.constraintlayout.widget.R.attr.colorPrimary)
                 if (viewModel.field.value?.get(cords)?.state == null)
                     findBlock(cords).setBlockColor(androidx.constraintlayout.widget.R.attr.colorAccent)
             }
