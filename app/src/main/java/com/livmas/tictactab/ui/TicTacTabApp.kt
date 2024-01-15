@@ -1,6 +1,7 @@
 package com.livmas.tictactab.ui
 
 import android.app.Application
+import com.livmas.tictactab.data.repositories.SettingsRepository
 import com.livmas.tictactab.data.sources.SettingsSharedPreferencesDataSource
 
 class TicTacTabApp: Application() {
@@ -9,5 +10,7 @@ class TicTacTabApp: Application() {
         super.onCreate()
 
         SettingsSharedPreferencesDataSource.instance.initiate(applicationContext)
+
+        ThemeManager.setTheme(SettingsRepository().readNightMode())
     }
 }

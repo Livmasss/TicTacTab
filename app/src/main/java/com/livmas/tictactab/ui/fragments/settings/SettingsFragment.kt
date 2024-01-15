@@ -10,6 +10,7 @@ import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.livmas.tictactab.databinding.FragmentSettingsBinding
+import com.livmas.tictactab.ui.ThemeManager
 import com.livmas.tictactab.ui.models.enums.ComplexGameMode
 
 class SettingsFragment : Fragment() {
@@ -41,8 +42,6 @@ class SettingsFragment : Fragment() {
                 val idToCheck = binding.rbgComplexGameMode[it.value].id
                 binding.rbgComplexGameMode.check(idToCheck)
             }
-
-            binding.sNightMode.isChecked = nightTheme.value == true
         }
     }
 
@@ -50,11 +49,13 @@ class SettingsFragment : Fragment() {
         viewModel.complexGameMode.value?.apply {
             binding.rbgComplexGameMode.check(value)
         }
+        binding.sNightMode.isChecked = viewModel.nightTheme.value == true
     }
 
     private fun initListeners() {
         initRGBListener()
         initNightSwitchListener()
+        initNightCBListener()
         initConfirmButtonListener()
     }
 
@@ -70,17 +71,21 @@ class SettingsFragment : Fragment() {
 
     private fun initNightSwitchListener() {
         binding.sNightMode.setOnCheckedChangeListener { _, b ->
-            viewModel.postNightMode(b)
+            viewModel.postNightTheme(b)
+            ThemeManager.setTheme(b)
+        }
+    }
+
+    private fun initNightCBListener() {
+        binding.cbUseNight.setOnCheckedChangeListener { _, b ->
+            viewModel.postUseNightTheme(b)
+            ThemeManager.useTheme = b
         }
     }
 
     private fun initConfirmButtonListener() {
-        binding.apply{
-            bConfirm.setOnClickListener {
-                viewModel.postNightMode(sNightMode.isChecked)
-
-                viewModel.saveData()
-            }
+        binding.bConfirm.setOnClickListener {
+            viewModel.saveData()
         }
     }
 }

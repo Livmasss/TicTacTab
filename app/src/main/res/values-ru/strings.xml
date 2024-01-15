@@ -45,4 +45,5 @@
     <string name="basic_mode">Базовый режим</string>
 
     <string name="night_theme">Тёмная тема</string>
+    <string name="use_app_night_mode">Тема приложения</string>
 </resources>

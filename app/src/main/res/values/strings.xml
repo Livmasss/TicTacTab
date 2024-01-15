@@ -47,5 +47,6 @@
     <string name="basic_mode">Basic mode</string>
 
     <string name="night_theme">Night theme</string>
+    <string name="use_app_night_mode">Use app Night mode</string>
 
 </resources>

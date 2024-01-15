@@ -37,14 +37,14 @@ class SettingsSharedPreferencesDataSource {
     }
 
     fun readCompGameMode(): Int {
-        return if (isPrefNull())
+        return if (isSharedPrefNull())
             0
         else
             sp!!.getInt(PREF_GAME_MODE, 0)
     }
 
     fun readNightMode(): Boolean {
-        return if (isPrefNull())
+        return if (isSharedPrefNull())
             false
         else
             sp!!.getBoolean(PREF_NIGHT_MODE, false)
@@ -58,7 +58,7 @@ class SettingsSharedPreferencesDataSource {
         }
     }
 
-    private fun isPrefNull(): Boolean {
+    private fun isSharedPrefNull(): Boolean {
         return (sp == null).let {
             if (it)
                 Log.w(SETTINGS_TAG, "SharedPreferences object is null!")

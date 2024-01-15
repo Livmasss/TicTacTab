@@ -1,22 +1,26 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.TicTacTab" parent="Theme.TicTacTab.Base">
+        <item name="colorOnPrimary">@color/white</item>
+
+        <item name="android:windowBackground">@color/white</item>
+    </style>
+
+    <style name="Theme.TicTacTab.Base" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_200</item>
         <item name="colorPrimaryVariant">@color/purple_500</item>
-        <item name="colorOnPrimary">@color/white</item>
+
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/orange_200</item>
         <item name="colorSecondaryVariant">@color/orange_500</item>
         <item name="colorOnSecondary">@color/black</item>
+
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-        <item name="android:windowBackground">@color/white</item>
         <item name="colorAccent">@color/teal_200</item>
-    </style>
 
-    <style name="Theme.TicTacTab.Base" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="android:textViewStyle">@style/textViewStyle</item>
         <item name="snackbarTextViewStyle">@style/Theme.Snackbar</item>
         <item name="android:buttonStyle">@style/Theme.Button</item>

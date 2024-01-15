@@ -37,7 +37,7 @@ class SettingsViewModel: ViewModel() {
     fun postGameMode(mode: ComplexGameMode) {
         _complexGameMode.postValue(mode)
     }
-    fun postNightMode(isNight: Boolean) {
+    fun postNightTheme(isNight: Boolean?) {
         _nightTheme.postValue(isNight)
     }
 
@@ -46,5 +46,9 @@ class SettingsViewModel: ViewModel() {
             putCompGameMode(_complexGameMode.value ?: ComplexGameMode.Stack)
             putNightMode(_nightTheme.value?: false)
         }
+    }
+
+    fun postUseNightTheme(bool: Boolean) {
+
     }
 }
