@@ -37,7 +37,7 @@ class ComplexGameSessionViewModel : GameSessionViewModel() {
     private val _gameMode = repository.readCompGameMode()
     val gameMode
         get() = _gameMode
-    override var session: GameSession? = BasicComplexSession()
+    override var session: GameSession? = null
     fun resumeGame() {
         if (_gameMode != repository.readCompGameMode()) {
             restartGame()
