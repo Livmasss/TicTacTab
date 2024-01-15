@@ -12,8 +12,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.snackbar.Snackbar
-import com.livmas.tictactab.GAME_TAG
 import com.livmas.tictactab.R
+import com.livmas.tictactab.UI_TAG
 import com.livmas.tictactab.databinding.FragmentComplexGameSessionBinding
 import com.livmas.tictactab.domain.models.ICoordinatesModel
 import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
@@ -126,7 +126,7 @@ class ComplexGameSessionFragment : GameSessionFragment() {
                 binding.flFieldContainer.removeViewAt(1)
             }
             catch (e: NullPointerException) {
-                Log.d(GAME_TAG, "No line drawn")
+                Log.d(UI_TAG, "No line drawn")
             }
             viewModel.restartGame()
         }
@@ -195,11 +195,21 @@ class ComplexGameSessionFragment : GameSessionFragment() {
         ivGameDisplay.contentDescription = resources.getString(R.string.iv_display_desc, res)
     }
 
+    private fun defineAlertMessage(alert: Alert): String {
+        return when(alert) {
+            Alert.SomeError -> resources.getString(R.string.internal_error_message)
+            Alert.CellOccupied -> resources.getString(R.string.entity_occupied_message, resources.getString(R.string.cell_var))
+            Alert.GameFinished -> resources.getString(R.string.game_finished_message)
+            Alert.BlockFinished -> resources.getString(R.string.entity_occupied_message, resources.getString(R.string.block_var))
+            Alert.BlockInactive -> resources.getString(R.string.block_inactive_message)
+        }
+    }
+
     private fun handleCurrBlockNull() {
         if (viewModel.gameMode == ComplexGameMode.Basic)
             return
         else
-            paintAllBlocks(androidx.appcompat.R.attr.colorAccent)
+            paintAllAvailableBlocks()
     }
 
     private fun handlePrevBlock() {
@@ -220,35 +230,37 @@ class ComplexGameSessionFragment : GameSessionFragment() {
                     }
                     handleLastTurn(it)
                 }
+
                 currentPlayer.observe(owner) {
                     binding.ivGameDisplay.apply {
                         setImageDrawable(definePlayerDrawable(it))
                         contentDescription = resources.getString(R.string.iv_display_desc, it)
                     }
                 }
+
                 gameResult.observe(owner) {
                     when (it) {
-                        null -> handleResultNull(currentPlayer.value)
+                        null -> {
+                            handleResultNull(currentPlayer.value)
+                            return@observe
+                        }
                         GameResult.N -> handleResultN()
                         else -> handleResultXO(it)
                     }
+                    paintAllBlocks(androidx.transition.R.attr.colorPrimary)
                 }
+
                 alert.observe(owner) {
-                    it?.let { messageCode ->
+                    it?.let { alert ->
                         Snackbar.make(
                             binding.root,
-                            when(messageCode) {
-                                Alert.SomeError -> resources.getString(R.string.internal_error_message)
-                                Alert.CellOccupied -> resources.getString(R.string.entity_occupied_message, resources.getString(R.string.cell_var))
-                                Alert.GameFinished -> resources.getString(R.string.game_finished_message)
-                                Alert.BlockFinished -> resources.getString(R.string.entity_occupied_message, resources.getString(R.string.block_var))
-                                Alert.BlockInactive -> resources.getString(R.string.block_inactive_message)
-                            },
+                            defineAlertMessage(alert),
                             Snackbar.LENGTH_LONG
                         ).show()
                     }
                     viewModel.clearAlert()
                 }
+
                 winLineCode.observe(owner) {
                     when (it) {
                         0 -> return@observe
@@ -262,14 +274,15 @@ class ComplexGameSessionFragment : GameSessionFragment() {
                         8 -> renderLine(offset = -0.35f, angle = 90f)
                     }
                 }
+
                 currentBlockCords.observe(viewLifecycleOwner) {
+                    Log.d(UI_TAG, "Update")
                     if (it == null)
                         handleCurrBlockNull()
                     else {
                         handlePrevBlock()
                         findBlock(it).setBlockColor(androidx.appcompat.R.attr.colorAccent)
                     }
-
                     prevBlockCords = it
                 }
             }
@@ -280,6 +293,14 @@ class ComplexGameSessionFragment : GameSessionFragment() {
         for (x in 0..2)
             for (y in 0..2)
                 findBlock(ClassicCoordinatesModel(x, y)).setBlockColor(attrId)
+    }
+    private fun paintAllAvailableBlocks() {
+        for (x in 0..2)
+            for (y in 0..2) {
+                val cords = ClassicCoordinatesModel(x, y)
+                if (viewModel.field.value?.get(cords)?.state == null)
+                    findBlock(cords).setBlockColor(androidx.constraintlayout.widget.R.attr.colorAccent)
+            }
     }
 
     //Set color from theme by R.attr integer

@@ -51,8 +51,8 @@ class ComplexGameSessionViewModel : GameSessionViewModel() {
     }
     override fun restartGame() {
         session = createGame(ComplexFieldModel(), Player.X, null)
-        _currentBlockCords.postValue(null)
         super.restartGame()
+        _currentBlockCords.postValue(null)
     }
     private fun createGame(field: ComplexFieldModel, current: Player, result: GameResult?): GameSession {
         return when(_gameMode) {
