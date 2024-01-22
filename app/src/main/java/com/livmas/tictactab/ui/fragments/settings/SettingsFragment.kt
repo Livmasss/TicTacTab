@@ -9,6 +9,7 @@ import android.widget.RadioButton
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.livmas.tictactab.SETTINGS_TAG
 import com.livmas.tictactab.databinding.FragmentSettingsBinding
 import com.livmas.tictactab.ui.ThemeManager
 import com.livmas.tictactab.ui.models.enums.ComplexGameMode
@@ -16,9 +17,6 @@ import com.livmas.tictactab.ui.models.enums.ComplexGameMode
 class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
     private val viewModel: SettingsViewModel by activityViewModels()
-    companion object {
-        const val TAG = "settings"
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +29,6 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        showValues()
         initListeners()
         initObservers()
     }
@@ -41,37 +38,23 @@ class SettingsFragment : Fragment() {
             complexGameMode.observe(viewLifecycleOwner) {
                 val idToCheck = binding.rbgComplexGameMode[it.value].id
                 binding.rbgComplexGameMode.check(idToCheck)
+                Log.i(SETTINGS_TAG, "Game mode observed: $it")
+            }
+
+            nightTheme.observe(viewLifecycleOwner) {
+                binding.sNightMode.isChecked = it
             }
         }
     }
 
-    private fun showValues() {
-        viewModel.complexGameMode.value?.apply {
-            binding.rbgComplexGameMode.check(value)
-        }
-        binding.sNightMode.isChecked = viewModel.nightTheme.value == true
-    }
-
     private fun initListeners() {
-        initRGBListener()
         initNightSwitchListener()
         initNightCBListener()
         initConfirmButtonListener()
     }
-
-    private fun initRGBListener() {
-        binding.rbgComplexGameMode.setOnCheckedChangeListener { group, i ->
-            val rb = group.findViewById<RadioButton>(i)
-            val gameMode = ComplexGameMode.values()[group.indexOfChild(rb)]
-            Log.i(TAG, gameMode.toString())
-
-            viewModel.postGameMode(gameMode)
-        }
-    }
-
+    
     private fun initNightSwitchListener() {
         binding.sNightMode.setOnCheckedChangeListener { _, b ->
-            viewModel.postNightTheme(b)
             ThemeManager.setTheme(b)
         }
     }
@@ -85,7 +68,15 @@ class SettingsFragment : Fragment() {
 
     private fun initConfirmButtonListener() {
         binding.bConfirm.setOnClickListener {
-            viewModel.saveData()
+            binding.rbgComplexGameMode.apply {
+                val rb = findViewById<RadioButton>(checkedRadioButtonId)
+                val gameMode = ComplexGameMode.values()[indexOfChild(rb)]
+
+                Log.d(SETTINGS_TAG, "Confirm")
+                viewModel.postGameMode(gameMode)
+            }
+
+            viewModel.postNightTheme(binding.sNightMode.isChecked)
         }
     }
 }

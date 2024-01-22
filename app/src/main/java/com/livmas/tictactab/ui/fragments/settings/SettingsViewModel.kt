@@ -36,16 +36,18 @@ class SettingsViewModel: ViewModel() {
 
     fun postGameMode(mode: ComplexGameMode) {
         _complexGameMode.postValue(mode)
+        saveCompGameMode(mode)
     }
     fun postNightTheme(isNight: Boolean?) {
         _nightTheme.postValue(isNight)
+        saveNightMode(isNight)
     }
+    private fun saveCompGameMode(mode: ComplexGameMode?) = repository.putCompGameMode(mode ?: ComplexGameMode.Stack)
+    private fun saveNightMode(isNight: Boolean?) = repository.putNightMode(isNight?: false)
 
     fun saveData() {
-        repository.apply {
-            putCompGameMode(_complexGameMode.value ?: ComplexGameMode.Stack)
-            putNightMode(_nightTheme.value?: false)
-        }
+        saveCompGameMode(_complexGameMode.value)
+        saveNightMode(_nightTheme.value)
     }
 
     fun postUseNightTheme(bool: Boolean) {
