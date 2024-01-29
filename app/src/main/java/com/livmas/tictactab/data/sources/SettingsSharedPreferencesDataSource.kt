@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import com.livmas.tictactab.SETTINGS_TAG
-import com.livmas.tictactab.data.sources.SettingsSharedPreferencesDataSource.Companion.PREF_NIGHT_MODE
 
 class SettingsSharedPreferencesDataSource {
     companion object {

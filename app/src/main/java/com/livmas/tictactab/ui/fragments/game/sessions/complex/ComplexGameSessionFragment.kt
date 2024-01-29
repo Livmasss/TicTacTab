@@ -164,6 +164,7 @@ class ComplexGameSessionFragment : GameSessionFragment() {
     private fun handleLastTurn(cords: ICoordinatesModel) {
         val button = getImageButton(cords as ComplexCoordinatesModel)
         renderCell(button, cords)
+
         viewModel.field.value?.let { field ->
             renderBlockState(field as ComplexFieldModel, ClassicCoordinatesModel(cords.x, cords.y))
         }
@@ -276,7 +277,9 @@ class ComplexGameSessionFragment : GameSessionFragment() {
                 }
 
                 currentBlockCords.observe(viewLifecycleOwner) {
-                    Log.d(UI_TAG, "Update")
+                    if (viewModel.gameResult.value != null)
+                        return@observe
+
                     if (it == null)
                         handleCurrBlockNull()
                     else {
