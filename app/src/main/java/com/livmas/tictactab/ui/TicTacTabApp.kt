@@ -8,9 +8,9 @@ class TicTacTabApp: Application() {
 
     override fun onCreate() {
         super.onCreate()
-
         SettingsSharedPreferencesDataSource.instance.initiate(applicationContext)
 
-        ThemeManager.setTheme(SettingsRepository().readNightMode())
+        ThemeManager.useTheme = SettingsRepository.instance.readUseNightMode()
+        ThemeManager.setTheme(SettingsRepository.instance.readNightMode())
     }
 }

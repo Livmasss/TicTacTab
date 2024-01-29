@@ -1,6 +1,7 @@
 package com.livmas.tictactab.ui
 
 import androidx.appcompat.app.AppCompatDelegate
+import com.livmas.tictactab.data.repositories.SettingsRepository
 
 class ThemeManager {
     companion object {
@@ -14,6 +15,11 @@ class ThemeManager {
                 }
             else
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        }
+
+        fun syncThemeWithPrefs() {
+            useTheme = SettingsRepository.instance.readUseNightMode()
+            setTheme(SettingsRepository.instance.readNightMode())
         }
     }
 }

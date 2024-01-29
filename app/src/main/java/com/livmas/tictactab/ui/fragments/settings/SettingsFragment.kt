@@ -1,5 +1,6 @@
 package com.livmas.tictactab.ui.fragments.settings
 
+import android.content.res.Resources.Theme
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -43,25 +44,23 @@ class SettingsFragment : Fragment() {
 
             nightTheme.observe(viewLifecycleOwner) {
                 binding.sNightMode.isChecked = it
+                Log.d(SETTINGS_TAG, "Night mode observed: $it")
+            }
+
+            useNightTheme.observe(viewLifecycleOwner) {
+                binding.cbUseNight.isChecked = it
+                Log.d(SETTINGS_TAG, "Use Night mode observed: $it")
             }
         }
     }
 
     private fun initListeners() {
-        initNightSwitchListener()
         initNightCBListener()
         initConfirmButtonListener()
-    }
-    
-    private fun initNightSwitchListener() {
-        binding.sNightMode.setOnCheckedChangeListener { _, b ->
-            ThemeManager.setTheme(b)
-        }
     }
 
     private fun initNightCBListener() {
         binding.cbUseNight.setOnCheckedChangeListener { _, b ->
-            viewModel.postUseNightTheme(b)
             ThemeManager.useTheme = b
         }
     }
@@ -75,8 +74,11 @@ class SettingsFragment : Fragment() {
                 Log.d(SETTINGS_TAG, "Confirm")
                 viewModel.postGameMode(gameMode)
             }
-
             viewModel.postNightTheme(binding.sNightMode.isChecked)
+            viewModel.postUseNightTheme(binding.cbUseNight.isChecked)
+
+            ThemeManager.useTheme = binding.cbUseNight.isChecked
+            ThemeManager.setTheme(binding.sNightMode.isChecked)
         }
     }
 }
