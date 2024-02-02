@@ -1,6 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.rules.RulesFragment"/>
+    tools:context=".ui.fragments.rules.RulesFragment"
+
+    android:padding="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:textSize="22sp"
+            android:textAlignment="center"
+            style="@style/rules_tv_style"
+
+            android:text="@string/rules_0"/>
+
+        <TextView
+            style="@style/rules_tv_style"
+            android:text="@string/rules_1"/>
+        <FrameLayout
+            style="@style/rules_image_style">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rules_screen_1"/>
+        </FrameLayout>
+
+        <TextView
+            style="@style/rules_tv_style"
+            android:text="@string/rules_2_0"/>
+
+        <TextView
+            style="@style/rules_tv_style"
+            android:text="@string/rules_2_1"/>
+
+        <TextView
+            style="@style/rules_tv_style"
+            android:text="@string/rules_2_2"/>
+
+        <TextView
+            style="@style/rules_tv_style"
+            android:text="@string/rules_2_3"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content">
+
+            <ImageView
+                style="@style/rules_image_style"
+                android:src="@drawable/rules_screen_2_1"/>
+
+            <ImageView
+                style="@style/rules_image_style"
+                android:src="@drawable/rules_screen_2_2"/>
+
+        </LinearLayout>
+
+        <TextView
+            style="@style/rules_tv_style"
+            android:text="@string/rules_3"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content">
+
+            <ImageView
+                style="@style/rules_image_style"
+                android:src="@drawable/rules_screen_3_1"/>
+
+            <ImageView
+                style="@style/rules_image_style"
+                android:src="@drawable/rules_screen_3_2"/>
+
+            <ImageView
+                style="@style/rules_image_style"
+                android:src="@drawable/rules_screen_3_3"/>
+
+        </LinearLayout>
+
+        <TextView
+            style="@style/rules_tv_style"
+            android:text="@string/rules_4"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content">
+
+            <FrameLayout
+                style="@style/rules_image_style">
+                <ImageView
+
+                    android:src="@drawable/rules_screen_4_1"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"/>
+
+            </FrameLayout>
+
+            <ImageView
+                style="@style/rules_image_style"
+                android:src="@drawable/rules_screen_4_2"/>
+
+            <ImageView
+                style="@style/rules_image_style"
+                android:src="@drawable/rules_screen_4_3"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

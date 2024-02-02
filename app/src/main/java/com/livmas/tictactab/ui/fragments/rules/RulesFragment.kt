@@ -14,9 +14,4 @@ class RulesFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_rules, container, false)
     }
-
-    companion object {
-        @JvmStatic
-        fun newInstance() = RulesFragment()
-    }
 }
