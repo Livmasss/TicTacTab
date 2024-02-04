@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Большие крестики-нолики</string>
+
     <!-- UI elements -->
     <string name="restart">Перезапустить</string>
     <string name="confirm">Подтвердить</string>
+
+    <string name="in_development">В разработке</string>
+
     <!-- Navigation -->
     <string name="title_history">История</string>
     <string name="title_settings">Настройки</string>
@@ -24,6 +29,20 @@
     <string name="cell_coordinates_2_0">Координаты клетки 2 0</string>
     <string name="cell_coordinates_2_1">Координаты клетки 2 1</string>
     <string name="cell_coordinates_2_2">Координаты клетки 2 2</string>
+
+    <!-- Screenshots -->
+    <string name="screenshot_1">Скриншот 1</string>
+
+    <string name="screenshot_2_1">Скриншот 2.1</string>
+    <string name="screenshot_2_2">Скриншот 2.2</string>
+
+    <string name="screenshot_3_1">Скриншот 3.1</string>
+    <string name="screenshot_3_2">Скриншот 3.2</string>
+    <string name="screenshot_3_3">Скриншот 3.3</string>
+
+    <string name="screenshot_4_1">Скриншот 4.1</string>
+    <string name="screenshot_4_2">Скриншот 4.2</string>
+    <string name="screenshot_4_3">Скриншот 4.3</string>
 
     <!-- Messages -->
     <string name="winner_message">Победитель:</string>

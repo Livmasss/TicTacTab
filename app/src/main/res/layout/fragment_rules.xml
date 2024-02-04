@@ -3,9 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.rules.RulesFragment"
-
-    android:padding="5dp">
+    tools:context=".ui.fragments.rules.RulesFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,9 +25,10 @@
         <FrameLayout
             style="@style/rules_image_style">
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/rules_screen_1"/>
+                style="@style/rules_image_style"
+                android:src="@drawable/rules_screen_1"
+
+                android:contentDescription="@string/screenshot_1"/>
         </FrameLayout>
 
         <TextView
@@ -55,11 +54,15 @@
 
             <ImageView
                 style="@style/rules_image_style"
-                android:src="@drawable/rules_screen_2_1"/>
+                android:src="@drawable/rules_screen_2_1"
+
+                android:contentDescription="@string/screenshot_2_1"/>
 
             <ImageView
                 style="@style/rules_image_style"
-                android:src="@drawable/rules_screen_2_2"/>
+                android:src="@drawable/rules_screen_2_2"
+
+                android:contentDescription="@string/screenshot_2_2"/>
 
         </LinearLayout>
 
@@ -74,15 +77,21 @@
 
             <ImageView
                 style="@style/rules_image_style"
-                android:src="@drawable/rules_screen_3_1"/>
+                android:src="@drawable/rules_screen_3_1"
+
+                android:contentDescription="@string/screenshot_3_1"/>
 
             <ImageView
                 style="@style/rules_image_style"
-                android:src="@drawable/rules_screen_3_2"/>
+                android:src="@drawable/rules_screen_3_2"
+
+                android:contentDescription="@string/screenshot_3_2"/>
 
             <ImageView
                 style="@style/rules_image_style"
-                android:src="@drawable/rules_screen_3_3"/>
+                android:src="@drawable/rules_screen_3_3"
+
+                android:contentDescription="@string/screenshot_3_3"/>
 
         </LinearLayout>
 
@@ -95,23 +104,23 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content">
 
-            <FrameLayout
-                style="@style/rules_image_style">
-                <ImageView
+            <ImageView
+                android:src="@drawable/rules_screen_4_1"
+                style="@style/rules_image_style"
 
-                    android:src="@drawable/rules_screen_4_1"
-                    android:layout_height="match_parent"
-                    android:layout_width="match_parent"/>
-
-            </FrameLayout>
+                android:contentDescription="@string/screenshot_4_1"/>
 
             <ImageView
                 style="@style/rules_image_style"
-                android:src="@drawable/rules_screen_4_2"/>
+                android:src="@drawable/rules_screen_4_2"
+
+                android:contentDescription="@string/screenshot_4_2"/>
 
             <ImageView
                 style="@style/rules_image_style"
-                android:src="@drawable/rules_screen_4_3"/>
+                android:src="@drawable/rules_screen_4_3"
+
+                android:contentDescription="@string/screenshot_4_3"/>
 
         </LinearLayout>
 

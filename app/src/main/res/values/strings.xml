@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">TicTacTab</string>
+    <string name="app_name">TicTacTab</string>
 
     <!-- UI elements -->
     <string name="restart">Restart</string>
@@ -26,6 +26,20 @@
     <string name="cell_coordinates_2_0">Cell coordinates 2 0</string>
     <string name="cell_coordinates_2_1">Cell coordinates 2 1</string>
     <string name="cell_coordinates_2_2">Cell coordinates 2 2</string>
+
+        <!-- Screenshots -->
+    <string name="screenshot_1">screenshot 1</string>
+
+    <string name="screenshot_2_1">screenshot 2.1</string>
+    <string name="screenshot_2_2">screenshot 2.2</string>
+
+    <string name="screenshot_3_1">screenshot 3.1</string>
+    <string name="screenshot_3_2">screenshot 3.2</string>
+    <string name="screenshot_3_3">screenshot 3.3</string>
+
+    <string name="screenshot_4_1">screenshot 4.1</string>
+    <string name="screenshot_4_2">screenshot 4.2</string>
+    <string name="screenshot_4_3">screenshot 4.3</string>
 
     <!-- Messages -->
     <string name="winner_message">Winner:</string>
@@ -61,6 +75,7 @@
     <string name="rules_3">\tОднако с такими правилами может произойти ситуация, когда активным должен тать уже завершенный блок, тогда текущему игроку предоставляется выбор среди всех открытых блоков, далее правила идут так же. </string>
     <string name="rules_4">\t•	Возвратный режим: Каждый игрок определяет следующий блок координатами клетки, в которую он ходит: например, игрок походил в левую верхнюю клетку в активном блоке, значит для следующего игрока активным будет левый верхний блок.
 \tОднако в отличие от предыдущего режима, игрок не сможет выбрать любой блок, потому что игра сама его определит. Текущий игрок будет ходить в последнем не завершенном блоке, в котором велась игра до этого. </string>
+    <string name="in_development">In development</string>
 
 
 </resources>

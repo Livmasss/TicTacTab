@@ -5,7 +5,6 @@ import com.livmas.tictactab.data.repositories.SettingsRepository
 import com.livmas.tictactab.data.sources.SettingsSharedPreferencesDataSource
 
 class TicTacTabApp: Application() {
-
     override fun onCreate() {
         super.onCreate()
         SettingsSharedPreferencesDataSource.instance.initiate(applicationContext)

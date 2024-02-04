@@ -4,8 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.livmas.tictactab.R
@@ -24,16 +22,16 @@ class MainActivity : AppCompatActivity() {
 
         navController = findNavController(R.id.nav_host_fragment_activity_main)
 
-//        ActionBar navigation
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_rules,
-                R.id.navigation_game,
-                R.id.navigation_history,
-                R.id.navigation_settings
-            )
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
+//        ActionBar navigation is disabled
+//        val appBarConfiguration = AppBarConfiguration(
+//            setOf(
+//                R.id.navigation_rules,
+//                R.id.navigation_game,
+//                R.id.navigation_history,
+//                R.id.navigation_settings
+//            )
+//        )
+//        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
 
