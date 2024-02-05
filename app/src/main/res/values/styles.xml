@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Game -->
     <style name="field_line">
         <item name="android:background">?attr/colorPrimary</item>
     </style>
@@ -13,6 +14,11 @@
         <item name="backgroundTint">@color/transparent</item>
     </style>
 
+    <style name="game_block_style">
+        <item name="android:layout_weight">1</item>
+        <item name="android:padding">5dp</item>
+    </style>
+
     <style name="game_fragment_theme">
         <item name="android:textSize">28sp</item>
         <item name="android:orientation">vertical</item>
@@ -20,9 +26,15 @@
         <item name="android:gravity">center_horizontal</item>
     </style>
 
+    <!-- Text -->
     <style name="textViewStyle" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">42sp</item>
     </style>
+
+    <style name="PreferenceTextStyle">
+        <item name="android:textSize">20sp</item>
+    </style>
+
     <style name="Theme.Snackbar" parent="Widget.MaterialComponents.Snackbar.TextView">
         <item name="android:textSize">14sp</item>
     </style>
@@ -33,19 +45,12 @@
         <item name="android:textSize">20sp</item>
     </style>
 
-    <style name="game_block_style">
-        <item name="android:layout_weight">1</item>
-        <item name="android:padding">5dp</item>
-    </style>
-
-    <style name="PreferenceTextStyle">
-        <item name="android:textSize">20sp</item>
-    </style>
+    <!-- rules -->
 
     <style name="rules_tv_style" parent="textViewStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:textAlignment">gravity</item>
     </style>
 

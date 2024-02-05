@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.TicTacTab" parent="Theme.TicTacTab.Base">
-        <item name="android:windowBackground">@color/gray</item>
-        <item name="colorOnPrimary">@color/gray</item>
+        <item name="android:windowBackground">@color/gray_200</item>
+        <item name="colorOnPrimary">@color/gray_200</item>
     </style>
 </resources>

@@ -3,7 +3,11 @@
 
     <!-- UI elements -->
     <string name="restart">Restart</string>
+    <string name="cancel">Cancel</string>
     <string name="confirm">Confirm</string>
+
+    <string name="in_development">In development</string>
+
     <!-- Navigation -->
     <string name="title_history">History</string>
     <string name="title_settings">Settings</string>
@@ -51,6 +55,8 @@
     <string name="cell_var">cell</string>
     <string name="block_var">block</string>
     <string name="block_inactive_message">This block is inactive! Choose active one.</string>
+    <string name="confirm_message">If you change game mode, game will be restarted</string>
+    <string name="confirm_title_message">Save changes?</string>
 
     <!-- Settings -->
     <string name="complex_game_mode">Complex Game Mode</string>
@@ -64,18 +70,14 @@
     <string name="use_app_night_mode">Use app Night mode</string>
 
     <!-- Rules -->
-    <string name="rules_0">\tДобро пожаловать в расширенные крестики нолики!</string>
-    <string name="rules_1">\tВ приложение представлены сразу несколько версий всем известной игры, которые вы можете переключать в настройках.
-        Помимо классической версии 3 x 3, вы можете попробовать усложненный вариант, в котором вместо обычных клеток выступают блоки клеток 3 x 3. Для победы вам необходимо так же, как обычно заполнить 3 блока подряд, а что бы присвоить себе какой-либо блок, вы должны одержать победу на маленьком поле в этом блоке, т.е. собрать в нем 3 клетки в ряд.</string>
-    <string name="rules_2_0">\tУ этой расширенной версии есть несколько режимов игры:</string>
-    <string name="rules_2_1">\t•	Базовый режим позволяет делать ход в любой части игрового поля;</string>
-    <string name="rules_2_2">\t•	Поочередный, в котором игра ведется в каждом блоке по очереди. Первый игрок может походить куда угодно, но после этого нельзя сменить блок, пока игра в нем не завершится.</string>
-    <string name="rules_2_3">\t•	Режим выбора. В этом режиме правила становятся несколько сложнее, активный блок меняется каждый ход, основываясь на предыдущем ходу. Каждый игрок определяет следующий блок координатами клетки, в которую он ходит: например, игрок походил в правую нижнюю клетку в активном блоке, значит для следующего игрока активным будет правый нижний блок.</string>
-
-    <string name="rules_3">\tОднако с такими правилами может произойти ситуация, когда активным должен тать уже завершенный блок, тогда текущему игроку предоставляется выбор среди всех открытых блоков, далее правила идут так же. </string>
-    <string name="rules_4">\t•	Возвратный режим: Каждый игрок определяет следующий блок координатами клетки, в которую он ходит: например, игрок походил в левую верхнюю клетку в активном блоке, значит для следующего игрока активным будет левый верхний блок.
-\tОднако в отличие от предыдущего режима, игрок не сможет выбрать любой блок, потому что игра сама его определит. Текущий игрок будет ходить в последнем не завершенном блоке, в котором велась игра до этого. </string>
-    <string name="in_development">In development</string>
-
-
+    <string name="rules_0">Welcome to TicTacTab!</string>
+    <string name="rules_1">\t\tThe app presents several versions of the well-known game that you can switch in settings.
+\n\t\tIn addition to the classic version 3 x 3, you can try a complicated variant, in which instead of ordinary cells are blocks of 3 x 3. To win you need the same as usual to fill 3 blocks in a row, and to assign someor block, you have to win on a small field in this block, i.e. put three squares in a row.</string>
+    <string name="rules_2">\t\tThe extended version has several game modes:
+\n\t\t•Basic mode allows you to make a move in any part of the game field;
+\n\t\t•Single mode, in which the game is played in each block in turn. The first player can go anywhere, but after that one cannot change the block until the game in it has finished.
+\n\t\t•Choise mode. In this mode, the rules become somewhat more complex, with the active block changing each turn based on the previous one. The player determines the following block with the coordinates of the cell to which he is going: for example, the player has moved to the right lower cell in the active block, meaning the next player has the right lower block.</string>
+    <string name="rules_3">\t\tHowever, with such rules, it may happen that the active player should have already completed the block, then the current player is given a choice among all the open blocks, then the rules go the same.</string>
+    <string name="rules_4">\t\t•BackStack mode: Each player determines the following block with the coordinates of the cell they are moving into: for example, the player has moved to the left upper cell in the active block, meaning the next player has the active left upper block.
+\n\t\tHowever, unlike the previous mode, the player will not be able to choose any block because the game will determine it. The current player will walk in the last unfinished block in which the game was previously played.</string>
 </resources>

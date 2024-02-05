@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
+import com.livmas.tictactab.R
 import com.livmas.tictactab.databinding.FragmentSettingsBinding
 import com.livmas.tictactab.ui.ThemeManager
 import com.livmas.tictactab.ui.models.enums.ComplexGameMode
@@ -81,10 +82,10 @@ class SettingsFragment : Fragment() {
 
     private fun showConfirmAlert() {
         AlertDialog.Builder(context)
-            .setNegativeButton("cancel") { _, _ -> }
-            .setPositiveButton("confirm") {_, _ -> confirm()}
-            .setMessage("If you change game mode, game will be restarted")
-            .setTitle("Are you sure?")
+            .setNegativeButton(R.string.cancel) { _, _ -> }
+            .setPositiveButton(R.string.confirm) {_, _ -> confirm()}
+            .setMessage(R.string.confirm_message)
+            .setTitle(R.string.confirm_title_message)
             .show()
     }
 

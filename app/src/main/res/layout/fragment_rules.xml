@@ -13,7 +13,7 @@
         android:gravity="center_horizontal">
 
         <TextView
-            android:textSize="22sp"
+            android:textSize="32sp"
             android:textAlignment="center"
             style="@style/rules_tv_style"
 
@@ -33,19 +33,7 @@
 
         <TextView
             style="@style/rules_tv_style"
-            android:text="@string/rules_2_0"/>
-
-        <TextView
-            style="@style/rules_tv_style"
-            android:text="@string/rules_2_1"/>
-
-        <TextView
-            style="@style/rules_tv_style"
-            android:text="@string/rules_2_2"/>
-
-        <TextView
-            style="@style/rules_tv_style"
-            android:text="@string/rules_2_3"/>
+            android:text="@string/rules_2"/>
 
         <LinearLayout
             android:orientation="horizontal"
