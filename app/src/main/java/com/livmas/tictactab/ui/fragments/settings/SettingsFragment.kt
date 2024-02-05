@@ -1,23 +1,19 @@
 package com.livmas.tictactab.ui.fragments.settings
 
-import android.content.res.Resources.Theme
+import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import com.livmas.tictactab.SETTINGS_TAG
 import com.livmas.tictactab.databinding.FragmentSettingsBinding
 import com.livmas.tictactab.ui.ThemeManager
 import com.livmas.tictactab.ui.models.enums.ComplexGameMode
 
 class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
-    private val viewModel: SettingsViewModel by activityViewModels()
+    private val states = SettingsStates()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,55 +26,71 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initViews()
         initListeners()
-        initObservers()
     }
 
-    private fun initObservers() {
-        viewModel.apply{
-            complexGameMode.observe(viewLifecycleOwner) {
-                val idToCheck = binding.rbgComplexGameMode[it.value].id
-                binding.rbgComplexGameMode.check(idToCheck)
-                Log.i(SETTINGS_TAG, "Game mode observed: $it")
-            }
+    override fun onStop() {
+        states.loadData()
+        initViews()
+        super.onStop()
+    }
 
-            nightTheme.observe(viewLifecycleOwner) {
-                binding.sNightMode.isChecked = it
-                Log.d(SETTINGS_TAG, "Night mode observed: $it")
-            }
+    private fun initViews() {
+        states.apply{
+            val idToCheck = binding.rbgComplexGameMode[complexGameMode.value].id
+            binding.rbgComplexGameMode.check(idToCheck)
 
-            useNightTheme.observe(viewLifecycleOwner) {
-                binding.cbUseNight.isChecked = it
-                Log.d(SETTINGS_TAG, "Use Night mode observed: $it")
-            }
+            binding.sNightMode.isChecked = nightTheme == true
+            binding.cbUseNight.isChecked = useNightTheme == true
         }
     }
 
     private fun initListeners() {
-        initNightCBListener()
+        initNightSListener()
+        initUseNightCBListener()
         initConfirmButtonListener()
+        initRBGListener()
     }
 
-    private fun initNightCBListener() {
+    private fun initUseNightCBListener() {
         binding.cbUseNight.setOnCheckedChangeListener { _, b ->
             ThemeManager.useTheme = b
+            states.useNightTheme = b
+        }
+    }
+
+    private fun initNightSListener() {
+        binding.sNightMode.setOnCheckedChangeListener { _, b ->
+            states.nightTheme = b
+        }
+    }
+
+    private fun initRBGListener() {
+        binding.rbgComplexGameMode.setOnCheckedChangeListener { group, id ->
+            val index = group.indexOfChild(group.findViewById(id))
+            states.complexGameMode = ComplexGameMode.values()[index]
         }
     }
 
     private fun initConfirmButtonListener() {
         binding.bConfirm.setOnClickListener {
-            binding.rbgComplexGameMode.apply {
-                val rb = findViewById<RadioButton>(checkedRadioButtonId)
-                val gameMode = ComplexGameMode.values()[indexOfChild(rb)]
-
-                Log.d(SETTINGS_TAG, "Confirm")
-                viewModel.postGameMode(gameMode)
-            }
-            viewModel.postNightTheme(binding.sNightMode.isChecked)
-            viewModel.postUseNightTheme(binding.cbUseNight.isChecked)
-
-            ThemeManager.useTheme = binding.cbUseNight.isChecked
-            ThemeManager.setTheme(binding.sNightMode.isChecked)
+            showConfirmAlert()
         }
+    }
+
+    private fun showConfirmAlert() {
+        AlertDialog.Builder(context)
+            .setNegativeButton("cancel") { _, _ -> }
+            .setPositiveButton("confirm") {_, _ -> confirm()}
+            .setMessage("If you change game mode, game will be restarted")
+            .setTitle("Are you sure?")
+            .show()
+    }
+
+    private fun confirm() {
+        states.saveData()
+        ThemeManager.useTheme = binding.cbUseNight.isChecked
+        ThemeManager.setTheme(binding.sNightMode.isChecked)
     }
 }

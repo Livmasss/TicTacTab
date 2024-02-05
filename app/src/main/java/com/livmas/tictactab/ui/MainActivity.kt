@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
         val navView: BottomNavigationView = binding.navView
 
-        navController = findNavController(R.id.nav_host_fragment_activity_main)
+        navController = findNavController(R.id.nav_host_fragment)
 
 //        ActionBar navigation is disabled
 //        val appBarConfiguration = AppBarConfiguration(
