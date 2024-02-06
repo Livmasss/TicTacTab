@@ -2,6 +2,7 @@ package com.livmas.tictactab.ui.fragments.game.sessions
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.View
 import android.widget.FrameLayout
@@ -29,8 +30,11 @@ abstract class GameSessionFragment: Fragment() {
     protected var xDrawable: Drawable? = null
     protected var oDrawable: Drawable? = null
 
+    private val displayMetrics = DisplayMetrics()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        activity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
 
         //Initiates drawables for cell states
         xDrawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_x_cell, null)
@@ -72,6 +76,13 @@ abstract class GameSessionFragment: Fragment() {
     //Inflates win line
     protected fun renderLine(offset: Float = 0f, angle: Float = 0f) {
         val view = layoutInflater.inflate(R.layout.final_line_layout, fieldContainer, false) as ConstraintLayout
+
+        view.layoutParams.width = if ((angle.toInt() / 45) % 2 == 0)
+            displayMetrics.widthPixels
+        else
+            (displayMetrics.widthPixels * 1.2).toInt()
+        view.requestLayout()
+
         addConstLayout(view, offset, angle)
     }
 
