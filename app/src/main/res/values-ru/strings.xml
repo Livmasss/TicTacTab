@@ -55,7 +55,7 @@
     <string name="cell_var">клетка</string>
     <string name="block_var">блок</string>
     <string name="block_inactive_message">Этот блок неактивен! Выберите другой.</string>
-    <string name="confirm_message">Если вы поменяете режим игры сейчас, игра будет перезапущена</string>
+    <string name="mode_changed_confirm_message">Если вы поменяете режим игры сейчас, игра будет перезапущена</string>
     <string name="confirm_title_message">Сохранить изменения?</string>
 
     <!-- Settings -->

@@ -55,7 +55,7 @@
     <string name="cell_var">cell</string>
     <string name="block_var">block</string>
     <string name="block_inactive_message">This block is inactive! Choose active one.</string>
-    <string name="confirm_message">If you change game mode, game will be restarted</string>
+    <string name="mode_changed_confirm_message">If you change game mode, game will be restarted</string>
     <string name="confirm_title_message">Save changes?</string>
 
     <!-- Settings -->
