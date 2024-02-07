@@ -36,32 +36,34 @@ abstract class GameSessionFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         activity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
 
-        //Initiates drawables for cell states
-        xDrawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_x_cell, null)
-        xDrawable?.setTint(
-            context?.let {
-                val typedValue = TypedValue()
-                it.theme.resolveAttribute(com.google.android.material.R.attr.colorSecondary, typedValue, true)
-                typedValue.data
-            } ?: ResourcesCompat.getColor(resources, R.color.orange_200, null)
+        xDrawable = prepareCellStateDrawable(
+            R.drawable.ic_x_cell,
+            com.google.android.material.R.attr.colorSecondary,
+            R.color.orange_200
         )
 
-        oDrawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_o_cell, null)
-        oDrawable?.setTint(
-            context?.let {
-                val typedValue = TypedValue()
-                it.theme.resolveAttribute(com.google.android.material.R.attr.colorPrimary, typedValue, true)
-                typedValue.data
-            } ?: ResourcesCompat.getColor(resources, R.color.purple_200, null)
+        oDrawable = prepareCellStateDrawable(
+            R.drawable.ic_o_cell,
+            com.google.android.material.R.attr.colorPrimary,
+            R.color.purple_200
         )
     }
+
+    //Initiates drawables for cell states
+    private fun prepareCellStateDrawable(drawableId: Int, colorAttrId: Int, altColorId: Int): Drawable? {
+        val drawable = ResourcesCompat.getDrawable(resources, drawableId, null)
+        drawable?.setTint(
+            context?.let {
+                val typedValue = TypedValue()
+                it.theme.resolveAttribute(colorAttrId, typedValue, true)
+                typedValue.data
+            } ?: ResourcesCompat.getColor(resources, altColorId, null)
+        )
+        return drawable
+    }
+
     // Update cell according to its value in field
     protected abstract fun renderCell(imageButton: ImageButton, cords: ICoordinatesModel)
-    protected fun renderField(field: IFieldModel, idsField: Array<Array<ImageButton>> ) {
-        for (x in 0..2)
-            for (y in 0..2)
-                renderCell(idsField[x][y], field[ClassicCoordinatesModel(x, y)])
-    }
 
     // Update drawable of ImageView
     protected fun renderCell(imageView: ImageView, cell: CellModel) = imageView.setImageDrawable(
@@ -72,6 +74,12 @@ abstract class GameSessionFragment: Fragment() {
             null -> null
         }
     )
+
+    protected fun renderField(field: IFieldModel, idsField: Array<Array<ImageButton>> ) {
+        for (x in 0..2)
+            for (y in 0..2)
+                renderCell(idsField[x][y], field[ClassicCoordinatesModel(x, y)])
+    }
 
     //Inflates win line
     protected fun renderLine(offset: Float = 0f, angle: Float = 0f) {

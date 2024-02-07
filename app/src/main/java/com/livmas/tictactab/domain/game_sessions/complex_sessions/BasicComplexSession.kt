@@ -29,14 +29,12 @@ open class BasicComplexSession(
     override fun postTurnProcess(cords: ICoordinatesModel) {
         val fCell = _field[ClassicCoordinatesModel(cords)]
         fCell.state = when (fCell.checkWinner()) {
-            CellState.N -> if (field.isFull()) CellState.N else null
+            CellState.N -> if (fCell.field.isFull()) CellState.N else null
             CellState.X -> CellState.X
             CellState.O -> CellState.O
         }
 
         super.postTurnProcess(cords)
-        if (fCell.state != null)
-            onBlockClose(cords)
     }
     override fun preTurnProcess(cords: ICoordinatesModel): GameMessage {
         cords as ComplexCoordinatesModel
@@ -74,7 +72,5 @@ open class BasicComplexSession(
                 null -> return message
             }
         )
-    }
-    open fun onBlockClose(cords: ICoordinatesModel) {
     }
 }

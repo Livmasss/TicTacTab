@@ -46,18 +46,18 @@ class ComplexGameSessionViewModel : GameSessionViewModel() {
                 return
             }
         }
-        session = createGame(_field.value!! as ComplexFieldModel, _currentPlayer.value?: Player.X, _gameResult.value)
+        session = continueGame(_field.value!! as ComplexFieldModel, _currentPlayer.value?: Player.X, _gameResult.value)
         _field.postValue(session!!.field)
     }
     private fun stopGame() {
         session = null
     }
     override fun restartGame() {
-        session = createGame(ComplexFieldModel(), Player.X, null)
+        session = continueGame(ComplexFieldModel(), Player.X, null)
         super.restartGame()
         _currentBlockCords.postValue(null)
     }
-    private fun createGame(field: ComplexFieldModel, current: Player, result: GameResult?): GameSession {
+    private fun continueGame(field: ComplexFieldModel, current: Player, result: GameResult?): GameSession {
         return when(_gameMode) {
             ComplexGameMode.Basic -> BasicComplexSession(field, current, result)
             ComplexGameMode.Single -> SingleComplexSession(field, current, result)
@@ -65,6 +65,15 @@ class ComplexGameSessionViewModel : GameSessionViewModel() {
             ComplexGameMode.Stack -> StackComplexSession(field, current, result)
         }
     }
+//
+//    private fun createGame(): GameSession {
+//        return when(_gameMode) {
+//            ComplexGameMode.Basic -> BasicComplexSession()
+//            ComplexGameMode.Single -> SingleComplexSession()
+//            ComplexGameMode.Choose -> ChooseComplexSession()
+//            ComplexGameMode.Stack -> StackComplexSession()
+//        }
+//    }
 
     fun makeTurn(cords: ComplexCoordinatesModel) {
         val message = if (session == null || session!!.result != null)
