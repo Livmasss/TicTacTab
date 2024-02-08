@@ -65,15 +65,6 @@ class ComplexGameSessionViewModel : GameSessionViewModel() {
             ComplexGameMode.Stack -> StackComplexSession(field, current, result)
         }
     }
-//
-//    private fun createGame(): GameSession {
-//        return when(_gameMode) {
-//            ComplexGameMode.Basic -> BasicComplexSession()
-//            ComplexGameMode.Single -> SingleComplexSession()
-//            ComplexGameMode.Choose -> ChooseComplexSession()
-//            ComplexGameMode.Stack -> StackComplexSession()
-//        }
-//    }
 
     fun makeTurn(cords: ComplexCoordinatesModel) {
         val message = if (session == null || session!!.result != null)

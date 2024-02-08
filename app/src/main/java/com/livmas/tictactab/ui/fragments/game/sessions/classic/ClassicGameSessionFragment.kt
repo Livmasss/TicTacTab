@@ -1,7 +1,6 @@
 package com.livmas.tictactab.ui.fragments.game.sessions.classic
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
@@ -10,7 +9,6 @@ import android.widget.ImageButton
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.snackbar.Snackbar
 import com.livmas.tictactab.R
-import com.livmas.tictactab.UI_TAG
 import com.livmas.tictactab.databinding.FragmentClassicGameSessionBinding
 import com.livmas.tictactab.domain.models.ICoordinatesModel
 import com.livmas.tictactab.domain.models.classic.ClassicCoordinatesModel
@@ -62,12 +60,7 @@ class ClassicGameSessionFragment : GameSessionFragment() {
         initCells()
 
         binding.bRestart.setOnClickListener {
-            try {
-                binding.flFieldContainer.removeViewAt(1)
-            }
-            catch (e: NullPointerException) {
-                Log.d(UI_TAG, "No line drawn")
-            }
+            removeLine()
             viewModel.restartGame()
         }
     }
@@ -141,15 +134,15 @@ class ClassicGameSessionFragment : GameSessionFragment() {
             }
             winLineCode.observe(viewLifecycleOwner) {
                 when (it) {
-                    0 -> return@observe
-                    1 -> renderLine(offset = -0.35f)
-                    2 -> renderLine()
-                    3 -> renderLine(offset = 0.35f)
-                    4 -> renderLine(angle = 45f)
-                    5 -> renderLine(angle = -45f)
-                    6 -> renderLine(offset = 0.35f, angle = 90f)
-                    7 -> renderLine(angle = 90f)
-                    8 -> renderLine(offset = -0.35f, angle = 90f)
+                    0 -> removeLine()
+                    1 -> rerenderLine(offset = -0.35f)
+                    2 -> rerenderLine()
+                    3 -> rerenderLine(offset = 0.35f)
+                    4 -> rerenderLine(angle = 45f)
+                    5 -> rerenderLine(angle = -45f)
+                    6 -> rerenderLine(offset = 0.35f, angle = 90f)
+                    7 -> rerenderLine(angle = 90f)
+                    8 -> rerenderLine(offset = -0.35f, angle = 90f)
                 }
             }
         }
