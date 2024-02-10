@@ -1,8 +1,8 @@
 package com.livmas.tictactab.ui.models.enums
 
 enum class ComplexGameMode(val value: Int) {
-    Basic(0),
-    Single(1),
-    Choose(2),
-    Stack(3)
+    Choose(0),
+    Stack(1),
+    Single(2),
+    Basic(3)
 }

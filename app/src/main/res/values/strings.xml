@@ -61,10 +61,10 @@
     <!-- Settings -->
     <string name="complex_game_mode">Complex Game Mode</string>
     <!-- Complex Game Modes -->
-    <string name="backstack_mode">BackStack mode</string>
-    <string name="choise_mode">Choise mode</string>
-    <string name="single_mode">Single mode</string>
-    <string name="basic_mode">Basic mode</string>
+    <string name="backstack_mode">Classic with rollback</string>
+    <string name="choise_mode">Classic</string>
+    <string name="single_mode">Block-by-Block</string>
+    <string name="basic_mode">Free mode</string>
 
     <string name="night_theme">Night theme</string>
     <string name="use_app_night_mode">Use app Night mode</string>
@@ -74,10 +74,10 @@
     <string name="rules_1">\t\tThe app presents several versions of the well-known game that you can switch in settings.
 \n\t\tIn addition to the classic version 3 x 3, you can try a complicated variant, in which instead of ordinary cells are blocks of 3 x 3. To win you need the same as usual to fill 3 blocks in a row, and to assign someor block, you have to win on a small field in this block, i.e. put three squares in a row.</string>
     <string name="rules_2">\t\tThe extended version has several game modes:
-\n\t\t•Basic mode allows you to make a move in any part of the game field;
-\n\t\t•Single mode, in which the game is played in each block in turn. The first player can go anywhere, but after that one cannot change the block until the game in it has finished.
-\n\t\t•Choise mode. In this mode, the rules become somewhat more complex, with the active block changing each turn based on the previous one. The player determines the following block with the coordinates of the cell to which he is going: for example, the player has moved to the right lower cell in the active block, meaning the next player has the right lower block.</string>
+\n\t\t•Free mode allows you to make a move in any part of the game field;
+\n\t\t•Block-by-Block mode, in which the game is played in each block in turn. The first player can go anywhere, but after that one cannot change the block until the game in it has finished.
+\n\t\t•Classic mode. In this mode, the rules become somewhat more complex, with the active block changing each turn based on the previous one. The player determines the following block with the coordinates of the cell to which he is going: for example, the player has moved to the right lower cell in the active block, meaning the next player has the right lower block.</string>
     <string name="rules_3">\t\tHowever, with such rules, it may happen that the active player should have already completed the block, then the current player is given a choice among all the open blocks, then the rules go the same.</string>
-    <string name="rules_4">\t\t•BackStack mode: Each player determines the following block with the coordinates of the cell they are moving into: for example, the player has moved to the left upper cell in the active block, meaning the next player has the active left upper block.
+    <string name="rules_4">\t\t•Classic with rollback mode: Each player determines the following block with the coordinates of the cell they are moving into: for example, the player has moved to the left upper cell in the active block, meaning the next player has the active left upper block.
 \n\t\tHowever, unlike the previous mode, the player will not be able to choose any block because the game will determine it. The current player will walk in the last unfinished block in which the game was previously played.</string>
 </resources>

@@ -28,11 +28,15 @@
 
     <!-- Text -->
     <style name="textViewStyle" parent="Widget.AppCompat.TextView">
-        <item name="android:textSize">42sp</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="PreferenceTextStyle">
         <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="TitleTextStyle">
+        <item name="android:textSize">32sp</item>
     </style>
 
     <style name="Theme.Snackbar" parent="Widget.MaterialComponents.Snackbar.TextView">
@@ -45,8 +49,12 @@
         <item name="android:textSize">20sp</item>
     </style>
 
-    <!-- rules -->
+    <style name="Theme.Navigation" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="android:textViewStyle">@style/rules_tv_style</item>
+        <item name="android:textSize">14sp</item>
+    </style>
 
+    <!-- rules -->
     <style name="rules_tv_style" parent="textViewStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -58,4 +66,5 @@
         <item name="android:layout_width">110dp</item>
         <item name="android:layout_height">150dp</item>
     </style>
+
 </resources>

@@ -37,7 +37,8 @@
         android:layout_weight="0"
 
         android:text="@string/current_player_message"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        style="@style/TitleTextStyle"/>
 
     <ImageView
         android:id="@+id/ivGameDisplay"

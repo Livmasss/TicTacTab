@@ -35,7 +35,7 @@
 
             <TextView
                 android:id="@+id/tvComplexGameMode"
-                style="@style/PreferenceTextStyle"
+                style="@style/TitleTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/complex_game_mode" />
@@ -46,28 +46,33 @@
                 android:layout_height="wrap_content">
 
                 <RadioButton
-                    android:id="@+id/rbBasic"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/basic_mode" />
-
-                <RadioButton
-                    android:id="@+id/rbSingle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/single_mode" />
-
-                <RadioButton
                     android:id="@+id/rbChoice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/choise_mode" />
+                    android:text="@string/choise_mode"
+                    style="@style/PreferenceTextStyle" />
 
                 <RadioButton
                     android:id="@+id/rbStack"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/backstack_mode" />
+                    android:text="@string/backstack_mode"
+                    style="@style/PreferenceTextStyle" />
+
+                <RadioButton
+                    android:id="@+id/rbSingle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/single_mode"
+                    style="@style/PreferenceTextStyle" />
+
+                <RadioButton
+                    android:id="@+id/rbBasic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/basic_mode"
+                    style="@style/PreferenceTextStyle" />
+
             </RadioGroup>
         </LinearLayout>
 
@@ -93,7 +98,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/use_app_night_mode"/>
+                android:text="@string/use_app_night_mode"
+                style="@style/PreferenceTextStyle" />
 
         </LinearLayout>
 
