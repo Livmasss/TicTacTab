@@ -1,7 +1,6 @@
 package com.livmas.tictactab.ui.fragments.game.sessions.complex
 
 import android.os.Bundle
-import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.snackbar.Snackbar
-import com.livmas.tictactab.GAME_TAG
 import com.livmas.tictactab.R
 import com.livmas.tictactab.databinding.FragmentComplexGameSessionBinding
 import com.livmas.tictactab.domain.models.ICoordinatesModel
@@ -23,6 +21,7 @@ import com.livmas.tictactab.domain.models.complex.ComplexFieldModel
 import com.livmas.tictactab.domain.models.enums.CellState
 import com.livmas.tictactab.domain.models.enums.GameResult
 import com.livmas.tictactab.domain.models.enums.Player
+import com.livmas.tictactab.ui.ResourceExtractor
 import com.livmas.tictactab.ui.fragments.game.sessions.GameSessionFragment
 import com.livmas.tictactab.ui.models.enums.Alert
 import com.livmas.tictactab.ui.models.enums.ComplexGameMode
@@ -33,6 +32,7 @@ class ComplexGameSessionFragment : GameSessionFragment() {
     override val viewModel: ComplexGameSessionViewModel by activityViewModels()
     private lateinit var binding: FragmentComplexGameSessionBinding
     private var prevBlockCords: ClassicCoordinatesModel? = null // Coordinates of previous active block
+    private lateinit var extractor: ResourceExtractor
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +48,7 @@ class ComplexGameSessionFragment : GameSessionFragment() {
                 }
             }
         }
+        extractor = ResourceExtractor(resources, requireContext())
         initBlockButtons()
 
         fieldContainer = binding.flFieldContainer
@@ -96,7 +97,7 @@ class ComplexGameSessionFragment : GameSessionFragment() {
     //Renders block at coordinates state
     private fun renderBlockState(field: ComplexFieldModel, cords: ClassicCoordinatesModel) {
         val container: ImageView by lazy {
-            val id = getIdByString("image${cords.x}${cords.y}")
+            val id = extractor.getIdByString("image${cords.x}${cords.y}")
             binding.root.findViewById(id)
         }
         renderBlockState(container, field[cords].state)
@@ -131,7 +132,7 @@ class ComplexGameSessionFragment : GameSessionFragment() {
             val x = i / 3
             val y = i % 3
 
-            val id = getIdByString("ibCell$x$y")
+            val id = extractor.getIdByString("ibCell$x$y")
             val cell = block.findViewById(id) as View
 
             cell.setOnClickListener(makeTurnListener(ComplexCoordinatesModel(cords.x, cords.y, ClassicCoordinatesModel(x, y))))
@@ -150,7 +151,7 @@ class ComplexGameSessionFragment : GameSessionFragment() {
     }
     //Find block (ConstraintLayout) by coordinates
     private fun findBlock(cords: ClassicCoordinatesModel): ConstraintLayout {
-        val id = getIdByString("block${cords.x}${cords.y}")
+        val id = extractor.getIdByString("block${cords.x}${cords.y}")
         return binding.root.findViewById(id) as ConstraintLayout
     }
 
@@ -201,7 +202,7 @@ class ComplexGameSessionFragment : GameSessionFragment() {
     }
 
     private fun handleCurrBlockNull() {
-        if (viewModel.gameMode == ComplexGameMode.Basic)
+        if (viewModel.gameMode == ComplexGameMode.Free)
             return
         else
             paintAllAvailableBlocks()
@@ -257,8 +258,6 @@ class ComplexGameSessionFragment : GameSessionFragment() {
                 }
 
                 winLineCode.observe(owner) {
-                    Log.d(GAME_TAG, "winLineCode observed: $it")
-
                     when (it) {
                         0 -> removeLine()
                         1 -> rerenderLine(offset = -0.35f)
@@ -317,7 +316,7 @@ class ComplexGameSessionFragment : GameSessionFragment() {
 
     //Finds ImageButton cell by cords
     private fun findCell(block: ConstraintLayout, cords: ClassicCoordinatesModel): ImageButton {
-        return getIdByString("ibCell${cords.x}${cords.y}").let {
+        return extractor.getIdByString("ibCell${cords.x}${cords.y}").let {
             block.findViewById(it)
         }
     }
@@ -346,10 +345,6 @@ class ComplexGameSessionFragment : GameSessionFragment() {
         }
     }
 
-    //Returns Int id by its string name
-    private fun getIdByString(name: String): Int {
-        return resources.getIdentifier(name, "id", context?.packageName)
-    }
 
     //Returns ImageButton by coordinates
     private fun getImageButton(cords: ComplexCoordinatesModel) =

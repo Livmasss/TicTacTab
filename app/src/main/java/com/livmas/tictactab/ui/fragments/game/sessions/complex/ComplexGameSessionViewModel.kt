@@ -39,7 +39,9 @@ class ComplexGameSessionViewModel : GameSessionViewModel() {
         get() = _gameMode
     override var session: GameSession? = null
     fun resumeGame() {
-        repository.readCompGameMode().let {settingsMode ->
+        Log.d(GAME_TAG, _gameMode.toString())
+
+        repository.readCompGameMode().let { settingsMode ->
             if (_gameMode != settingsMode) {
                 _gameMode = settingsMode
                 restartGame()
@@ -59,10 +61,10 @@ class ComplexGameSessionViewModel : GameSessionViewModel() {
     }
     private fun continueGame(field: ComplexFieldModel, current: Player, result: GameResult?): GameSession {
         return when(_gameMode) {
-            ComplexGameMode.Basic -> BasicComplexSession(field, current, result)
-            ComplexGameMode.Single -> SingleComplexSession(field, current, result)
-            ComplexGameMode.Choose -> ChooseComplexSession(field, current, result)
-            ComplexGameMode.Stack -> StackComplexSession(field, current, result)
+            ComplexGameMode.Free -> BasicComplexSession(field, current, result)
+            ComplexGameMode.BlockByBlock -> SingleComplexSession(field, current, result)
+            ComplexGameMode.Classic -> ChooseComplexSession(field, current, result)
+            ComplexGameMode.ClassicRollback -> StackComplexSession(field, current, result)
         }
     }
 

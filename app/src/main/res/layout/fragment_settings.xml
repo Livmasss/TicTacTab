@@ -49,28 +49,28 @@
                     android:id="@+id/rbChoice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/choise_mode"
+                    android:text="@string/complex_mode_0"
                     style="@style/PreferenceTextStyle" />
 
                 <RadioButton
                     android:id="@+id/rbStack"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/backstack_mode"
+                    android:text="@string/complex_mode_1"
                     style="@style/PreferenceTextStyle" />
 
                 <RadioButton
                     android:id="@+id/rbSingle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/single_mode"
+                    android:text="@string/complex_mode_2"
                     style="@style/PreferenceTextStyle" />
 
                 <RadioButton
                     android:id="@+id/rbBasic"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/basic_mode"
+                    android:text="@string/complex_mode_3"
                     style="@style/PreferenceTextStyle" />
 
             </RadioGroup>

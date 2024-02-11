@@ -61,10 +61,10 @@
     <!-- Settings -->
     <string name="complex_game_mode">Complex Game Mode</string>
     <!-- Complex Game Modes -->
-    <string name="backstack_mode">Classic with rollback</string>
-    <string name="choise_mode">Classic</string>
-    <string name="single_mode">Block-by-Block</string>
-    <string name="basic_mode">Free mode</string>
+    <string name="complex_mode_0">Classic</string>
+    <string name="complex_mode_1">Classic with rollback</string>
+    <string name="complex_mode_2">Block-by-Block</string>
+    <string name="complex_mode_3">Free mode</string>
 
     <string name="night_theme">Night theme</string>
     <string name="use_app_night_mode">Use app Night mode</string>

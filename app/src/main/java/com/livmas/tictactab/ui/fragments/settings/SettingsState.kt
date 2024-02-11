@@ -14,7 +14,7 @@ class SettingsState(
         SettingsRepository.instance.readUseNightMode()
     )
 
-    private fun saveCompGameMode(mode: ComplexGameMode?) = SettingsRepository.instance.putCompGameMode(mode ?: ComplexGameMode.Stack)
+    private fun saveCompGameMode(mode: ComplexGameMode?) = SettingsRepository.instance.putCompGameMode(mode ?: ComplexGameMode.ClassicRollback)
     private fun saveNightMode(isNight: Boolean?) = SettingsRepository.instance.putNightMode(isNight?: false)
     private fun saveUseNightMode(b: Boolean?) = SettingsRepository.instance.putUseNightMode(b?: false)
 
