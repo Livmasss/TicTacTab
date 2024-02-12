@@ -279,7 +279,8 @@ class ComplexGameSessionFragment : GameSessionFragment() {
                         handleCurrBlockNull()
                     else {
                         handlePrevBlock()
-                        findBlock(it).setBlockColor(androidx.appcompat.R.attr.colorAccent)
+                        if (viewModel.gameMode != ComplexGameMode.Free)
+                            findBlock(it).setBlockColor(androidx.appcompat.R.attr.colorAccent)
                     }
                     prevBlockCords = it
                 }

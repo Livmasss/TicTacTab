@@ -38,17 +38,22 @@ open class BasicComplexSession(
     }
     override fun preTurnProcess(cords: ICoordinatesModel): GameMessage {
         cords as ComplexCoordinatesModel
+
+        //Turn in unavailable block
         if (_currentBlockCords != null && _currentBlockCords != (ClassicCoordinatesModel(cords)))
             return GameMessage(
                 null,
                 42
             )
+
+        //Closed block
         if (_field[ClassicCoordinatesModel(cords)].state != null)
             return GameMessage(
                 null,
                 41
             )
 
+        //Cell occupied
         if (_field[cords] != CellState.N)
             return GameMessage(
                 null,
