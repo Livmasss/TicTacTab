@@ -61,8 +61,8 @@
     <!-- Settings -->
     <string name="complex_game_mode">Режим сложной игры</string>
     <!-- Complex Game Modes -->
-    <string name="complex_mode_1">Классический</string>
-    <string name="complex_mode_0">Классический с откатом</string>
+    <string name="complex_mode_0">Классический</string>
+    <string name="complex_mode_1">Классический с откатом</string>
     <string name="complex_mode_2">Поблочный</string>
     <string name="complex_mode_3">Свободный</string>
 

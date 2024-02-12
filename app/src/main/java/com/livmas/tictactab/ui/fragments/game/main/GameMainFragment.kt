@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.livmas.tictactab.R
@@ -62,5 +61,8 @@ class GameMainFragment : Fragment() {
         val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, arrayList)
         adapter.setDropDownViewResource(androidx.appcompat.R.layout.select_dialog_item_material)
         binding.spinGameModeSelector.adapter = adapter
+
+        val savedMode = SettingsRepository.instance.readCompGameMode().value
+        binding.spinGameModeSelector.setSelection(savedMode)
     }
 }
