@@ -9,7 +9,6 @@ class TicTacTabApp: Application() {
         super.onCreate()
         SettingsSharedPreferencesDataSource.instance.initiate(applicationContext)
 
-        ThemeManager.useTheme = SettingsRepository.instance.readUseNightMode()
         ThemeManager.setTheme(SettingsRepository.instance.readNightMode())
     }
 }

@@ -10,7 +10,6 @@ class SettingsSharedPreferencesDataSource {
         const val SP_NAME = "com.livmas.tictactab"
         const val PREF_GAME_MODE = "comp_game_mode"
         const val PREF_NIGHT_MODE = "night_mode"
-        const val PREF_USE_NIGHT_MODE = "use_night_mode"
 
         val instance: SettingsSharedPreferencesDataSource by lazy {
             SettingsSharedPreferencesDataSource()
@@ -38,14 +37,6 @@ class SettingsSharedPreferencesDataSource {
         editor!!.commit()
     }
 
-    fun putUseNightMode(b: Boolean) {
-        if (isEditorNull())
-            return
-        Log.d(SETTINGS_TAG, "Use night mode put in prefs: $b")
-        editor!!.putBoolean(PREF_USE_NIGHT_MODE, b)
-        editor!!.commit()
-    }
-
     fun readCompGameMode(): Int {
         return if (isSharedPrefNull())
             0
@@ -57,14 +48,7 @@ class SettingsSharedPreferencesDataSource {
         return if (isSharedPrefNull())
             false
         else
-            sp!!.getBoolean(PREF_NIGHT_MODE, false)
-    }
-
-    fun readUseNightMode(): Boolean {
-        return if (isSharedPrefNull())
-            false
-        else
-            sp!!.getBoolean(PREF_USE_NIGHT_MODE, false)
+            sp!!.getBoolean(PREF_NIGHT_MODE, true)
     }
 
     private fun isEditorNull(): Boolean {

@@ -16,11 +16,9 @@ class SettingsRepository {
 
     fun putCompGameMode(mode: ComplexGameMode) = source.putCompGameMode(mode.value)
     fun putNightMode(isNight: Boolean) = source.putNightMode(isNight)
-    fun putUseNightMode(b: Boolean) = source.putUseNightMode(b)
+
     fun readCompGameMode() = ComplexGameMode.values()[source.readCompGameMode()].also {
         Log.d(SETTINGS_TAG, "Game mode gained from settings sp: $it") }
     fun readNightMode(): Boolean = source.readNightMode().also {
         Log.d(SETTINGS_TAG, "Night mode gained from settings sp: $it") }
-    fun readUseNightMode(): Boolean = source.readUseNightMode().also {
-        Log.d(SETTINGS_TAG, "Use night mode gained from settings sp: $it") }
 }
