@@ -16,12 +16,12 @@ Game is not finished yet.
 
 
 **Instalation**
-To use this app, you should:
+
+Install rustore app on your phone and follow this link. Then download TicTacTab application and enjoy the gameplay.
+https://www.rustore.ru/catalog/app/com.livmas.tictactab
+
+There is another optionm you can follow these steps:
 - Clone the repository;
 - Open project in android studio;
 - Build .apk file for release;
 - Run this file on your device.
-
-
-**Страница в Rustore**
-https://www.rustore.ru/catalog/app/com.livmas.tictactab
