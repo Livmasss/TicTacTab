@@ -17,10 +17,10 @@ Game is not finished yet.
 
 **Instalation**
 To use this app, you should:
-    - Clone the repository;
-    - Open project in android studio;
-    - Build .apk file for release;
-    - Run this file on your device.
+- Clone the repository;
+- Open project in android studio;
+- Build .apk file for release;
+- Run this file on your device.
 
 
 **Страница в Rustore**
